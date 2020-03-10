@@ -31,6 +31,15 @@ namespace Painel_Projetos.DataAccess.GenericAbstract
             }
         }
 
+        IAlunoRepository alunos;
+        public IAlunoRepository Alunos
+        {
+            get
+            {
+                return alunos ?? (alunos = new AlunoRepository(ctx));
+            }
+        }
+
         public void SaveChanges()
         {
             ctx.SaveChanges();

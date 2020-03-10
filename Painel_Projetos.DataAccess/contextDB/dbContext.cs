@@ -23,5 +23,6 @@ namespace Painel_Projetos.DataAccess.contextDB
             modelBuilder.Properties().Configure(p => p.IsRequired());
         }
 
+        public System.Data.Entity.DbSet<Painel_Projetos.DomainModel.Class.Aluno> Alunoes { get; set; }
     }
 }
