@@ -5,15 +5,14 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{CE81497F-01C5-4FB9-A5B9-A8898E4D4BB3}</ProjectGuid>
+    <ProjectGuid>{71DC8BA0-D7B3-4517-9422-9E2B35E475D0}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Painel_Projetos.DomainModel</RootNamespace>
-    <AssemblyName>Painel_Projetos.DomainModel</AssemblyName>
-    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <RootNamespace>Painel_Projetos.DataAccess</RootNamespace>
+    <AssemblyName>Painel_Projetos.DataAccess</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
-    <TargetFrameworkProfile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
   </PropertyGroup>
@@ -52,16 +51,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class\Curso.cs" />
-    <Compile Include="Class\EntityBase.cs" />
+    <Compile Include="contextDB\dbContext.cs" />
+    <Compile Include="GenericAbstract\AbstractRepository.cs" />
+    <Compile Include="GenericAbstract\Repository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repository\ICursoRepository.cs" />
-    <Compile Include="Repository\IRepository.cs" />
-    <Compile Include="Repository\IRepositoryBase.cs" />
+    <Compile Include="Repository\CursoRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Painel_Projetos.DataModel\Painel_Projetos.DomainModel.csproj">
+      <Project>{ce81497f-01c5-4fb9-a5b9-a8898e4d4bb3}</Project>
+      <Name>Painel_Projetos.DomainModel</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
