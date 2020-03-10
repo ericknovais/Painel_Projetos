@@ -9,6 +9,7 @@ namespace Painel_Projetos.DomainModel.Repository
     public interface IRepository
     {
         ICursoRepository Cursos { get; }
+        IAlunoRepository Alunos { get; }
         void SaveChanges();
     }
 }
