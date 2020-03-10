@@ -33,7 +33,7 @@ namespace Painel_Projetos.DataAccess.GenericAbstract
 
         public void SaveChanges()
         {
-            throw new NotImplementedException();
+            ctx.SaveChanges();
         }
     }
 }
