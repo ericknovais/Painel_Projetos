@@ -54,12 +54,16 @@
   <ItemGroup>
     <Compile Include="Class\Aluno.cs" />
     <Compile Include="Class\Curso.cs" />
+    <Compile Include="Class\Empresa.cs" />
     <Compile Include="Class\EntityBase.cs" />
+    <Compile Include="Class\Representante.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\IAlunoRepository.cs" />
     <Compile Include="Repository\ICursoRepository.cs" />
+    <Compile Include="Repository\IEmpresaRepository.cs" />
     <Compile Include="Repository\IRepository.cs" />
     <Compile Include="Repository\IRepositoryBase.cs" />
+    <Compile Include="Repository\IRepresentanteRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
