@@ -47,7 +47,7 @@ namespace Painel_Projetos.Web.Controllers
                         repository.Cursos.ObterCursoAtivo(),
                         "Id",
                         "Descricao",
-                        entity.Curso
+                        entity.CursoID
                     );
 
                 return View(entity);
