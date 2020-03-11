@@ -9,5 +9,6 @@ namespace Painel_Projetos.DomainModel.Repository
 {
     public interface ICursoRepository : IRepositoryBase<Curso>
     {
+        IList<Curso> ObterCursoAtivo();
     }
 }

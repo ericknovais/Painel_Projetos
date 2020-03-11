@@ -10,12 +10,18 @@ namespace Painel_Projetos.DataAccess.contextDB
 {
     public class dbContext : DbContext
     {
-        public dbContext():base("PpBeta")
+        public dbContext() : base("PpBeta")
         {
-
+            //if (base.Database.Exists())
+            //{
+            //    base.Database.Delete();
+            //}
+            //else { base.Database.Create(); }
         }
 
         public DbSet<Curso> Cursos { get; set; }
+
+        public DbSet<Aluno> Alunos { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -23,6 +29,5 @@ namespace Painel_Projetos.DataAccess.contextDB
             modelBuilder.Properties().Configure(p => p.IsRequired());
         }
 
-        public System.Data.Entity.DbSet<Painel_Projetos.DomainModel.Class.Aluno> Alunoes { get; set; }
     }
 }

@@ -40,14 +40,16 @@ namespace Painel_Projetos.Web.Controllers
             Aluno entity = new Aluno();
             try
             {
-
                 entity = id.Equals(0) ? new Aluno() : repository.Alunos.ObterPor(id);
-                ViewBag.CursoDrop = new SelectList(
-                    repository.Cursos.ObterTodos(),
-                    "Id",
-                    "Descricao",
-                    entity.Curso
-                );
+
+                ViewBag.CursoId = new SelectList
+                    (
+                        repository.Cursos.ObterCursoAtivo(),
+                        "Id",
+                        "Descricao",
+                        entity.Curso
+                    );
+
                 return View(entity);
             }
             catch (Exception ex)
@@ -77,6 +79,12 @@ namespace Painel_Projetos.Web.Controllers
                 if (id.Equals(0))
                 {
                     ModelState.Clear();
+                    ViewBag.CursoId = new SelectList
+                   (
+                       repository.Cursos.ObterCursoAtivo(),
+                       "Id",
+                       "Descricao"
+                   );
                     return View(new Aluno());
                 }
                 return RedirectToAction("List");
@@ -85,7 +93,6 @@ namespace Painel_Projetos.Web.Controllers
             {
                 ViewBag.Mensagem = ex.Message.Replace(Environment.NewLine, "<br/>");
                 return View("List", repository.Alunos.ObterTodos());
-                //return View("List");
             }
         }
     }

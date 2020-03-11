@@ -17,16 +17,16 @@ namespace Painel_Projetos.Web.Controllers
         // GET: Curso
         public ActionResult List()
         {
-            IList<Curso> lista = new List<Curso>();
+            IList<Curso> cursos = new List<Curso>();
             try
             {
-                lista = repository.Cursos.ObterTodos();
-                return View(lista);
+                cursos = repository.Cursos.ObterTodos();
+                return View(cursos);
             }
             catch (Exception ex)
             {
                 ViewBag.Mensagem = ex.Message.Replace(Environment.NewLine, "</br>");
-                return View(lista);
+                return View(cursos);
             }
         }
 
@@ -44,6 +44,7 @@ namespace Painel_Projetos.Web.Controllers
                 return View(curso);
             }
         }
+
         [HttpPost]
         public ActionResult Edit(Curso entity, int id = 0)
         {
