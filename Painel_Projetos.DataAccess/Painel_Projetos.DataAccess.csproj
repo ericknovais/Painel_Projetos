@@ -65,7 +65,9 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Scripts\CargaDeDados.sql" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Painel_Projetos.DataModel\Painel_Projetos.DomainModel.csproj">
       <Project>{ce81497f-01c5-4fb9-a5b9-a8898e4d4bb3}</Project>

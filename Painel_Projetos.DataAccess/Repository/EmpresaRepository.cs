@@ -12,8 +12,18 @@ namespace Painel_Projetos.DataAccess.Repository
 {
     class EmpresaRepository : AbstractRepository<Empresa>, IEmpresaRepository
     {
+        #region Context
+        dbContext ctx = new dbContext();
+        #endregion
+
         public EmpresaRepository(dbContext context) : base(context)
         {
+            this.ctx = context;
+        }
+
+        public new IList<Empresa> ObterTodos()
+        {
+            return ctx.Empresas.Include("Representante").OrderBy(x => x.RazaoSocial).ToList();
         }
     }
 }

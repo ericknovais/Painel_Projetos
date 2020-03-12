@@ -10,6 +10,15 @@ namespace Painel_Projetos.DomainModel.Class
     [Table("Empresas")]
     public class Empresa : EntityBase
     {
+        public Empresa()
+        {
+
+        }
+
+        public Empresa(Representante representante)
+        {
+            representante = new Representante();
+        }
         public string CNPJ { get; set; }
         public string RazaoSocial { get; set; }
         public Representante Representante { get; set; }
