@@ -10,6 +10,8 @@ namespace Painel_Projetos.DomainModel.Repository
     {
         ICursoRepository Cursos { get; }
         IAlunoRepository Alunos { get; }
+        IEmpresaRepository Empresas { get; }
+        IRepresentanteRepository Representantes { get; }
         void SaveChanges();
     }
 }

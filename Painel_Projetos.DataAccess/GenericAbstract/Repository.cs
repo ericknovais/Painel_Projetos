@@ -40,6 +40,24 @@ namespace Painel_Projetos.DataAccess.GenericAbstract
             }
         }
 
+        IEmpresaRepository empresas;
+        public IEmpresaRepository Empresas
+        {
+            get
+            {
+                return empresas ?? (empresas = new EmpresaRepository(ctx));
+            }
+        }
+
+        IRepresentanteRepository representantes;
+        public IRepresentanteRepository Representantes
+        {
+            get
+            {
+                return representantes ?? (representantes = new RepresentanteRepository(ctx));
+            }
+        }
+
         public void SaveChanges()
         {
             ctx.SaveChanges();
