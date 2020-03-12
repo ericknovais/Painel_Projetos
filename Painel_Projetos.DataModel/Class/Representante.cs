@@ -9,7 +9,6 @@ namespace Painel_Projetos.DomainModel.Class
     public class Representante : EntityBase
     {
         public string Nome { get; set; }
-        public string E mail { get; set; }
-
+        public string Email { get; set; }
     }
 }
