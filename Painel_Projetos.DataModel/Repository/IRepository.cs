@@ -8,10 +8,11 @@ namespace Painel_Projetos.DomainModel.Repository
 {
     public interface IRepository
     {
-        ICursoRepository Cursos { get; }
-        IAlunoRepository Alunos { get; }
-        IEmpresaRepository Empresas { get; }
-        IRepresentanteRepository Representantes { get; }
+        ICursoRepository Curso { get; }
+        IAlunoRepository Aluno { get; }
+        IEmpresaRepository Empresa { get; }
+        IRepresentanteRepository Representante { get; }
+        ILoginRepository Login { get; }
         void SaveChanges();
     }
 }
