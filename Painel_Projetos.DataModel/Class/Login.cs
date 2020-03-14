@@ -12,9 +12,9 @@ namespace Painel_Projetos.DomainModel.Class
     public class Login : EntityBase
     {
         public Aluno Aluno { get; set; }
-        public int AlunoId { get; set; }
+        public int? AlunoId { get; set; }
         public Representante Representante { get; set; }
-        public int RepresentanteID { get; set; }
+        public int? RepresentanteID { get; set; }
         public string Usuario { get; set; }
         public string Senha { get; set; }
         public Perfil Perfil { get; set; }
