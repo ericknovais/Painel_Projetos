@@ -67,7 +67,7 @@ namespace Painel_Projetos.Web.Controllers
                 if (id.Equals(0))
                 {
                     login.RepresentanteID = representante.ID;
-                    login.Usuario = login.separarEmail(representante.Email);
+                    login.Usuario = Login.SepararEmail(representante.Email);
                     login.Senha = "impacta2020";
                     login.Perfil = Perfil.Representante;
                     repository.Login.Salvar(login);

@@ -27,7 +27,7 @@ namespace Painel_Projetos.DomainModel.Class
         /// </summary>
         /// <param name="email"></param>
         /// <returns></returns>
-        public string separarEmail(string email)
+        public static string SepararEmail(string email)
         {
             string[] dividido = email.Split('@');
             return dividido[0];
