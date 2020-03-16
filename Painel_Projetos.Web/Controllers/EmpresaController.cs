@@ -52,6 +52,7 @@ namespace Painel_Projetos.Web.Controllers
         {
             Empresa empresa = new Empresa();
             Representante representante = new Representante();
+            Login login = new Login();
             try
             {
                 empresa = id.Equals(0) ? new Empresa() : repository.Empresa.ObterPor(id);
@@ -62,7 +63,17 @@ namespace Painel_Projetos.Web.Controllers
                 representante.Email = entity.Representante.Email;
                 repository.Representante.Salvar(representante);
                 repository.Empresa.Salvar(empresa);
+
+                if (id.Equals(0))
+                {
+                    login.RepresentanteID = representante.ID;
+                    login.Usuario = login.separarEmail(representante.Email);
+                    login.Senha = "impacta2020";
+                    login.Perfil = Perfil.Representante;
+                    repository.Login.Salvar(login);
+                }
                 repository.SaveChanges();
+
                 if (id.Equals(0))
                 {
                     ModelState.Clear();

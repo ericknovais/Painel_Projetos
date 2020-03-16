@@ -80,7 +80,7 @@ namespace Painel_Projetos.Web.Controllers
                 if (id.Equals(0))
                 {
                     login.AlunoId = aluno.ID;
-                    login.Usuario = aluno.Email;
+                    login.Usuario = login.separarEmail(aluno.Email);
                     login.Senha = "impacta2020";
                     login.Perfil = Perfil.Aluno;
                     repository.Login.Salvar(login);

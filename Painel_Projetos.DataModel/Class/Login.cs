@@ -18,6 +18,22 @@ namespace Painel_Projetos.DomainModel.Class
         public string Usuario { get; set; }
         public string Senha { get; set; }
         public Perfil Perfil { get; set; }
+
+        #region Metodos publicos 
+
+        /// <summary>
+        /// Método para separar o endereço de e-mail do seu dominio.
+        /// Ex: passando joao.silva@aluno.faculdadeimpacta.cpm.br, o retorno será (joao.silva) 
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
+        public string separarEmail(string email)
+        {
+            string[] dividido = email.Split('@');
+            return dividido[0];
+        }
+
+        #endregion
     }
 
     public enum Perfil

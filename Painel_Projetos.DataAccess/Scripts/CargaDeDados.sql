@@ -18,4 +18,4 @@ VALUES(1802047, 'Erick Novais Da Hora', 2, '10/01/1994', 'erick.hora@aluno.facul
 GO
 
 INSERT INTO Logins(AlunoId, Usuario, Senha, Perfil)
-VALUES(1, 'erick.hora', 'impacta2020', 2);
+VALUES(1, 'erick.hora', 'impacta2020', 2); 
