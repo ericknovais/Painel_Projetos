@@ -10,17 +10,17 @@ namespace Painel_Projetos.DomainModel.Class
 {
     class Criptografar
     {
-        public static string Encriptar(string senha)
+        public static string Encriptar(string texto)
         {
             string[] vs = { "&H0", "&H1", "&H2", "&H3", "&H4", "&H5", "&H6", "&H5", "&H4", "&H3", "&H2", "&H1", "&H0" };
             byte[] salt = Encoding.ASCII.GetBytes(vs.ToString());
-            Rfc2898DeriveBytes chave = new Rfc2898DeriveBytes(senha, salt);
+            Rfc2898DeriveBytes chave = new Rfc2898DeriveBytes(texto, salt);
             RijndaelManaged algoritimo = new RijndaelManaged();
 
             algoritimo.Key = chave.GetBytes(16);
             algoritimo.IV = chave.GetBytes(16);
 
-            byte[] fonteBytes = UnicodeEncoding.UTF8.GetBytes(senha);
+            byte[] fonteBytes = UnicodeEncoding.UTF8.GetBytes(texto);
 
             MemoryStream streamFonte = new MemoryStream(fonteBytes);
 
