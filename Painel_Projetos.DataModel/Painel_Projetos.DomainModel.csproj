@@ -53,6 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class\Aluno.cs" />
+    <Compile Include="Class\Criptografar.cs" />
     <Compile Include="Class\Curso.cs" />
     <Compile Include="Class\Empresa.cs" />
     <Compile Include="Class\EntityBase.cs" />

@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -33,13 +35,21 @@ namespace Painel_Projetos.DomainModel.Class
             return dividido[0];
         }
 
+        public static string Encriptar(string senha)
+        {
+           return Criptografar.Encriptar(senha);
+        }
+
         #endregion
     }
-
-    public enum Perfil
-    {
-        Cordenador = 1,
-        Aluno = 2,
-        Representante = 3
-    }
 }
+
+
+
+public enum Perfil
+{
+    Cordenador = 1,
+    Aluno = 2,
+    Representante = 3
+}
+
