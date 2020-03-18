@@ -51,6 +51,9 @@ namespace Painel_Projetos.Web.Controllers
                         entity.CursoID
                     );
 
+                var login = id.Equals(0) ? new Login(): repository.Login.ObterAluno(entity.ID);
+                var senha = Login.Desencriptar(login.Senha);
+                ViewBag.Mensagem = senha;
                 return View(entity);
             }
             catch (Exception ex)

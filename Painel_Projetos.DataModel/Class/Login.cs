@@ -37,13 +37,16 @@ namespace Painel_Projetos.DomainModel.Class
 
         public static string Encriptar(string senha)
         {
-           return Criptografar.Encriptar(senha);
+            return Criptografia.Encriptar(senha);
         }
 
+        public static string Desencriptar(string senha)
+        {
+            return Criptografia.Desencriptar(senha);
+        }
         #endregion
     }
 }
-
 
 
 public enum Perfil

@@ -12,8 +12,16 @@ namespace Painel_Projetos.DataAccess.Repository
 {
     class LoginRepository : AbstractRepository<Login>, ILoginRepository
     {
+        dbContext ctx = new dbContext();
+
         public LoginRepository(dbContext context) : base(context)
         {
+            this.ctx = context;
+        }
+
+        public Login ObterAluno(int? idAluno)
+        {
+            return ctx.Logins.Where(x => x.AlunoId == idAluno).First(); ;
         }
     }
 }

@@ -9,5 +9,6 @@ namespace Painel_Projetos.DomainModel.Repository
 {
     public interface ILoginRepository : IRepositoryBase<Login>
     {
+        Login ObterAluno(int? idAluno);
     }
 }
