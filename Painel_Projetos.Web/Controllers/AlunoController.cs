@@ -42,18 +42,16 @@ namespace Painel_Projetos.Web.Controllers
             try
             {
                 entity = id.Equals(0) ? new Aluno() : repository.Aluno.ObterPor(id);
+                #region ViewBag.CursoId
+                    ViewBag.CursoId = new SelectList
+                        (
+                            repository.Curso.ObterCursoAtivo(),
+                            "Id",
+                            "Descricao",
+                            entity.CursoID
+                        );
+                #endregion
 
-                ViewBag.CursoId = new SelectList
-                    (
-                        repository.Curso.ObterCursoAtivo(),
-                        "Id",
-                        "Descricao",
-                        entity.CursoID
-                    );
-
-                var login = id.Equals(0) ? new Login(): repository.Login.ObterAluno(entity.ID);
-                var senha = Login.Desencriptar(login.Senha);
-                ViewBag.Mensagem = senha;
                 return View(entity);
             }
             catch (Exception ex)
@@ -82,7 +80,7 @@ namespace Painel_Projetos.Web.Controllers
 
                 if (id.Equals(0))
                 {
-                    login.AlunoId = aluno.ID;
+                    login.AlunoID = aluno.ID;
                     login.Usuario = Login.SepararEmail(aluno.Email); 
                     login.Senha = Login.Encriptar("impacta2020");
                     login.Perfil = Perfil.Aluno;

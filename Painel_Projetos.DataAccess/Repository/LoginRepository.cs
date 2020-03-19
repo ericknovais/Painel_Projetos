@@ -19,9 +19,14 @@ namespace Painel_Projetos.DataAccess.Repository
             this.ctx = context;
         }
 
-        public Login ObterAluno(int? idAluno)
+        public Login ObterAluno(int idAluno)
         {
-            return ctx.Logins.Where(x => x.AlunoId == idAluno).First(); ;
+            return ctx.Logins.Where(x => x.AlunoID == idAluno).First(); ;
+        }
+
+        public Login ObterRepresentante(int idRepresentante)
+        {
+            return ctx.Logins.Where(x => x.RepresentanteID == idRepresentante).First();
         }
     }
 }

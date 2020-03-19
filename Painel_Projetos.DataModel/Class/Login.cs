@@ -14,7 +14,7 @@ namespace Painel_Projetos.DomainModel.Class
     public class Login : EntityBase
     {
         public Aluno Aluno { get; set; }
-        public int? AlunoId { get; set; }
+        public int? AlunoID { get; set; }
         public Representante Representante { get; set; }
         public int? RepresentanteID { get; set; }
         public string Usuario { get; set; }
@@ -27,8 +27,6 @@ namespace Painel_Projetos.DomainModel.Class
         /// Método para separar o endereço de e-mail do seu dominio.
         /// Ex: passando joao.silva@aluno.faculdadeimpacta.cpm.br, o retorno será (joao.silva) 
         /// </summary>
-        /// <param name="email"></param>
-        /// <returns></returns>
         public static string SepararEmail(string email)
         {
             string[] dividido = email.Split('@');
@@ -37,12 +35,12 @@ namespace Painel_Projetos.DomainModel.Class
 
         public static string Encriptar(string senha)
         {
-            return Criptografia.Encriptar(senha);
+            return Criptografia.Criptografando(senha);
         }
 
         public static string Desencriptar(string senha)
         {
-            return Criptografia.Desencriptar(senha);
+            return Criptografia.Descriptografar(senha);
         }
         #endregion
     }
