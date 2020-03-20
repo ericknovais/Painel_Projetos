@@ -22,39 +22,48 @@ namespace Painel_Projetos.DataAccess.GenericAbstract
         }
         #endregion
 
-        ICursoRepository cursos;
-        public ICursoRepository Cursos
+        ICursoRepository curso;
+        public ICursoRepository Curso
         {
             get
             {
-                return cursos ?? (cursos = new CursoRepository(ctx));
+                return curso ?? (curso = new CursoRepository(ctx));
             }
         }
 
-        IAlunoRepository alunos;
-        public IAlunoRepository Alunos
+        IAlunoRepository aluno;
+        public IAlunoRepository Aluno
         {
             get
             {
-                return alunos ?? (alunos = new AlunoRepository(ctx));
+                return aluno ?? (aluno = new AlunoRepository(ctx));
             }
         }
 
-        IEmpresaRepository empresas;
-        public IEmpresaRepository Empresas
+        IEmpresaRepository empresa;
+        public IEmpresaRepository Empresa
         {
             get
             {
-                return empresas ?? (empresas = new EmpresaRepository(ctx));
+                return empresa ?? (empresa = new EmpresaRepository(ctx));
             }
         }
 
-        IRepresentanteRepository representantes;
-        public IRepresentanteRepository Representantes
+        IRepresentanteRepository representante;
+        public IRepresentanteRepository Representante
         {
             get
             {
-                return representantes ?? (representantes = new RepresentanteRepository(ctx));
+                return representante ?? (representante = new RepresentanteRepository(ctx));
+            }
+        }
+
+        IUsuarioRepository usuario;
+        public IUsuarioRepository Usuario
+        {
+            get
+            {
+                return usuario ?? (usuario = new UsuarioRepository(ctx));
             }
         }
 

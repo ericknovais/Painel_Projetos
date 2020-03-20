@@ -20,7 +20,7 @@ namespace Painel_Projetos.Web.Controllers
             IList<Curso> cursos = new List<Curso>();
             try
             {
-                cursos = repository.Cursos.ObterTodos();
+                cursos = repository.Curso.ObterTodos();
                 return View(cursos);
             }
             catch (Exception ex)
@@ -35,7 +35,7 @@ namespace Painel_Projetos.Web.Controllers
             Curso curso = new Curso();
             try
             {
-                curso = id.Equals(0) ? new Curso() : repository.Cursos.ObterPor(id);
+                curso = id.Equals(0) ? new Curso() : repository.Curso.ObterPor(id);
                 return View(curso);
             }
             catch (Exception ex)
@@ -51,11 +51,11 @@ namespace Painel_Projetos.Web.Controllers
             Curso curso = new Curso();
             try
             {
-                curso = id.Equals(0) ? new Curso() : repository.Cursos.ObterPor(id);
+                curso = id.Equals(0) ? new Curso() : repository.Curso.ObterPor(id);
                 curso.Descricao = entity.Descricao;
                 curso.Ativo = entity.Ativo;
                 curso.Validar();
-                repository.Cursos.Salvar(curso);
+                repository.Curso.Salvar(curso);
                 repository.SaveChanges();
                 ViewBag.Mensagem = "O curso foi salvo com sucesso!";
                 if (id.Equals(0))

@@ -20,7 +20,7 @@ namespace Painel_Projetos.Web.Controllers
             IList<Empresa> empresas = new List<Empresa>();
             try
             {
-                empresas = repository.Empresas.ObterTodos();
+                empresas = repository.Empresa.ObterTodos();
                 return View(empresas);
             }
             catch (Exception ex)
@@ -36,8 +36,8 @@ namespace Painel_Projetos.Web.Controllers
             Representante representante = new Representante();
             try
             {
-                empresa = id.Equals(0) ? new Empresa() : repository.Empresas.ObterPor(id);
-                representante = empresa.RepresentanteId.Equals(0) ? new Representante() : repository.Representantes.ObterPor(empresa.RepresentanteId);
+                empresa = id.Equals(0) ? new Empresa() : repository.Empresa.ObterPor(id);
+                representante = empresa.RepresentanteId.Equals(0) ? new Representante() : repository.Representante.ObterPor(empresa.RepresentanteId);
                 return View(empresa);
             }
             catch (Exception ex)
@@ -52,17 +52,34 @@ namespace Painel_Projetos.Web.Controllers
         {
             Empresa empresa = new Empresa();
             Representante representante = new Representante();
+            Usuario usuario = new Usuario();
             try
             {
-                empresa = id.Equals(0) ? new Empresa() : repository.Empresas.ObterPor(id);
-                representante = empresa.RepresentanteId.Equals(0) ? new Representante() : repository.Representantes.ObterPor(empresa.RepresentanteId);
+                empresa = id.Equals(0) ? new Empresa() : repository.Empresa.ObterPor(id);
+                representante = empresa.RepresentanteId.Equals(0) ? new Representante() : repository.Representante.ObterPor(empresa.RepresentanteId);
+
                 empresa.RazaoSocial = entity.RazaoSocial;
                 empresa.CNPJ = entity.CNPJ;
                 representante.Nome = entity.Representante.Nome;
                 representante.Email = entity.Representante.Email;
-                repository.Representantes.Salvar(representante);
-                repository.Empresas.Salvar(empresa);
+
+                empresa.Validar();
+                representante.Validar();
+
+                repository.Representante.Salvar(representante);
+                repository.Empresa.Salvar(empresa);
+
+                if (id.Equals(0))
+                {
+                    usuario.RepresentanteID = representante.ID;
+                    usuario.Login = Usuario.SepararEmail(representante.Email);
+                    usuario.Senha = Usuario.Encriptar("impacta2020");
+                    usuario.Perfil = Perfil.Representante;
+                    repository.Usuario.Salvar(usuario);
+                }
+
                 repository.SaveChanges();
+
                 if (id.Equals(0))
                 {
                     ModelState.Clear();
@@ -73,8 +90,8 @@ namespace Painel_Projetos.Web.Controllers
             }
             catch (Exception ex)
             {
-
-                return View();
+                ViewBag.Mensagem = ex.Message.Replace(Environment.NewLine, "<\br>");
+                return View(empresa);
             }
         }
     }

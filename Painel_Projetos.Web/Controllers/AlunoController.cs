@@ -2,6 +2,7 @@
 using Painel_Projetos.DomainModel.Class;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Core;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -20,9 +21,9 @@ namespace Painel_Projetos.Web.Controllers
             IList<Aluno> lista = new List<Aluno>();
             try
             {
-                lista = repository.Alunos.ObterTodos();
+                lista = repository.Aluno.ObterTodos();
                 ViewBag.CursoID = new SelectList(
-                    repository.Cursos.ObterTodos(),
+                    repository.Curso.ObterTodos(),
                     "Id",
                     "Descricao"
                 );
@@ -40,15 +41,16 @@ namespace Painel_Projetos.Web.Controllers
             Aluno entity = new Aluno();
             try
             {
-                entity = id.Equals(0) ? new Aluno() : repository.Alunos.ObterPor(id);
-
-                ViewBag.CursoId = new SelectList
-                    (
-                        repository.Cursos.ObterCursoAtivo(),
-                        "Id",
-                        "Descricao",
-                        entity.CursoID
-                    );
+                entity = id.Equals(0) ? new Aluno() : repository.Aluno.ObterPor(id);
+                #region ViewBag.CursoId
+                    ViewBag.CursoId = new SelectList
+                        (
+                            repository.Curso.ObterCursoAtivo(),
+                            "Id",
+                            "Descricao",
+                            entity.CursoID
+                        );
+                #endregion
 
                 return View(entity);
             }
@@ -63,25 +65,38 @@ namespace Painel_Projetos.Web.Controllers
         public ActionResult Edit(Aluno entity, int id = 0)
         {
             Aluno aluno = new Aluno();
+            Usuario usuario = new Usuario();
             try
             {
-                aluno = id.Equals(0) ? new Aluno() : repository.Alunos.ObterPor(id);
+                aluno = id.Equals(0) ? new Aluno() : repository.Aluno.ObterPor(id);
                 aluno.ID = entity.ID;
                 aluno.Nome = entity.Nome;
                 aluno.RA = entity.RA;
                 aluno.Email = entity.Email;
                 aluno.DataNascimento = entity.DataNascimento;
-                aluno.Curso = repository.Cursos.ObterPor(entity.CursoID);
+                aluno.Curso = repository.Curso.ObterPor(entity.CursoID);
                 aluno.Validar();
-                repository.Alunos.Salvar(aluno);
+                repository.Aluno.Salvar(aluno);
+
+                if (id.Equals(0))
+                {
+                    usuario.AlunoID = aluno.ID;
+                    usuario.Login = Usuario.SepararEmail(aluno.Email); 
+                    usuario.Senha = Usuario.Encriptar("impacta2020");
+                    usuario.Perfil = Perfil.Aluno;
+                    usuario.Validar();
+                    repository.Usuario.Salvar(usuario);
+                }
+                
                 repository.SaveChanges();
+
                 ViewBag.Mensagem = "Registro Salvo";
                 if (id.Equals(0))
                 {
                     ModelState.Clear();
                     ViewBag.CursoId = new SelectList
                    (
-                       repository.Cursos.ObterCursoAtivo(),
+                       repository.Curso.ObterCursoAtivo(),
                        "Id",
                        "Descricao"
                    );
@@ -89,10 +104,10 @@ namespace Painel_Projetos.Web.Controllers
                 }
                 return RedirectToAction("List");
             }
-            catch (Exception ex)
+            catch (EntityException ex)
             {
                 ViewBag.Mensagem = ex.Message.Replace(Environment.NewLine, "<br/>");
-                return View("List", repository.Alunos.ObterTodos());
+                return View("List", repository.Aluno.ObterTodos());
             }
         }
     }
