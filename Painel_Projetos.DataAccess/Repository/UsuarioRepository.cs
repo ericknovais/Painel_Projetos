@@ -28,5 +28,10 @@ namespace Painel_Projetos.DataAccess.Repository
         {
             return ctx.Usuarios.Where(x => x.RepresentanteID == idRepresentante).First();
         }
+
+        public Usuario ObterSenhaPor(string login)
+        {
+            return ctx.Usuarios.Where(x => x.Login == login).First();
+        }
     }
 }
