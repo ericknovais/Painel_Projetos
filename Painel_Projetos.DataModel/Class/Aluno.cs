@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
@@ -14,6 +15,7 @@ namespace Painel_Projetos.DomainModel.Class
         public string Nome { get; set; }
         public Curso Curso { get; set; }
         public int CursoID { get; set; }
+        [DataType(DataType.Date)]
         public DateTime DataNascimento { get; set; }
         public string Email { get; set; }
 
