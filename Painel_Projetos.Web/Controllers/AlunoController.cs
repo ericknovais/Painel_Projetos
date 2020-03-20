@@ -65,7 +65,7 @@ namespace Painel_Projetos.Web.Controllers
         public ActionResult Edit(Aluno entity, int id = 0)
         {
             Aluno aluno = new Aluno();
-            Login login = new Login();
+            Usuario usuario = new Usuario();
             try
             {
                 aluno = id.Equals(0) ? new Aluno() : repository.Aluno.ObterPor(id);
@@ -80,11 +80,12 @@ namespace Painel_Projetos.Web.Controllers
 
                 if (id.Equals(0))
                 {
-                    login.AlunoID = aluno.ID;
-                    login.Usuario = Login.SepararEmail(aluno.Email); 
-                    login.Senha = Login.Encriptar("impacta2020");
-                    login.Perfil = Perfil.Aluno;
-                    repository.Login.Salvar(login);
+                    usuario.AlunoID = aluno.ID;
+                    usuario.Login = Usuario.SepararEmail(aluno.Email); 
+                    usuario.Senha = Usuario.Encriptar("impacta2020");
+                    usuario.Perfil = Perfil.Aluno;
+                    usuario.Validar();
+                    repository.Usuario.Salvar(usuario);
                 }
                 
                 repository.SaveChanges();

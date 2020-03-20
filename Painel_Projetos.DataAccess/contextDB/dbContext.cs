@@ -27,13 +27,13 @@ namespace Painel_Projetos.DataAccess.contextDB
 
         public DbSet<Representante> Representantes { get; set; }
 
-        public DbSet<Login> Logins { get; set; }
+        public DbSet<Usuario> Usuarios { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Properties<string>().Configure(p => p.HasColumnType("VARCHAR"));
-            modelBuilder.Entity<Login>().Property(prop => prop.RepresentanteID).IsOptional();
-            //modelBuilder.Properties().Configure(p => p.IsRequired());
+            modelBuilder.Properties<string>().Configure(p => p.HasColumnType("VARCHAR(MAX)"));
+            modelBuilder.Entity<Usuario>().Property(prop => prop.RepresentanteID).IsOptional();
+            modelBuilder.Properties().Configure(p => p.IsRequired());
         }
     }
 }

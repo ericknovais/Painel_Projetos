@@ -12,7 +12,7 @@ namespace Painel_Projetos.DomainModel.Repository
         IAlunoRepository Aluno { get; }
         IEmpresaRepository Empresa { get; }
         IRepresentanteRepository Representante { get; }
-        ILoginRepository Login { get; }
+        IUsuarioRepository Usuario { get; }
         void SaveChanges();
     }
 }

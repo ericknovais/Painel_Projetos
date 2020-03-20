@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 
 namespace Painel_Projetos.DomainModel.Class
 {
-    [Table("Logins")]
-    public class Login : EntityBase
+    [Table("Usuarios")]
+    public class Usuario : EntityBase
     {
         public Aluno Aluno { get; set; }
         public int? AlunoID { get; set; }
         public Representante Representante { get; set; }
         public int? RepresentanteID { get; set; }
-        public string Usuario { get; set; }
+        public string Login { get; set; }
         public string Senha { get; set; }
         public Perfil Perfil { get; set; }
 

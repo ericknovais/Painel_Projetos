@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace Painel_Projetos.DomainModel.Repository
 {
-    public interface ILoginRepository : IRepositoryBase<Login>
+    public interface IUsuarioRepository : IRepositoryBase<Usuario>
     {
-        Login ObterAluno(int idAluno);
-        Login ObterRepresentante(int idRepresentante);
+        Usuario ObterAluno(int idAluno);
+        Usuario ObterRepresentante(int idRepresentante);
     }
 }

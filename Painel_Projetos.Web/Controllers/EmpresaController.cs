@@ -52,26 +52,32 @@ namespace Painel_Projetos.Web.Controllers
         {
             Empresa empresa = new Empresa();
             Representante representante = new Representante();
-            Login login = new Login();
+            Usuario usuario = new Usuario();
             try
             {
                 empresa = id.Equals(0) ? new Empresa() : repository.Empresa.ObterPor(id);
                 representante = empresa.RepresentanteId.Equals(0) ? new Representante() : repository.Representante.ObterPor(empresa.RepresentanteId);
+
                 empresa.RazaoSocial = entity.RazaoSocial;
                 empresa.CNPJ = entity.CNPJ;
                 representante.Nome = entity.Representante.Nome;
                 representante.Email = entity.Representante.Email;
+
+                empresa.Validar();
+                representante.Validar();
+
                 repository.Representante.Salvar(representante);
                 repository.Empresa.Salvar(empresa);
 
                 if (id.Equals(0))
                 {
-                    login.RepresentanteID = representante.ID;
-                    login.Usuario = Login.SepararEmail(representante.Email);
-                    login.Senha = Login.Encriptar("impacta2020");
-                    login.Perfil = Perfil.Representante;
-                    repository.Login.Salvar(login);
+                    usuario.RepresentanteID = representante.ID;
+                    usuario.Login = Usuario.SepararEmail(representante.Email);
+                    usuario.Senha = Usuario.Encriptar("impacta2020");
+                    usuario.Perfil = Perfil.Representante;
+                    repository.Usuario.Salvar(usuario);
                 }
+
                 repository.SaveChanges();
 
                 if (id.Equals(0))

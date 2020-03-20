@@ -58,12 +58,12 @@ namespace Painel_Projetos.DataAccess.GenericAbstract
             }
         }
 
-        ILoginRepository login;
-        public ILoginRepository Login
+        IUsuarioRepository usuario;
+        public IUsuarioRepository Usuario
         {
             get
             {
-                return login ?? (login = new LoginRepository(ctx));
+                return usuario ?? (usuario = new UsuarioRepository(ctx));
             }
         }
 

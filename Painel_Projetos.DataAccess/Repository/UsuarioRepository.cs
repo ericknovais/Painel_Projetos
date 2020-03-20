@@ -10,23 +10,23 @@ using System.Threading.Tasks;
 
 namespace Painel_Projetos.DataAccess.Repository
 {
-    class LoginRepository : AbstractRepository<Login>, ILoginRepository
+    class UsuarioRepository : AbstractRepository<Usuario>, IUsuarioRepository
     {
         dbContext ctx = new dbContext();
 
-        public LoginRepository(dbContext context) : base(context)
+        public UsuarioRepository(dbContext context) : base(context)
         {
             this.ctx = context;
         }
 
-        public Login ObterAluno(int idAluno)
+        public Usuario ObterAluno(int idAluno)
         {
-            return ctx.Logins.Where(x => x.AlunoID == idAluno).First(); ;
+            return ctx.Usuarios.Where(x => x.AlunoID == idAluno).First(); ;
         }
 
-        public Login ObterRepresentante(int idRepresentante)
+        public Usuario ObterRepresentante(int idRepresentante)
         {
-            return ctx.Logins.Where(x => x.RepresentanteID == idRepresentante).First();
+            return ctx.Usuarios.Where(x => x.RepresentanteID == idRepresentante).First();
         }
     }
 }
