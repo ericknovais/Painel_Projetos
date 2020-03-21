@@ -31,9 +31,10 @@ namespace Painel_Projetos.Web.Controllers
                 else
                 {
                     usuario = repository.Usuario.ObterSenhaPor(entity.Login);
-                    if (Usuario.Desencriptar(usuario.Senha) == entity.Senha)
+                    if (Usuario.Desencriptar(usuario.Senha) == entity.Senha.ToLower())
                     {
-                        return RedirectToAction($"Index/{usuario.Perfil}", "Home");
+                        //return RedirectToAction($"Index/?perfil={usuario.Perfil.ToString()}", "Home");
+                        return RedirectToAction("Index", "Home", new { perfil = usuario.Perfil, usuarioID = usuario.ID });
                     }
                 }
             }

@@ -21,17 +21,17 @@ namespace Painel_Projetos.DataAccess.Repository
 
         public Usuario ObterAluno(int idAluno)
         {
-            return ctx.Usuarios.Where(x => x.AlunoID == idAluno).First(); ;
+            return ctx.Usuarios.FirstOrDefault(x => x.AlunoID == idAluno); ;
         }
 
         public Usuario ObterRepresentante(int idRepresentante)
         {
-            return ctx.Usuarios.Where(x => x.RepresentanteID == idRepresentante).First();
+            return ctx.Usuarios.FirstOrDefault(x => x.RepresentanteID == idRepresentante);
         }
 
         public Usuario ObterSenhaPor(string login)
         {
-            return ctx.Usuarios.Where(x => x.Login == login).First();
+            return ctx.Usuarios.FirstOrDefault(x => x.Login == login);
         }
     }
 }
