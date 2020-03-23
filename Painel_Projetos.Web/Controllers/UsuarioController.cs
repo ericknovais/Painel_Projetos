@@ -30,12 +30,13 @@ namespace Painel_Projetos.Web.Controllers
                     usuario.Validar();
                 else
                 {
-                    usuario = repository.Usuario.ObterSenhaPor(entity.Login);
-                    if (Usuario.Desencriptar(usuario.Senha) == entity.Senha.ToLower())
-                    {
-                        //return RedirectToAction($"Index/?perfil={usuario.Perfil.ToString()}", "Home");
+                    usuario = repository.Usuario.ObterSenhaPor(entity.Login.ToLower());
+                    if (Usuario.Desencriptar(usuario.Senha) == entity.Senha)
                         return RedirectToAction("Index", "Home", new { perfil = usuario.Perfil, usuarioID = usuario.ID });
-                    }
+                    else
+                        usuario.Validar();  
+
+                    
                 }
             }
             catch (Exception ex)
