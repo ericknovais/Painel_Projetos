@@ -14,8 +14,8 @@ VALUES ('Teste', 0);
 GO
 
 INSERT INTO Alunos(RA, Nome, CursoID, DataNascimento, Email)
-VALUES(1802047, 'Erick Novais Da Hora', 2, '10/01/1994', 'erick.hora@aluno.faculdadeimpacta.com.br');
+VALUES(1802047, 'Erick Novais Da Hora', 1, '10/01/1994', 'erick.hora@aluno.faculdadeimpacta.com.br');
 GO
 
 INSERT INTO Usuarios(AlunoId, Login, Senha, Perfil)
-VALUES(1, 'erick.hora', 'TFJfQKRzHMZ1+nG4SQvi6Q==', 2); 
+VALUES(1, 'erick.hora', '9A16B485EAEAB7F4615B8A631E1F54822DACF2EE95832179E5F639F8E5F1B35', 2); 

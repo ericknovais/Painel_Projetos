@@ -15,6 +15,7 @@ namespace Painel_Projetos.Web.Controllers
         Repository repository = new Repository();
         #endregion
 
+        [Authorize]
         // GET: Aluno
         public ActionResult List()
         {
@@ -36,6 +37,7 @@ namespace Painel_Projetos.Web.Controllers
             }
         }
 
+        [Authorize]
         public ActionResult Edit(int id = 0)
         {
             Aluno entity = new Aluno();
@@ -61,6 +63,7 @@ namespace Painel_Projetos.Web.Controllers
             }
         }
 
+        [Authorize]
         [HttpPost]
         public ActionResult Edit(Aluno entity, int id = 0)
         {

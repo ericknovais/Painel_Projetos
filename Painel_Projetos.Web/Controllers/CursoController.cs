@@ -14,6 +14,7 @@ namespace Painel_Projetos.Web.Controllers
         Repository repository = new Repository();
         #endregion
 
+        [Authorize]
         // GET: Curso
         public ActionResult List()
         {
@@ -30,6 +31,7 @@ namespace Painel_Projetos.Web.Controllers
             }
         }
 
+        [Authorize]
         public ActionResult Edit(int id = 0)
         {
             Curso curso = new Curso();
@@ -45,6 +47,7 @@ namespace Painel_Projetos.Web.Controllers
             }
         }
 
+        [Authorize]
         [HttpPost]
         public ActionResult Edit(Curso entity, int id = 0)
         {

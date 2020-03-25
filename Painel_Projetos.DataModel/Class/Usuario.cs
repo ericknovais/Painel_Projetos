@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Painel_Projetos.DomainModel.Utils;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -36,13 +37,9 @@ namespace Painel_Projetos.DomainModel.Class
 
         public static string Encriptar(string senha)
         {
-            return Criptografia.Criptografando(senha);
+            return Hash.GerarHash(senha);
         }
 
-        public static string Desencriptar(string senha)
-        {
-            return Criptografia.Descriptografar(senha);
-        }
         #endregion
     }
 }

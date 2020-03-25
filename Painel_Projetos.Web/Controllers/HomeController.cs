@@ -13,24 +13,25 @@ namespace Painel_Projetos.Web.Controllers
         #region Repository
         Repository repository = new Repository();
         #endregion
-        // GET: Home
-        public ActionResult Index(Perfil perfil, int usuarioID)
-        {
-             Usuario usuario = repository.Usuario.ObterPor(usuarioID);
 
-            switch (perfil)
-            {
-                case Perfil.Cordenador:
-                    break;
-                case Perfil.Aluno:
-                    Aluno aluno = repository.Aluno.ObterPor(Convert.ToInt32(usuario.AlunoID));
-                    ViewBag.Nome = aluno.Nome;
-                    break;
-                case Perfil.Representante:
-                    break;
-                default:
-                    break;
-            }
+        [Authorize]
+        public ActionResult Index()
+        {
+            // Usuario usuario = repository.Usuario.ObterPor(usuarioID);
+
+            //switch (perfil)
+            //{
+            //    case Perfil.Cordenador:
+            //        break;
+            //    case Perfil.Aluno:
+            //        Aluno aluno = repository.Aluno.ObterPor(Convert.ToInt32(usuario.AlunoID));
+            //        ViewBag.Nome = aluno.Nome;
+            //        break;
+            //    case Perfil.Representante:
+            //        break;
+            //    default:
+            //        break;
+            //}
             return View();
         }
     }

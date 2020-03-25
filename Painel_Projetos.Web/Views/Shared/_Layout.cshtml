@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My ASP.NET Application</title>
+    <title>Painel de projetos</title>
     <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <script src="~/Scripts/modernizr-2.6.2.js"></script>
@@ -17,14 +17,29 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Home", "Index", "Home", new { perfil = Request.QueryString["perfil"], usuarioID = Request.QueryString["usuarioID"] }, new { @class = "navbar-brand" })
-                @Html.ActionLink("Curso", "List", "Curso", new { perfil = Request.QueryString["perfil"], usuarioID = Request.QueryString["usuarioID"] }, new { @class = "navbar-brand " })
-                @Html.ActionLink("Aluno", "List", "Aluno", new { perfil = Request.QueryString["perfil"], usuarioID = Request.QueryString["usuarioID"] }, new { @class = "navbar-brand" })
-                @Html.ActionLink("Empresa", "List", "Empresa", new { perfil = Request.QueryString["perfil"], usuarioID = Request.QueryString["usuarioID"] }, new { @class = "navbar-brand" })
+                @if (User.Identity.IsAuthenticated)
+                {
+                    @Html.ActionLink("Home", "Index", "Home", new { @class = "navbar-brand" })
+                    @Html.ActionLink("Curso", "List", "Curso", new { @class = "navbar-brand " })
+                    @Html.ActionLink("Aluno", "List", "Aluno", new { @class = "navbar-brand" })
+                    @Html.ActionLink("Empresa", "List", "Empresa", new { @class = "navbar-brand" })
+                }
             </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
+                <ul class="nav navbar-nav navbar-right">
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">@User.Identity.Name<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                @*<li>@Html.ActionLink("Alterar senha", "AlterarSenha", "Perfil")</li>*@
+                                <li>@Html.ActionLink("Sair", "Logout", "Usuario")</li>
+                            </ul>
+                        </li>
+
+                    }
                 </ul>
+
             </div>
         </div>
     </div>
@@ -39,5 +54,6 @@
 
     <script src="~/Scripts/jquery-1.10.2.min.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>
+    @RenderSection("Scripts", false)
 </body>
 </html>

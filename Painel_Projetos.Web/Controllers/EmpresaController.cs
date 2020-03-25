@@ -14,7 +14,7 @@ namespace Painel_Projetos.Web.Controllers
         Repository repository = new Repository();
         #endregion
 
-        // GET: Empresa
+        [Authorize]
         public ActionResult List()
         {
             IList<Empresa> empresas = new List<Empresa>();
@@ -30,6 +30,7 @@ namespace Painel_Projetos.Web.Controllers
             }
         }
 
+        [Authorize]
         public ActionResult Edit(int id = 0)
         {
             Empresa empresa = new Empresa();
@@ -47,6 +48,7 @@ namespace Painel_Projetos.Web.Controllers
             }
         }
 
+        [Authorize]
         [HttpPost]
         public ActionResult Edit(Empresa entity, int id = 0)
         {
@@ -90,7 +92,7 @@ namespace Painel_Projetos.Web.Controllers
             }
             catch (Exception ex)
             {
-                ViewBag.Mensagem = ex.Message.Replace(Environment.NewLine, "<\br>");
+                TempData["msgErro"] = ex.Message.Replace(Environment.NewLine, "<\br>");
                 return View(empresa);
             }
         }
