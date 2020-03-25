@@ -55,6 +55,7 @@ namespace Painel_Projetos.Web.Controllers
             Empresa empresa = new Empresa();
             Representante representante = new Representante();
             Usuario usuario = new Usuario();
+
             try
             {
                 empresa = id.Equals(0) ? new Empresa() : repository.Empresa.ObterPor(id);
@@ -62,6 +63,7 @@ namespace Painel_Projetos.Web.Controllers
 
                 empresa.RazaoSocial = entity.RazaoSocial;
                 empresa.CNPJ = entity.CNPJ;
+
                 representante.Nome = entity.Representante.Nome;
                 representante.Email = entity.Representante.Email;
 
@@ -73,7 +75,7 @@ namespace Painel_Projetos.Web.Controllers
 
                 if (id.Equals(0))
                 {
-                    usuario.RepresentanteID = representante.ID;
+                    usuario.Representante = representante;
                     usuario.Login = Usuario.SepararEmail(representante.Email);
                     usuario.Senha = Usuario.Encriptar("impacta2020");
                     usuario.Perfil = Perfil.Representante;

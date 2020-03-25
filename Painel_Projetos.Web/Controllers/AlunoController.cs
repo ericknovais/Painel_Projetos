@@ -83,7 +83,7 @@ namespace Painel_Projetos.Web.Controllers
 
                 if (id.Equals(0))
                 {
-                    usuario.AlunoID = aluno.ID;
+                    usuario.Aluno = aluno;
                     usuario.Login = Usuario.SepararEmail(aluno.Email); 
                     usuario.Senha = Usuario.Encriptar("impacta2020");
                     usuario.Perfil = Perfil.Aluno;

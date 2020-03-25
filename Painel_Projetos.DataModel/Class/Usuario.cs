@@ -19,7 +19,6 @@ namespace Painel_Projetos.DomainModel.Class
         public Representante Representante { get; set; }
         public int? RepresentanteID { get; set; }
         public string Login { get; set; }
-        [DataType(DataType.Password)]
         public string Senha { get; set; }
         public Perfil Perfil { get; set; }
 
