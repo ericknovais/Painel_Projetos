@@ -17,7 +17,6 @@ namespace Painel_Projetos.Web.Controllers
         Repository repository = new Repository();
         #endregion
 
-        // GET: Usuario
         public ActionResult Login(string ReturnUrl)
         {
             LoginViewModel viewModel = new LoginViewModel
