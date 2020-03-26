@@ -58,7 +58,7 @@ namespace Painel_Projetos.Web.Controllers
                      {
                         new Claim(ClaimTypes.Name, userA.Nome),
                         new Claim("Login", usuario.Login),
-                        new Claim("Perfil", usuario.Perfil.ToString()),
+                        new Claim(ClaimTypes.Role, usuario.Perfil.ToString()),
                     }, "ApplicationCookie");
                     break;
                 case Perfil.Representante:
@@ -67,7 +67,7 @@ namespace Painel_Projetos.Web.Controllers
                      {
                         new Claim(ClaimTypes.Name, userR.Nome),
                         new Claim("Login", usuario.Login),
-                        new Claim("Perfil", usuario.Perfil.ToString()),
+                        new Claim(ClaimTypes.Role, usuario.Perfil.ToString()),
                     }, "ApplicationCookie");
                     break;
                 default:
