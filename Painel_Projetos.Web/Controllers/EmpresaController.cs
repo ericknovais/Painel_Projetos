@@ -1,4 +1,5 @@
-﻿using Painel_Projetos.DataAccess.GenericAbstract;
+﻿using AutenticacaoNoAspNetMVC.Filters;
+using Painel_Projetos.DataAccess.GenericAbstract;
 using Painel_Projetos.DomainModel.Class;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,7 @@ namespace Painel_Projetos.Web.Controllers
         Repository repository = new Repository();
         #endregion
 
-        [Authorize]
+        [AutorizacaoTipo(new[] { Perfil.Cordenador })]
         public ActionResult List()
         {
             IList<Empresa> empresas = new List<Empresa>();
@@ -30,7 +31,7 @@ namespace Painel_Projetos.Web.Controllers
             }
         }
 
-        [Authorize]
+        [AutorizacaoTipo(new[] { Perfil.Cordenador })]
         public ActionResult Edit(int id = 0)
         {
             Empresa empresa = new Empresa();
@@ -48,7 +49,7 @@ namespace Painel_Projetos.Web.Controllers
             }
         }
 
-        [Authorize]
+        [AutorizacaoTipo(new[] { Perfil.Cordenador })]
         [HttpPost]
         public ActionResult Edit(Empresa entity, int id = 0)
         {

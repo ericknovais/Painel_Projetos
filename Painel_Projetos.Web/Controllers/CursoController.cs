@@ -1,4 +1,5 @@
-﻿using Painel_Projetos.DataAccess.GenericAbstract;
+﻿using AutenticacaoNoAspNetMVC.Filters;
+using Painel_Projetos.DataAccess.GenericAbstract;
 using Painel_Projetos.DomainModel.Class;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,7 @@ namespace Painel_Projetos.Web.Controllers
         Repository repository = new Repository();
         #endregion
 
-        [Authorize]
+        [AutorizacaoTipo(new[] { Perfil.Cordenador })]
         // GET: Curso
         public ActionResult List()
         {
@@ -31,7 +32,7 @@ namespace Painel_Projetos.Web.Controllers
             }
         }
 
-        [Authorize]
+        [AutorizacaoTipo(new[] { Perfil.Cordenador })]
         public ActionResult Edit(int id = 0)
         {
             Curso curso = new Curso();
@@ -47,7 +48,7 @@ namespace Painel_Projetos.Web.Controllers
             }
         }
 
-        [Authorize]
+        [AutorizacaoTipo(new[] { Perfil.Cordenador })]
         [HttpPost]
         public ActionResult Edit(Curso entity, int id = 0)
         {

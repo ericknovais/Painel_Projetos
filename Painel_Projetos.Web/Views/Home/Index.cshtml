@@ -14,3 +14,9 @@
     </div>
 }
 
+@if (TempData["ErroAutorizacao"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["ErroAutorizacao"]
+    </div>
+}

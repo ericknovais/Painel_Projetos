@@ -1,4 +1,5 @@
-﻿using Painel_Projetos.DataAccess.GenericAbstract;
+﻿using AutenticacaoNoAspNetMVC.Filters;
+using Painel_Projetos.DataAccess.GenericAbstract;
 using Painel_Projetos.DomainModel.Class;
 using System;
 using System.Collections.Generic;
@@ -15,7 +16,7 @@ namespace Painel_Projetos.Web.Controllers
         Repository repository = new Repository();
         #endregion
 
-        [Authorize]
+        [AutorizacaoTipo(new[] { Perfil.Cordenador })]
         // GET: Aluno
         public ActionResult List()
         {
@@ -37,7 +38,7 @@ namespace Painel_Projetos.Web.Controllers
             }
         }
 
-        [Authorize]
+        [AutorizacaoTipo(new[] { Perfil.Cordenador })]
         public ActionResult Edit(int id = 0)
         {
             Aluno entity = new Aluno();
@@ -45,13 +46,13 @@ namespace Painel_Projetos.Web.Controllers
             {
                 entity = id.Equals(0) ? new Aluno() : repository.Aluno.ObterPor(id);
                 #region ViewBag.CursoId
-                    ViewBag.CursoId = new SelectList
-                        (
-                            repository.Curso.ObterCursoAtivo(),
-                            "Id",
-                            "Descricao",
-                            entity.CursoID
-                        );
+                ViewBag.CursoId = new SelectList
+                    (
+                        repository.Curso.ObterCursoAtivo(),
+                        "Id",
+                        "Descricao",
+                        entity.CursoID
+                    );
                 #endregion
 
                 return View(entity);
@@ -63,7 +64,7 @@ namespace Painel_Projetos.Web.Controllers
             }
         }
 
-        [Authorize]
+        [AutorizacaoTipo(new[] { Perfil.Cordenador })]
         [HttpPost]
         public ActionResult Edit(Aluno entity, int id = 0)
         {
@@ -84,13 +85,13 @@ namespace Painel_Projetos.Web.Controllers
                 if (id.Equals(0))
                 {
                     usuario.Aluno = aluno;
-                    usuario.Login = Usuario.SepararEmail(aluno.Email); 
+                    usuario.Login = Usuario.SepararEmail(aluno.Email);
                     usuario.Senha = Usuario.Encriptar("impacta2020");
                     usuario.Perfil = Perfil.Aluno;
                     usuario.Validar();
                     repository.Usuario.Salvar(usuario);
                 }
-                
+
                 repository.SaveChanges();
 
                 ViewBag.Mensagem = "Registro Salvo";
