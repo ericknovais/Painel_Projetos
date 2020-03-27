@@ -76,8 +76,6 @@ namespace Painel_Projetos.Web.Controllers
                         new Claim(ClaimTypes.Role, usuario.Perfil.ToString()),
                     }, "ApplicationCookie");
                     break;
-                default:
-                    break;
             }
 
             Request.GetOwinContext().Authentication.SignIn(identity);
