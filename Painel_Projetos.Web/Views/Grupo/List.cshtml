@@ -4,42 +4,49 @@
     ViewBag.Title = "List";
 }
 
-<h2>List</h2>
+<h2>Grupos</h2>
 
+@if (TempData["Sucesso"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["Sucesso"]
+    </div>
+}
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @if (User.IsInRole("Aluno"))
+    {
+        @Html.ActionLink("Criar grupo", "Edit")
+    }
 </p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.AlunoID)
+
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.GrupoID)
+            Grupo
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Administrador)
+            Aluno Admistrador
         </th>
-        <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.AlunoID)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.GrupoID)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Administrador)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @if (User.IsInRole("Aluno"))
+                {
+                    @Html.ActionLink("Editar", "Edit", new { id = item.ID })
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Grupo.Nome)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Aluno.Nome)
+            </td>
+        </tr>
+    }
 
 </table>

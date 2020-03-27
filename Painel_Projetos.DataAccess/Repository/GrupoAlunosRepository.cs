@@ -12,8 +12,18 @@ namespace Painel_Projetos.DataAccess.Repository
 {
     class GrupoAlunosRepository : AbstractRepository<GruposAlunos>, IGruposAlunosRepository
     {
+        #region Context
+        dbContext ctx = new dbContext();
+        #endregion
+
         public GrupoAlunosRepository(dbContext context) : base(context)
         {
+            ctx = context;
+        }
+
+        public new IList<GruposAlunos> ObterTodos()
+        {
+            return ctx.GruposAlunos.Include("Aluno").Include("Grupo").ToList();
         }
     }
 }

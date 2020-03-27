@@ -8,8 +8,13 @@ namespace Painel_Projetos.Web.ViewModels
 {
     public class GrupoViewModel
     {
-        [Required]
-        public string Nome { get; set; }
-        public int AlunoID { get; set; }
+        public int ID { get; set; }
+
+        [Required(ErrorMessage = " Informe o nome do grupo")]
+        [MinLength(3, ErrorMessage ="No mínimo de 3 caracteres")]
+        [Display(Name = "Grupo")]
+        public string NomeGrupo { get; set; }
+        [Display(Name ="Administrador")]
+        public string NomeAluno { get; set; }
     }
 }
