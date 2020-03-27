@@ -57,6 +57,7 @@
     <Compile Include="GenericAbstract\Repository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\AlunoRepository.cs" />
+    <Compile Include="Repository\CordenadorRepository.cs" />
     <Compile Include="Repository\CursoRepository.cs" />
     <Compile Include="Repository\EmpresaRepository.cs" />
     <Compile Include="Repository\UsuarioRepository.cs" />

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using Painel_Projetos.DomainModel.Class;
+using System.Linq;
 using System.Web.Mvc;
 
 namespace AutenticacaoNoAspNetMVC.Filters

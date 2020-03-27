@@ -18,6 +18,8 @@ namespace Painel_Projetos.DomainModel.Class
         public int? AlunoID { get; set; }
         public Representante Representante { get; set; }
         public int? RepresentanteID { get; set; }
+        public Cordenador Cordenador { get; set; }
+        public int? CordenadorID { get; set; }
         public string Login { get; set; }
         public string Senha { get; set; }
         public Perfil Perfil { get; set; }
@@ -42,12 +44,3 @@ namespace Painel_Projetos.DomainModel.Class
         #endregion
     }
 }
-
-
-public enum Perfil
-{
-    Cordenador = 1,
-    Aluno = 2,
-    Representante = 3
-}
-

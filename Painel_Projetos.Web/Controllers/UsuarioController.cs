@@ -50,21 +50,28 @@ namespace Painel_Projetos.Web.Controllers
             switch (usuario.Perfil)
             {
                 case Perfil.Cordenador:
+                    var cordenador = repository.Cordenador.ObterPor(Convert.ToInt32(usuario.CordenadorID));
+                    identity = new ClaimsIdentity(new[]
+                    {
+                        new Claim(ClaimTypes.Name, cordenador.Nome),
+                        new Claim("Login", usuario.Login),
+                        new Claim(ClaimTypes.Role, usuario.Perfil.ToString()),
+                    }, "ApplicationCookie");
                     break;
                 case Perfil.Aluno:
-                    var userA = repository.Aluno.ObterPor(Convert.ToInt32(usuario.AlunoID));
+                    var aluno = repository.Aluno.ObterPor(Convert.ToInt32(usuario.AlunoID));
                     identity = new ClaimsIdentity(new[]
                      {
-                        new Claim(ClaimTypes.Name, userA.Nome),
+                        new Claim(ClaimTypes.Name, aluno.Nome),
                         new Claim("Login", usuario.Login),
                         new Claim(ClaimTypes.Role, usuario.Perfil.ToString()),
                     }, "ApplicationCookie");
                     break;
                 case Perfil.Representante:
-                    var userR = repository.Representante.ObterPor(Convert.ToInt32(usuario.RepresentanteID));
+                    var representante = repository.Representante.ObterPor(Convert.ToInt32(usuario.RepresentanteID));
                     identity = new ClaimsIdentity(new[]
                      {
-                        new Claim(ClaimTypes.Name, userR.Nome),
+                        new Claim(ClaimTypes.Name, representante.Nome),
                         new Claim("Login", usuario.Login),
                         new Claim(ClaimTypes.Role, usuario.Perfil.ToString()),
                     }, "ApplicationCookie");

@@ -67,6 +67,15 @@ namespace Painel_Projetos.DataAccess.GenericAbstract
             }
         }
 
+        ICordenadorRepository cordenador;
+        public ICordenadorRepository Cordenador
+        {
+            get
+            {
+                return cordenador ?? (cordenador = new CordenadorRepository(ctx));
+            }
+        }
+
         public void SaveChanges()
         {
             ctx.SaveChanges();

@@ -34,9 +34,10 @@ namespace Painel_Projetos.DataAccess.contextDB
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Properties<string>().Configure(p => p.HasColumnType("VARCHAR(MAX)"));
+            modelBuilder.Properties<string>().Configure(p => p.HasColumnType("VARCHAR"));
             modelBuilder.Entity<Usuario>().Property(prop => prop.RepresentanteID).IsOptional();
             modelBuilder.Entity<Usuario>().Property(prop => prop.AlunoID).IsOptional();
+            modelBuilder.Entity<Usuario>().Property(prop => prop.CordenadorID).IsOptional();
             modelBuilder.Properties().Configure(p => p.IsRequired());
         }
 
