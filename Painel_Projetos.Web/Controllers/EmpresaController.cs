@@ -1,6 +1,7 @@
 ﻿using AutenticacaoNoAspNetMVC.Filters;
 using Painel_Projetos.DataAccess.GenericAbstract;
 using Painel_Projetos.DomainModel.Class;
+using Painel_Projetos.Web.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,39 +35,43 @@ namespace Painel_Projetos.Web.Controllers
         [AutorizacaoTipo(new[] { Perfil.Cordenador })]
         public ActionResult Edit(int id = 0)
         {
-            Empresa empresa = new Empresa();
-            Representante representante = new Representante();
+            EmpresaViewModel viewModel = new EmpresaViewModel();
             try
             {
-                empresa = id.Equals(0) ? new Empresa() : repository.Empresa.ObterPor(id);
-                representante = empresa.RepresentanteId.Equals(0) ? new Representante() : repository.Representante.ObterPor(empresa.RepresentanteId);
-                return View(empresa);
+                Empresa empresa = id.Equals(0) ? new Empresa() : repository.Empresa.ObterPor(id);
+                Representante representante = empresa.RepresentanteId.Equals(0) ? new Representante() : repository.Representante.ObterPor(empresa.RepresentanteId);
+
+                viewModel.CNPJ = empresa.CNPJ;
+                viewModel.RazaoSocial = empresa.RazaoSocial;
+                viewModel.Nome = representante.Nome;
+                viewModel.Email = representante.Email;
+
+                return View(viewModel);
             }
             catch (Exception ex)
             {
                 ViewBag.Mensagem = ex.Message.Replace(Environment.NewLine, "<\br>");
-                return View(empresa);
+                return View(viewModel);
             }
         }
 
         [AutorizacaoTipo(new[] { Perfil.Cordenador })]
         [HttpPost]
-        public ActionResult Edit(Empresa entity, int id = 0)
+        public ActionResult Edit(EmpresaViewModel viewmodel, int id = 0)
         {
-            Empresa empresa = new Empresa();
-            Representante representante = new Representante();
+
             Usuario usuario = new Usuario();
 
             try
             {
-                empresa = id.Equals(0) ? new Empresa() : repository.Empresa.ObterPor(id);
-                representante = empresa.RepresentanteId.Equals(0) ? new Representante() : repository.Representante.ObterPor(empresa.RepresentanteId);
+                Empresa empresa = id.Equals(0) ? new Empresa() : repository.Empresa.ObterPor(id);
+                Representante representante = empresa.RepresentanteId.Equals(0) ? new Representante() : repository.Representante.ObterPor(empresa.RepresentanteId);
 
-                empresa.RazaoSocial = entity.RazaoSocial;
-                empresa.CNPJ = entity.CNPJ;
+                empresa.RazaoSocial = viewmodel.RazaoSocial;
+                empresa.CNPJ = viewmodel.CNPJ;
 
-                representante.Nome = entity.Representante.Nome;
-                representante.Email = entity.Representante.Email;
+                representante.Nome = viewmodel.Nome;
+                representante.Email = viewmodel.Email;
 
                 empresa.Validar();
                 representante.Validar();
@@ -85,18 +90,18 @@ namespace Painel_Projetos.Web.Controllers
 
                 repository.SaveChanges();
 
+                ViewBag.Sucesso = "Registro salvo com sucesso";
                 if (id.Equals(0))
                 {
                     ModelState.Clear();
-                    Representante rep = new Representante();
-                    return View(new Empresa(rep));
+                    return View(new EmpresaViewModel());
                 }
                 return RedirectToAction("List");
             }
             catch (Exception ex)
             {
                 TempData["msgErro"] = ex.Message.Replace(Environment.NewLine, "<\br>");
-                return View(empresa);
+                return View(new EmpresaViewModel());
             }
         }
     }

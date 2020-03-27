@@ -14,6 +14,7 @@ namespace Painel_Projetos.DomainModel.Class
         public Aluno()
         {
             GrupoAlunos = new HashSet<GruposAlunos>();
+            DataNascimento = DateTime.Now;
         }
 
         public int RA { get; set; }

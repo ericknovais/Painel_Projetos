@@ -77,7 +77,7 @@ namespace Painel_Projetos.Web.Controllers
                 aluno.Nome = entity.Nome;
                 aluno.RA = entity.RA;
                 aluno.Email = entity.Email;
-                aluno.DataNascimento = entity.DataNascimento;
+                aluno.DataNascimento = entity.DataNascimento.Date;
                 aluno.Curso = repository.Curso.ObterPor(entity.CursoID);
                 aluno.Validar();
                 repository.Aluno.Salvar(aluno);

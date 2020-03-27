@@ -1,0 +1,45 @@
+﻿@model IEnumerable<Painel_Projetos.DomainModel.Class.GruposAlunos>
+
+@{
+    ViewBag.Title = "List";
+}
+
+<h2>List</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.AlunoID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.GrupoID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Administrador)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.AlunoID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.GrupoID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Administrador)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+        </td>
+    </tr>
+}
+
+</table>
