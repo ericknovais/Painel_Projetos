@@ -4,6 +4,13 @@
 }
 
 <h2>
-    Bem-vindo @ViewBag.Nome
+    Bem-vindo @User.Identity.Name
 </h2>
+
+@if (TempData["Mensagem"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["Mensagem"]
+    </div>
+}
 

@@ -2,7 +2,6 @@
 using Painel_Projetos.DomainModel.Class;
 using Painel_Projetos.Web.ViewModels;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Web;
@@ -85,6 +84,40 @@ namespace Painel_Projetos.Web.Controllers
         {
             Request.GetOwinContext().Authentication.SignOut("ApplicationCookie");
             return RedirectToAction("Login", "Usuario");
+        }
+
+        [Authorize]
+        public ActionResult AlterarSenha()
+        {
+            return View();
+        }
+
+        [Authorize]
+        [HttpPost]
+        public ActionResult AlterarSenha(AlterarSenhaViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+
+            var identity = User.Identity as ClaimsIdentity;
+            var login = identity.Claims.FirstOrDefault(x => x.Type == "Login").Value;
+
+            var usuario = repository.Usuario.ObterSenhaPor(login);
+
+            if (Usuario.Encriptar(viewModel.SenhaAtual) != usuario.Senha)
+            {
+                ModelState.AddModelError("SenhaAtual", "Senha Incorreta");
+                return View();
+            }
+
+            usuario.Senha = Usuario.Encriptar(viewModel.NovaSenha);
+            repository.SaveChanges();
+
+            TempData["Mensagem"] = "Senha alterada com sucesso";
+
+            return RedirectToAction("Index", "Home");
         }
     }
 }
