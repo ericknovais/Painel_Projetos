@@ -1,4 +1,5 @@
 ﻿using Painel_Projetos.DataAccess.GenericAbstract;
+using Painel_Projetos.DomainModel.Class;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,16 +16,18 @@ namespace Painel_Projetos.Web.Controllers
         // GET: Grupo
         public ActionResult List()
         {
+            IList<GruposAlunos> lista = new List<GruposAlunos>();
             try
             {
-
+                lista = repository.GruposAlunos.ObterTodos();
+                return View(lista);
             }
             catch (Exception ex)
             {
 
-                throw;
+                return View(lista);
             }
-            return View();
+            
         }
 
         public ActionResult Edit(int id = 0)
