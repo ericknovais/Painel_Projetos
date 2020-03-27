@@ -11,6 +11,11 @@ namespace Painel_Projetos.DomainModel.Class
     [Table("Alunos")]
     public class Aluno : EntityBase
     {
+        public Aluno()
+        {
+            GrupoAlunos = new HashSet<GruposAlunos>();
+        }
+
         public int RA { get; set; }
         public string Nome { get; set; }
         public Curso Curso { get; set; }
@@ -18,6 +23,8 @@ namespace Painel_Projetos.DomainModel.Class
         [DataType(DataType.Date)]
         public DateTime DataNascimento { get; set; }
         public string Email { get; set; }
+
+        public ICollection<GruposAlunos> GrupoAlunos { get; set; }
 
         public override void Validar()
         {

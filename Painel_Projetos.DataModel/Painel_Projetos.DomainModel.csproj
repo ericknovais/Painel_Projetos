@@ -56,8 +56,12 @@
   <ItemGroup>
     <Compile Include="Class\Aluno.cs" />
     <Compile Include="Class\Cordenador.cs" />
+    <Compile Include="Class\Grupo.cs" />
+    <Compile Include="Class\GruposAlunos.cs" />
     <Compile Include="Class\Perfil.cs" />
     <Compile Include="Repository\ICordenadorRepository.cs" />
+    <Compile Include="Repository\IGruposAlunosRepository.cs" />
+    <Compile Include="Repository\IGrupoRepository.cs" />
     <Compile Include="Utils\Hash.cs" />
     <Compile Include="Class\Curso.cs" />
     <Compile Include="Class\Empresa.cs" />
