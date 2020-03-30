@@ -12,8 +12,15 @@ namespace Painel_Projetos.DataAccess.Repository
 {
     class AlunoRepository : AbstractRepository<Aluno>, IAlunoRepository
     {
+        dbContext ctx = new dbContext();
         public AlunoRepository(dbContext context) : base(context)
         {
+            ctx = context;
+        }
+
+        public Aluno ObterPor(string nome)
+        {
+            return ctx.Alunos.FirstOrDefault(x => x.Nome == nome);
         }
     }
 }

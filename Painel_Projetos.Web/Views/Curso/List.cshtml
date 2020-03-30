@@ -15,10 +15,10 @@
 
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Descricao)
+            Curso
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Ativo)
+            Ativo
         </th>
     </tr>
 
@@ -31,7 +31,7 @@
             @item.Descricao
         </td>
         <td>
-            @item.Ativo
+            @Html.DisplayFor(modelItem => item.Ativo)
         </td>
     </tr>
 }

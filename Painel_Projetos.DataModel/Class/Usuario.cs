@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Painel_Projetos.DomainModel.Utils;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -17,6 +18,8 @@ namespace Painel_Projetos.DomainModel.Class
         public int? AlunoID { get; set; }
         public Representante Representante { get; set; }
         public int? RepresentanteID { get; set; }
+        public Cordenador Cordenador { get; set; }
+        public int? CordenadorID { get; set; }
         public string Login { get; set; }
         public string Senha { get; set; }
         public Perfil Perfil { get; set; }
@@ -35,22 +38,9 @@ namespace Painel_Projetos.DomainModel.Class
 
         public static string Encriptar(string senha)
         {
-            return Criptografia.Criptografando(senha);
+            return Hash.GerarHash(senha);
         }
 
-        public static string Desencriptar(string senha)
-        {
-            return Criptografia.Descriptografar(senha);
-        }
         #endregion
     }
 }
-
-
-public enum Perfil
-{
-    Cordenador = 1,
-    Aluno = 2,
-    Representante = 3
-}
-

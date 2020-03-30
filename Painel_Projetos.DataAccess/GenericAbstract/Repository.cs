@@ -67,6 +67,33 @@ namespace Painel_Projetos.DataAccess.GenericAbstract
             }
         }
 
+        ICordenadorRepository cordenador;
+        public ICordenadorRepository Cordenador
+        {
+            get
+            {
+                return cordenador ?? (cordenador = new CordenadorRepository(ctx));
+            }
+        }
+
+        IGrupoRepository grupo;
+        public IGrupoRepository Grupo
+        {
+            get
+            {
+                return grupo ?? (grupo = new GrupoRepository(ctx));
+            }
+        }
+
+        IGruposAlunosRepository gruposAlunos;
+        public IGruposAlunosRepository GruposAlunos
+        {
+            get
+            {
+                return gruposAlunos ?? (gruposAlunos = new GrupoAlunosRepository(ctx));
+            }
+        }
+
         public void SaveChanges()
         {
             ctx.SaveChanges();

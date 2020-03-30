@@ -1,0 +1,52 @@
+﻿@model IEnumerable<Painel_Projetos.DomainModel.Class.GruposAlunos>
+
+@{
+    ViewBag.Title = "List";
+}
+
+<h2>Grupos</h2>
+
+@if (TempData["Sucesso"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["Sucesso"]
+    </div>
+}
+<p>
+    @if (User.IsInRole("Aluno"))
+    {
+        @Html.ActionLink("Criar grupo", "Edit")
+    }
+</p>
+<table class="table">
+    <tr>
+        <th>
+
+        </th>
+        <th>
+            Grupo
+        </th>
+        <th>
+            Aluno Admistrador
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @if (User.IsInRole("Aluno"))
+                {
+                    @Html.ActionLink("Editar", "Edit", new { id = item.ID })
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Grupo.Nome)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Aluno.Nome)
+            </td>
+        </tr>
+    }
+
+</table>

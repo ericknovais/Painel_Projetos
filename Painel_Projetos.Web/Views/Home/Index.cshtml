@@ -3,5 +3,20 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>
+    Bem-vindo @User.Identity.Name
+</h2>
 
+@if (TempData["Mensagem"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["Mensagem"]
+    </div>
+}
+
+@if (TempData["ErroAutorizacao"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["ErroAutorizacao"]
+    </div>
+}

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
@@ -19,6 +20,7 @@ namespace Painel_Projetos.DomainModel.Class
         {
             representante = new Representante();
         }
+        [Required(ErrorMessage ="Informe o CNPJ")]
         public string CNPJ { get; set; }
         public string RazaoSocial { get; set; }
         public Representante Representante { get; set; }
