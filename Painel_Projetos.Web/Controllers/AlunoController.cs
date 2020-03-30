@@ -73,7 +73,7 @@ namespace Painel_Projetos.Web.Controllers
             try
             {
                 aluno = id.Equals(0) ? new Aluno() : repository.Aluno.ObterPor(id);
-                aluno.ID = entity.ID;
+                //aluno.ID = entity.ID;
                 aluno.Nome = entity.Nome;
                 aluno.RA = entity.RA;
                 aluno.Email = entity.Email;

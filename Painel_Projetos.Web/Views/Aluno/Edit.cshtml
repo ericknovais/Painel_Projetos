@@ -37,7 +37,7 @@
             @Html.LabelFor(model => model.CursoID, "Curso", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10 ">
 
-                @Html.DropDownList("ViewBag.CursoId", ViewBag.CursoId as SelectList ,"Selecione curso", htmlAttributes:  new { @class = "form-control" } )
+                @Html.DropDownList("CursoId", "Selecione curso")
                 @Html.ValidationMessageFor(model => model.CursoID, "", new { @class = "text-danger" })
             </div>
         </div>
