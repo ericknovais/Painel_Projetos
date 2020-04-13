@@ -102,9 +102,7 @@ namespace Painel_Projetos.Web.Controllers
         public ActionResult AlterarSenha(AlterarSenhaViewModel viewModel)
         {
             if (!ModelState.IsValid)
-            {
                 return View();
-            }
 
             var identity = User.Identity as ClaimsIdentity;
             var login = identity.Claims.FirstOrDefault(x => x.Type == "Login").Value;

@@ -68,12 +68,24 @@ namespace Painel_Projetos.Web.Controllers
         [HttpPost]
         public ActionResult Edit(Aluno entity, int id = 0)
         {
+            if (entity.CursoID == 0)
+            {
+                ModelState.AddModelError("CursoID", "Selecione um curso");
+                ViewBag.CursoId = new SelectList
+                   (
+                       repository.Curso.ObterCursoAtivo(),
+                       "Id",
+                       "Descricao",
+                       entity.CursoID
+                   );
+                return View(entity);
+            }
+
             Aluno aluno = new Aluno();
             Usuario usuario = new Usuario();
             try
             {
                 aluno = id.Equals(0) ? new Aluno() : repository.Aluno.ObterPor(id);
-                //aluno.ID = entity.ID;
                 aluno.Nome = entity.Nome;
                 aluno.RA = entity.RA;
                 aluno.Email = entity.Email;
@@ -108,10 +120,28 @@ namespace Painel_Projetos.Web.Controllers
                 }
                 return RedirectToAction("List");
             }
-            catch (EntityException ex)
+            catch (Exception ex)
             {
-                ViewBag.Mensagem = ex.Message.Replace(Environment.NewLine, "<br/>");
-                return View("List", repository.Aluno.ObterTodos());
+                string[] mensagens = ex.Message.Replace("\r\n", "x").Split('x');
+
+                for (int i = 0; i < mensagens.Count() - 1; i++)
+                {
+                    if (mensagens[i].Contains(aluno.MsgRA))
+                        ModelState.AddModelError("RA", mensagens[i]);
+                    else if(mensagens[i].Contains(aluno.MsgEmail))
+                        ModelState.AddModelError("Email", mensagens[i]);
+                    else
+                        ViewBag.Mensagem = ex.Message.Replace(Environment.NewLine, "<br/>");
+                }
+
+                ViewBag.CursoId = new SelectList
+                  (
+                      repository.Curso.ObterCursoAtivo(),
+                      "Id",
+                      "Descricao",
+                      entity.CursoID
+                  );
+                return View(entity);
             }
         }
     }
