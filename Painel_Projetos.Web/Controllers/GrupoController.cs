@@ -36,6 +36,11 @@ namespace Painel_Projetos.Web.Controllers
         public ActionResult Edit(int id = 0)
         {
             GrupoViewModel viewModel = new GrupoViewModel();
+            var aluno = repository.GruposAlunos.ObterAlunoPor(User.Identity.Name);
+            if (aluno != null)
+            {
+
+            }
             try
             {
                 Grupo grupo = id.Equals(0) ? new Grupo() : repository.Grupo.ObterPor(id);
@@ -46,7 +51,6 @@ namespace Painel_Projetos.Web.Controllers
             catch (Exception ex)
             {
                 return View(viewModel);
-                throw;
             }
 
         }
@@ -58,7 +62,7 @@ namespace Painel_Projetos.Web.Controllers
             {
                 GruposAlunos gruposAlunos = id.Equals(0) ? new GruposAlunos() : repository.GruposAlunos.ObterPor(id);
                 Grupo grupo = id.Equals(0) ? new Grupo() : repository.Grupo.ObterPor(gruposAlunos.GrupoID);
-                
+
                 Aluno aluno = repository.Aluno.ObterPor(User.Identity.Name);
 
                 grupo.Nome = viewModel.NomeGrupo;

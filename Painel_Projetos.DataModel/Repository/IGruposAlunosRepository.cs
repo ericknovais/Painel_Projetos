@@ -9,5 +9,6 @@ namespace Painel_Projetos.DomainModel.Repository
 {
     public interface IGruposAlunosRepository : IRepositoryBase<GruposAlunos>
     {
+        GruposAlunos ObterAlunoPor(string nome);
     }
 }
