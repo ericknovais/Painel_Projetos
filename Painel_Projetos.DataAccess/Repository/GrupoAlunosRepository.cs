@@ -28,7 +28,7 @@ namespace Painel_Projetos.DataAccess.Repository
 
         public new IList<GruposAlunos> ObterTodos()
         {
-            return ctx.GruposAlunos.Include("Aluno").Include("Grupo").ToList();
+            return ctx.GruposAlunos.Include("Aluno").Include("Grupo").Where(x => x.Administrador == true).ToList();
         }
     }
 }

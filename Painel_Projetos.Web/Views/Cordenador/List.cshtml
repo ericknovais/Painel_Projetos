@@ -1,0 +1,46 @@
+﻿@model IEnumerable<Painel_Projetos.DomainModel.Class.Cordenador>
+
+@{
+    ViewBag.Title = "List";
+}
+
+<h2>Lista de cordenadores</h2>
+
+@if (ViewBag.Mensagem != null)
+{
+    <div class="alert alert-warning">
+        @ViewBag.Mensagem
+    </div>
+}
+<hr>
+<p>
+    @Html.ActionLink("Cadastrar de cordenador", "Edit")
+</p>
+<table class="table">
+    <tr>
+        <th>
+
+        </th>
+        <th>
+            Nome
+        </th>
+        <th>
+            E-mail
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.ActionLink("Editar", "Edit", new { id = item.ID })
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nome)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+        </tr>
+    }
+</table>

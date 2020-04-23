@@ -59,6 +59,8 @@
     <Compile Include="Class\Grupo.cs" />
     <Compile Include="Class\GruposAlunos.cs" />
     <Compile Include="Class\Perfil.cs" />
+    <Compile Include="Class\Projeto.cs" />
+    <Compile Include="Class\ProjetosGrupos.cs" />
     <Compile Include="Repository\ICordenadorRepository.cs" />
     <Compile Include="Repository\IGruposAlunosRepository.cs" />
     <Compile Include="Repository\IGrupoRepository.cs" />

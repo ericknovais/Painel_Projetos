@@ -6,10 +6,18 @@
 
 <h2>Grupos</h2>
 
+
 @if (TempData["Sucesso"] != null)
 {
     <div class="alert alert-success">
         @TempData["Sucesso"]
+    </div>
+}
+
+@if (TempData["Alerta"] != null)
+{
+    <div class="alert alert-warning">
+        @TempData["Alerta"]
     </div>
 }
 <p>

@@ -37,13 +37,15 @@ namespace Painel_Projetos.Web.Controllers
         {
             GrupoViewModel viewModel = new GrupoViewModel();
             var aluno = repository.GruposAlunos.ObterAlunoPor(User.Identity.Name);
-            if (aluno != null)
+            if (aluno != null && aluno.ID != id)
             {
-
+                TempData["Alerta"] = "Você já esta em um grupo, por isso não pode criar outro!";
+                return RedirectToAction("List");
             }
             try
             {
-                Grupo grupo = id.Equals(0) ? new Grupo() : repository.Grupo.ObterPor(id);
+                GruposAlunos gruposAlunos = id.Equals(0) ? new GruposAlunos() : repository.GruposAlunos.ObterPor(id);
+                Grupo grupo = gruposAlunos.GrupoID.Equals(0) ? new Grupo() : repository.Grupo.ObterPor(gruposAlunos.GrupoID);
                 viewModel.NomeAluno = User.Identity.Name;
                 viewModel.NomeGrupo = grupo.Nome;
                 return View(viewModel);
