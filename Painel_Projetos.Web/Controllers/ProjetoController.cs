@@ -46,6 +46,7 @@ namespace Painel_Projetos.Web.Controllers
         }
 
         [HttpPost]
+        [ValidateInput(false)]
         public ActionResult Edit(Projeto entity, int id = 0)
         {
             Representante representante = repository.Representante.ObterPorNome(User.Identity.Name);
