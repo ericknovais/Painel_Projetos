@@ -7,8 +7,7 @@ using System.Threading.Tasks;
 
 namespace Painel_Projetos.DomainModel.Repository
 {
-    public interface IRepresentanteRepository : IRepositoryBase<Representante>
+    public interface IProjetoRepository : IRepositoryBase<Projeto>
     {
-        Representante ObterPorNome(string nome);
     }
 }

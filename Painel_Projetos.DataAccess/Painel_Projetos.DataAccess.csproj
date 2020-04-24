@@ -55,6 +55,35 @@
     <Compile Include="contextDB\dbContext.cs" />
     <Compile Include="GenericAbstract\AbstractRepository.cs" />
     <Compile Include="GenericAbstract\Repository.cs" />
+    <Compile Include="Migrations\202003271246357_InitialCreate.cs" />
+    <Compile Include="Migrations\202003271246357_InitialCreate.designer.cs">
+      <DependentUpon>202003271246357_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202004240037547_Tabela_Projetos.cs" />
+    <Compile Include="Migrations\202004240037547_Tabela_Projetos.designer.cs">
+      <DependentUpon>202004240037547_Tabela_Projetos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202004240047305_AdicionadoCampo_TituloNaTabela_Projetos.cs" />
+    <Compile Include="Migrations\202004240047305_AdicionadoCampo_TituloNaTabela_Projetos.designer.cs">
+      <DependentUpon>202004240047305_AdicionadoCampo_TituloNaTabela_Projetos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202004240106307_CampoUnico_OrdemDasColunas.cs" />
+    <Compile Include="Migrations\202004240106307_CampoUnico_OrdemDasColunas.designer.cs">
+      <DependentUpon>202004240106307_CampoUnico_OrdemDasColunas.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202004240110185_Projetos_campoNull.cs" />
+    <Compile Include="Migrations\202004240110185_Projetos_campoNull.designer.cs">
+      <DependentUpon>202004240110185_Projetos_campoNull.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202004240217064_Projeto_CampoGrupoNull.cs" />
+    <Compile Include="Migrations\202004240217064_Projeto_CampoGrupoNull.designer.cs">
+      <DependentUpon>202004240217064_Projeto_CampoGrupoNull.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202004240220388_Projeto_CampoGrupoNull2.cs" />
+    <Compile Include="Migrations\202004240220388_Projeto_CampoGrupoNull2.designer.cs">
+      <DependentUpon>202004240220388_Projeto_CampoGrupoNull2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\AlunoRepository.cs" />
     <Compile Include="Repository\CordenadorRepository.cs" />
@@ -62,6 +91,8 @@
     <Compile Include="Repository\EmpresaRepository.cs" />
     <Compile Include="Repository\GrupoAlunosRepository.cs" />
     <Compile Include="Repository\GrupoRepository.cs" />
+    <Compile Include="Repository\ProjetoRepository.cs" />
+    <Compile Include="Repository\ProjetosGruposRepository.cs" />
     <Compile Include="Repository\UsuarioRepository.cs" />
     <Compile Include="Repository\RepresentanteRepository.cs" />
   </ItemGroup>
@@ -77,6 +108,29 @@
       <Project>{ce81497f-01c5-4fb9-a5b9-a8898e4d4bb3}</Project>
       <Name>Painel_Projetos.DomainModel</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202003271246357_InitialCreate.resx">
+      <DependentUpon>202003271246357_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004240037547_Tabela_Projetos.resx">
+      <DependentUpon>202004240037547_Tabela_Projetos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004240047305_AdicionadoCampo_TituloNaTabela_Projetos.resx">
+      <DependentUpon>202004240047305_AdicionadoCampo_TituloNaTabela_Projetos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004240106307_CampoUnico_OrdemDasColunas.resx">
+      <DependentUpon>202004240106307_CampoUnico_OrdemDasColunas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004240110185_Projetos_campoNull.resx">
+      <DependentUpon>202004240110185_Projetos_campoNull.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004240217064_Projeto_CampoGrupoNull.resx">
+      <DependentUpon>202004240217064_Projeto_CampoGrupoNull.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004240220388_Projeto_CampoGrupoNull2.resx">
+      <DependentUpon>202004240220388_Projeto_CampoGrupoNull2.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

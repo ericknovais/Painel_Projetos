@@ -32,9 +32,12 @@ namespace Painel_Projetos.DataAccess.contextDB
 
         public DbSet<Usuario> Usuarios { get; set; }
 
-        public DbSet<Grupo> Grupos{ get; set; }
+        public DbSet<Grupo> Grupos { get; set; }
 
         public DbSet<GruposAlunos> GruposAlunos { get; set; }
+
+        public DbSet<Projeto> Projetos { get; set; }
+        public DbSet<ProjetosGrupos> ProjetosGrupos { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -42,6 +45,7 @@ namespace Painel_Projetos.DataAccess.contextDB
             modelBuilder.Entity<Usuario>().Property(prop => prop.RepresentanteID).IsOptional();
             modelBuilder.Entity<Usuario>().Property(prop => prop.AlunoID).IsOptional();
             modelBuilder.Entity<Usuario>().Property(prop => prop.CordenadorID).IsOptional();
+            modelBuilder.Entity<ProjetosGrupos>().Property(prop => prop.GrupoID).IsOptional();
             modelBuilder.Properties().Configure(p => p.IsRequired());
         }
 

@@ -1,0 +1,50 @@
+﻿@model IEnumerable<Painel_Projetos.DomainModel.Class.ProjetosGrupos>
+
+@{
+    ViewBag.Title = "List";
+}
+
+<h2>Projetos</h2>
+
+@if (User.IsInRole("Representante"))
+{
+    <p>
+        @Html.ActionLink("Cadastar novo projeto", "Edit")
+    </p>
+}
+
+<table class="table">
+    <tr>
+        @if (User.IsInRole("Representante"))
+        {
+            <th>
+
+            </th>
+        }
+        <th>
+            Representante
+        </th>
+        <th>
+            Projeto
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            @if (User.IsInRole("Representante"))
+            {
+                <td>
+                    @Html.ActionLink("Editar", "Edit", new { id = item.ProjetoID })
+                </td>
+            }
+            <td>
+                @Html.DisplayFor(modelItem => item.Representante.Nome)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Projeto.Titulo)
+            </td>
+        </tr>
+    }
+
+</table>

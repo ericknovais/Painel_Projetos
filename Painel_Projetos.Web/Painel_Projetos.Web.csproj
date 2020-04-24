@@ -152,6 +152,7 @@
     <Compile Include="Controllers\EmpresaController.cs" />
     <Compile Include="Controllers\GrupoController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ProjetoController.cs" />
     <Compile Include="Controllers\UsuarioController.cs" />
     <Compile Include="Filters\AutorizacaoTipo.cs" />
     <Compile Include="Global.asax.cs">
@@ -189,6 +190,8 @@
     <Content Include="Views\Grupo\Edit.cshtml" />
     <Content Include="Views\Cordenador\List.cshtml" />
     <Content Include="Views\Cordenador\Edit.cshtml" />
+    <Content Include="Views\Projeto\List.cshtml" />
+    <Content Include="Views\Projeto\Edit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -196,7 +199,9 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Views\Projetos\" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Painel_Projetos.DataAccess\Painel_Projetos.DataAccess.csproj">
       <Project>{71dc8ba0-d7b3-4517-9422-9e2b35e475d0}</Project>

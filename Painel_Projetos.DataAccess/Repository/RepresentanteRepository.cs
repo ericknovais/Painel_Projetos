@@ -12,8 +12,15 @@ namespace Painel_Projetos.DataAccess.Repository
 {
     class RepresentanteRepository : AbstractRepository<Representante>, IRepresentanteRepository
     {
+        dbContext ctx = new dbContext();
         public RepresentanteRepository(dbContext context) : base(context)
         {
+            ctx = context;
+        }
+
+        public Representante ObterPorNome(string nome)
+        {
+            return ctx.Representantes.FirstOrDefault(x => x.Nome == nome);
         }
     }
 }

@@ -64,6 +64,8 @@
     <Compile Include="Repository\ICordenadorRepository.cs" />
     <Compile Include="Repository\IGruposAlunosRepository.cs" />
     <Compile Include="Repository\IGrupoRepository.cs" />
+    <Compile Include="Repository\IProjetoRepository.cs" />
+    <Compile Include="Repository\IProjetosGruposRepository.cs" />
     <Compile Include="Utils\Hash.cs" />
     <Compile Include="Class\Curso.cs" />
     <Compile Include="Class\Empresa.cs" />

@@ -94,6 +94,24 @@ namespace Painel_Projetos.DataAccess.GenericAbstract
             }
         }
 
+        IProjetoRepository projeto;
+        public IProjetoRepository Projeto
+        {
+            get
+            {
+                return projeto ?? (projeto = new ProjetoRepository(ctx));
+            }
+        }
+
+        IProjetosGruposRepository projetosGrupos;
+        public IProjetosGruposRepository ProjetosGrupos
+        {
+            get
+            {
+                return projetosGrupos ?? (projetosGrupos = new ProjetosGruposRepository(ctx));
+            }
+        }
+
         public void SaveChanges()
         {
             ctx.SaveChanges();
