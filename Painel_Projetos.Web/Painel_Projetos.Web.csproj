@@ -110,10 +110,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\PpBeta.mdf" />
-    <Content Include="App_Data\PpBeta_log.ldf">
-      <DependentUpon>PpBeta.mdf</DependentUpon>
-    </Content>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Site.css" />
@@ -193,7 +189,9 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Painel_Projetos.DataAccess\Painel_Projetos.DataAccess.csproj">
       <Project>{71dc8ba0-d7b3-4517-9422-9e2b35e475d0}</Project>

@@ -32,7 +32,7 @@ namespace Painel_Projetos.DataAccess.contextDB
 
         public DbSet<Usuario> Usuarios { get; set; }
 
-        public DbSet<Grupo> Grupos{ get; set; }
+        public DbSet<Grupo> Grupos { get; set; }
 
         public DbSet<GruposAlunos> GruposAlunos { get; set; }
 
