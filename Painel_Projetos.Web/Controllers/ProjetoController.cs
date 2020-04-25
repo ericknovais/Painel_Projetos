@@ -85,5 +85,21 @@ namespace Painel_Projetos.Web.Controllers
                 return View(entity);
             }
         }
+
+        public ActionResult Details(int id = 0)
+        {
+            Projeto projeto = new Projeto();
+            try
+            {
+                projeto = id.Equals(0) ? new Projeto() : repository.Projeto.ObterPor(id);
+                return View(projeto);
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Mensagem = ex.Message.Replace(Environment.NewLine, "</br>");
+                return View(projeto);
+            }
+        }
+
     }
 }
