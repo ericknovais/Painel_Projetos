@@ -4,39 +4,46 @@
     ViewBag.Title = "Login";
 }
 
-<h2>Login</h2>
+<h2>Arrival Solution</h2>
 
 @using (Html.BeginForm()) 
+
 {
     @Html.AntiForgeryToken()
     
-    <div class="form-horizontal">
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.UrlRetorno)
+<div style="width: 300px; height: 300px; background-color:rgba(0,0,5,0.2); position: absolute;   top: 50%; left: 50%; margin-top: -150px;  margin-left: -190px; ">
+    <hr />
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Login, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Login, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Login, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Senha, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Senha, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Senha, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Logar" class="btn btn-default" />
-            </div>
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.UrlRetorno)
+    <hr />
+    <div >
+        @Html.LabelFor(model => model.Login, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Login, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Login, "", new { @class = "text-danger" })
         </div>
     </div>
+    <hr />
+    <hr />
+    <hr />
+    <div class="">
+        @Html.LabelFor(model => model.Senha, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Senha, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Senha, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <hr />
+    <hr />
+    <hr />
+
+    <div class="">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Logar" class="btn btn-default" />
+        </div>
+    </div>
+</div>
 }
 
 @section scripts{
