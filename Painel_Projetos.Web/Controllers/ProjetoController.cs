@@ -62,8 +62,8 @@ namespace Painel_Projetos.Web.Controllers
 
                 if (id.Equals(0))
                 {
-                    prjGrupos.Representante = representante;
-                    prjGrupos.Projeto = projeto;
+                    prjGrupos.RepresentanteId = representante.ID;
+                    prjGrupos.ProjetoID = projeto.ID;
                     prjGrupos.Validar();
                     repository.ProjetosGrupos.Salvar(prjGrupos);
                 }

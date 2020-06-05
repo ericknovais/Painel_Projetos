@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity.Core;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Web;
 using System.Web.Mvc;
 
@@ -97,14 +99,46 @@ namespace Painel_Projetos.Web.Controllers
                 if (id.Equals(0))
                 {
                     usuario.Aluno = aluno;
-                    usuario.Login = Usuario.SepararEmail(aluno.Email);
+                    usuario.Login = "novais"; //Usuario.SepararEmail(aluno.Email);
                     usuario.Senha = Usuario.Encriptar("impacta2020");
                     usuario.Perfil = Perfil.Aluno;
                     usuario.Validar();
                     repository.Usuario.Salvar(usuario);
                 }
 
+                //using (MailMessage mail = new MailMessage())
+                //{
+                //    mail.From = new MailAddress("ericknovais95@gmail.com");
+                //    mail.To.Add(aluno.Email);
+                //    mail.Subject = "Senha e Login";
+                //    mail.Body = $"<p>Olá {aluno.Nome} foi realizado um cadastro na nossa plataforma </br> Login:{Usuario.SepararEmail(aluno.Email)} " +
+                //                $"</br>Senha: impacta2020</p>";
+                //    mail.IsBodyHtml = true;
+                //    //mail.Attachments.Add(new Attachment("C:\\file.zip"));
+
+                //    using (SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587))
+                //    {
+                //        smtp.Credentials = new NetworkCredential("ericknovais95@gmail.com", "colg@te03");
+                //        smtp.EnableSsl = true;
+                //        smtp.Send(mail);
+                //    }
+                //}
+
                 repository.SaveChanges();
+
+                //SmtpClient client = new SmtpClient("smtp.gmail.com", 587);
+                //client.EnableSsl = true;
+                //client.Timeout = 10000;
+                //client.DeliveryMethod = SmtpDeliveryMethod.Network;
+                //client.UseDefaultCredentials = false;
+                //client.Credentials = new NetworkCredential("erick.hora@aluno.faculdadeimpacta.com.br", "Colg@te01");
+                //MailMessage mail = new MailMessage();
+                //mail.To.Add(aluno.Email);
+                //mail.From = new MailAddress("ericknovais95@gmail.com");
+                //mail.Subject = "Login e senha";
+                //mail.Body = $"Olá {aluno.Nome} foi realizado um cadastro na nossa plataforma seu login:{Usuario.SepararEmail(aluno.Email)} " +
+                //            $"Senha: impacta2020";
+                //client.Send(mail);
 
                 ViewBag.Mensagem = "Registro Salvo";
                 if (id.Equals(0))
