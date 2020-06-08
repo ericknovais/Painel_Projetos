@@ -67,10 +67,11 @@ namespace Painel_Projetos.Web.Controllers
                 {
                     usuario.Cordenador = cordenador;
                     usuario.Login = Usuario.SepararEmail(cordenador.Email);
-                    usuario.Senha = Usuario.Encriptar("impacta2020");
+                    usuario.Senha = Usuario.Encriptar(Usuario.SenhaPadrao);
                     usuario.Perfil = Perfil.Cordenador;
                     usuario.Validar();
                     repository.Usuario.Salvar(usuario);
+                    Usuario.EnviarEmailDeLogin(cordenador.Nome, cordenador.Email);
                 }
 
                 repository.SaveChanges();

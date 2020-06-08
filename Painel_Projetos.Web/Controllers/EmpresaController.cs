@@ -83,9 +83,10 @@ namespace Painel_Projetos.Web.Controllers
                 {
                     usuario.Representante = representante;
                     usuario.Login = Usuario.SepararEmail(representante.Email);
-                    usuario.Senha = Usuario.Encriptar("impacta2020");
+                    usuario.Senha = Usuario.Encriptar(Usuario.SenhaPadrao);
                     usuario.Perfil = Perfil.Representante;
                     repository.Usuario.Salvar(usuario);
+                    Usuario.EnviarEmailDeLogin(representante.Nome, representante.Email);
                 }
 
                 repository.SaveChanges();
