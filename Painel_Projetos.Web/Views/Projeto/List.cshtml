@@ -4,53 +4,57 @@
     ViewBag.Title = "List";
 }
 
-<h2>Projetos</h2>
+<div id="layoutSidenav_content">
+    <main>
+        <h2>Projetos</h2>
 
-@if (User.IsInRole("Representante"))
-{
-    <p>
-        @Html.ActionLink("Cadastar novo projeto", "Edit")
-    </p>
-}
-
-<table class="table">
-    <tr>
         @if (User.IsInRole("Representante"))
         {
-            <th>
-
-            </th>
+            <p>
+                @Html.ActionLink("Cadastar novo projeto", "Edit")
+            </p>
         }
-        <th>
 
-        </th>
-        <th>
-            Representante
-        </th>
-        <th>
-            Projeto
-        </th>
-    </tr>
+        <table class="table">
+            <tr>
+                @if (User.IsInRole("Representante"))
+                {
+                    <th>
 
-    @foreach (var item in Model)
-    {
-        <tr>
-            @if (User.IsInRole("Representante"))
+                    </th>
+                }
+                <th>
+
+                </th>
+                <th>
+                    Representante
+                </th>
+                <th>
+                    Projeto
+                </th>
+            </tr>
+
+            @foreach (var item in Model)
             {
-                <td>
-                    @Html.ActionLink("Editar", "Edit", new { id = item.ProjetoID })
-                </td>
+                <tr>
+                    @if (User.IsInRole("Representante"))
+                    {
+                        <td>
+                            @Html.ActionLink("Editar", "Edit", new { id = item.ProjetoID })
+                        </td>
+                    }
+                    <td>
+                        @Html.ActionLink("Detalhes", "Details", new { id = item.ProjetoID })
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Representante.Nome)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Projeto.Titulo)
+                    </td>
+                </tr>
             }
-            <td>
-                @Html.ActionLink("Detalhes", "Details", new { id = item.ProjetoID })
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Representante.Nome)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Projeto.Titulo)
-            </td>
-        </tr>
-    }
 
-</table>
+        </table>
+    </main>
+</div>

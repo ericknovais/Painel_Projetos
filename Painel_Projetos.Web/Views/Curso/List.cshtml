@@ -3,36 +3,40 @@
 @{
     ViewBag.Title = "List";
 }
+<div id="layoutSidenav_content">
+    <main>
+        <h2>Lista de cursos</h2>
 
-<h2>Lista de cursos</h2>
+        <p>
+            @Html.ActionLink("Cadastrar de Curso", "Edit")
+        </p>
+        <table class="table">
+            <tr>
+                <th>
 
-<p>
-    @Html.ActionLink("Cadastrar de Curso", "Edit")
-</p>
-<table class="table">
-    <tr>
-        <th>
+                </th>
+                <th>
+                    Curso
+                </th>
+                <th>
+                    Ativo
+                </th>
+            </tr>
 
-        </th>
-        <th>
-            Curso
-        </th>
-        <th>
-            Ativo
-        </th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.ActionLink("Editar", "Edit", new { id = item.ID })
-        </td>
-        <td>
-            @item.Descricao
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Ativo)
-        </td>
-    </tr>
-}
-</table>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.ActionLink("Editar", "Edit", new { id = item.ID })
+                    </td>
+                    <td>
+                        @item.Descricao
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Ativo)
+                    </td>
+                </tr>
+            }
+        </table>
+    </main>
+</div>

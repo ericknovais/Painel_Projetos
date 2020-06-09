@@ -4,42 +4,47 @@
     ViewBag.Title = "List";
 }
 
-<h2>Lista de empresas</h2>
+<div id="layoutSidenav_content">
+    <main>
+        <h2>Lista de empresas</h2>
 
-<p>
-    @Html.ActionLink("Cadastrar Empresa", "Edit")
-</p>
-<table class="table">
-    <tr>
-        <th>
+        <p>
+            @Html.ActionLink("Cadastrar Empresa", "Edit")
+        </p>
+        <table class="table">
+            <tr>
+                <th>
 
-        </th>
-        <th>
-            Representante
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CNPJ)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.RazaoSocial)
-        </th>
-    </tr>
+                </th>
+                <th>
+                    Representante
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CNPJ)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.RazaoSocial)
+                </th>
+            </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.ActionLink("Editar", "Edit", new { id = item.ID })
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Representante.Nome)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CNPJ)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.RazaoSocial)
-        </td>
-    </tr>
-}
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.ActionLink("Editar", "Edit", new { id = item.ID })
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Representante.Nome)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CNPJ)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RazaoSocial)
+                    </td>
+                </tr>
+            }
 
-</table>
+        </table>
+    </main>
+</div>

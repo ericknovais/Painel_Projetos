@@ -3,55 +3,60 @@
 @{
     ViewBag.Title = "List";
 }
+<div id="layoutSidenav_content">
+    <main>
+        <h2>Lista de alunos</h2>
 
-<h2>Lista de alunos</h2>
+        <hr>
+        <p>
+            @Html.ActionLink("Cadastro de alunos", "Edit")
+        </p>
+        <table class="table">
+            <tr>
+                <th>
 
-<hr>
-<p>
-    @Html.ActionLink("Cadastro de alunos", "Edit")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            
-        </th>
-        <th>
-            RA
-        </th>
-        <th>
-            Aluno
-        </th>
-        <th>
-            Data de nascimento
-        </th>
-        <th>
-            E-mail
-        </th>
-        <th>
-            Curso
-        </th>
-    </tr>
+                </th>
+                <th>
+                    RA
+                </th>
+                <th>
+                    Aluno
+                </th>
+                <th>
+                    Data de nascimento
+                </th>
+                <th>
+                    E-mail
+                </th>
+                <th>
+                    Curso
+                </th>
+            </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.ActionLink("Editar", "Edit", new { id = item.ID })
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.RA)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Nome)
-        </td>
-        <td>
-            @item.DataNascimento.ToShortDateString()
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Email)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Curso.Descricao)
-        </td>
-    </tr>
-}
-</table>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.ActionLink("Editar", "Edit", new { id = item.ID })
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RA)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Nome)
+                    </td>
+                    <td>
+                        @item.DataNascimento.ToShortDateString()
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Curso.Descricao)
+                    </td>
+                </tr>
+            }
+        </table>
+    </main>
+</div>
+
