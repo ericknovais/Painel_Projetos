@@ -110,9 +110,10 @@ namespace Painel_Projetos.Web.Controllers
 
                 repository.SaveChanges();
                 
-                ViewBag.Mensagem = "Registro Salvo";
+                
                 if (id.Equals(0))
                 {
+                    TempData["Mensagem"] = "Sucesso";
                     ModelState.Clear();
                     ViewBag.CursoId = new SelectList
                    (

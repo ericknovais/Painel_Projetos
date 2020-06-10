@@ -5,58 +5,55 @@
 }
 <div id="layoutSidenav_content">
     <main>
-        <h2>Lista de alunos</h2>
+        <div class="container-fluid">
+            <div class="mt-4"></div>
 
-        <hr>
-        <p>
-            @Html.ActionLink("Cadastro de alunos", "Edit")
-        </p>
-        <table class="table">
-            <tr>
-                <th>
+            <div class="card mb-4">
+                <a href="@Url.Action("Edit","Aluno")">
+                    <div class="card-header">
+                        <i class="fas fa-plus mr-1"></i>
+                        Incluir aluno
+                    </div>
+                </a>
 
-                </th>
-                <th>
-                    RA
-                </th>
-                <th>
-                    Aluno
-                </th>
-                <th>
-                    Data de nascimento
-                </th>
-                <th>
-                    E-mail
-                </th>
-                <th>
-                    Curso
-                </th>
-            </tr>
+                <div class="card-body">
+                    <div class="table-responsive">
 
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        @Html.ActionLink("Editar", "Edit", new { id = item.ID })
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.RA)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Nome)
-                    </td>
-                    <td>
-                        @item.DataNascimento.ToShortDateString()
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Email)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Curso.Descricao)
-                    </td>
-                </tr>
-            }
-        </table>
+                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>Editar</th>
+                                    <th>RA</th>
+                                    <th>Aluno</th>
+                                    <th>Data de nascimento</th>
+                                    <th>E-mail</th>
+                                    <th>Curso</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                @foreach (var item in Model)
+                                {
+                                <tr>
+
+                                    <td>
+                                        <a class="nav-link" href="@Url.Action("Edit", "Aluno", new { id = item.ID })">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                    </td>
+                                    <td>@item.RA</td>
+                                    <td>@item.Nome</td>
+                                    <td>@item.DataNascimento.ToShortDateString()</td>
+                                    <td>@item.Email</td>
+                                    <td>@item.Curso.Descricao</td>
+                                </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
     </main>
 </div>
 
