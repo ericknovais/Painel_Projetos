@@ -61,9 +61,11 @@ namespace Painel_Projetos.Web.Controllers
                 curso.Validar();
                 repository.Curso.Salvar(curso);
                 repository.SaveChanges();
-                ViewBag.Mensagem = "O curso foi salvo com sucesso!";
+
+                
                 if (id.Equals(0))
                 {
+                    TempData["Mensagem"] = "Sucesso";
                     ModelState.Clear();
                     return View(new Curso());
                 }

@@ -3,40 +3,61 @@
 @{
     ViewBag.Title = "List";
 }
+
 <div id="layoutSidenav_content">
     <main>
-        <h2>Lista de cursos</h2>
+        <div class="container-fluid">
+            <div class="mt-4"></div>
 
-        <p>
-            @Html.ActionLink("Cadastrar de Curso", "Edit")
-        </p>
-        <table class="table">
-            <tr>
-                <th>
+            <div class="card mb-4">
+                <a href="@Url.Action("Edit","Curso")">
+                    <div class="card-header">
+                        <i class="fas fa-plus mr-1"></i>
+                        Incluir curso
+                    </div>
+                </a>
+                
+                <div class="card-body">
+                    <div class="table-responsive">
 
-                </th>
-                <th>
-                    Curso
-                </th>
-                <th>
-                    Ativo
-                </th>
-            </tr>
+                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>Editar</th>
+                                    <th>Curso</th>
+                                    <th>Ativo</th>
+                                </tr>
+                            </thead>
+                            <tbody>
 
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        @Html.ActionLink("Editar", "Edit", new { id = item.ID })
-                    </td>
-                    <td>
-                        @item.Descricao
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Ativo)
-                    </td>
-                </tr>
-            }
-        </table>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+
+                                        <td>
+                                            <a class="nav-link" href="@Url.Action("Edit", "Curso", new { id = item.ID })">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+                                        </td>
+                                        <td>
+                                            @item.Descricao
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Ativo)
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @section scripts{
+            <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/js/all.min.js" crossorigin="anonymous"></script>
+            <script src="~/Content/js/datatables-demo.js"></script>
+        }
+
     </main>
 </div>
