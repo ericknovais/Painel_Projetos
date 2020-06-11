@@ -31,7 +31,9 @@
                         <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
                             <li>@Html.ActionLink("Alterar senha", "AlterarSenha", "Usuario", new { area = "" }, new { @class = "dropdown-item" })</li>
                             <hr />
-                            <li>@Html.ActionLink("Sair", "Logout", "Usuario", new { area = "" }, new { @class = "dropdown-item" })</li>
+                            <li>
+                                @Html.ActionLink("Sair", "Logout", "Usuario", new { area = "" }, new { @class = "dropdown-item" })
+                            </li>
                         </ul>
                     </li>
                 }
@@ -93,7 +95,7 @@
         @RenderBody()
     </div>
 
-    
+
     <script src="~/Scripts/jquery-1.10.2.min.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>

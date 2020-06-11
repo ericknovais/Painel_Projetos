@@ -106,21 +106,34 @@ namespace Painel_Projetos.Web.Controllers
 
             var identity = User.Identity as ClaimsIdentity;
             var login = identity.Claims.FirstOrDefault(x => x.Type == "Login").Value;
-
+            
             var usuario = repository.Usuario.ObterSenhaPor(login);
 
             if (Usuario.Encriptar(viewModel.SenhaAtual) != usuario.Senha)
             {
-                ModelState.AddModelError("SenhaAtual", "Senha Incorreta");
+                TempData["Alerta"] = "Senha atual informada está incorreta";
+                return View();
+            }
+
+            if (Usuario.Encriptar(viewModel.NovaSenha) == usuario.Senha)
+            {
+                TempData["Alerta"] = "Nova senha não poder ser a mesma que a senha atual";
                 return View();
             }
 
             usuario.Senha = Usuario.Encriptar(viewModel.NovaSenha);
-            repository.SaveChanges();
-
-            TempData["Mensagem"] = "Senha alterada com sucesso";
-
-            return RedirectToAction("Index", "Home");
+            try
+            {
+                repository.SaveChanges();
+                TempData["SenhaAlterada"] = "Senha alterada com sucesso";
+                return RedirectToAction("Index", "Home");
+            }
+            catch (Exception ex)
+            {
+                TempData["Alerta"] = ex.Message.Replace(Environment.NewLine, "</br>");
+                return View();
+            }
+            
         }
     }
 }
