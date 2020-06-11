@@ -19,7 +19,7 @@ namespace Painel_Projetos.DomainModel.Class
         public int? AlunoID { get; set; }
         public Representante Representante { get; set; }
         public int? RepresentanteID { get; set; }
-        public Cordenador Cordenador { get; set; }
+        public Coordenador Cordenador { get; set; }
         public int? CordenadorID { get; set; }
         public string Login { get; set; }
         public string Senha { get; set; }

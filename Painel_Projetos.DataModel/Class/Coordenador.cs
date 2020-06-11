@@ -8,12 +8,13 @@ using System.Threading.Tasks;
 
 namespace Painel_Projetos.DomainModel.Class
 {
-    [Table("Cordenadores")]
-    public class Cordenador : EntityBase
+    [Table("Coordenadores")]
+    public class Coordenador : EntityBase
     {
         [Required(ErrorMessage = "Informe um nome do cordenador")]
         public string Nome { get; set; }
 
+        [Required(ErrorMessage = "Informe um e-mail do cordenador")]
         public string Email { get; set; }
 
         [NotMapped]

@@ -10,9 +10,9 @@ using System.Threading.Tasks;
 
 namespace Painel_Projetos.DataAccess.Repository
 {
-    class CordenadorRepository : AbstractRepository<Cordenador>, ICordenadorRepository
+    class CoordenadorRepository : AbstractRepository<Coordenador>, ICoordenadorRepository
     {
-        public CordenadorRepository(dbContext context) : base(context)
+        public CoordenadorRepository(dbContext context) : base(context)
         {
         }
     }

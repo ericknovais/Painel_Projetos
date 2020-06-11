@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Painel_Projetos.DomainModel.Repository
 {
-    public interface ICordenadorRepository :IRepositoryBase<Cordenador>
+    public interface ICoordenadorRepository :IRepositoryBase<Coordenador>
     {
     }
 }

@@ -9,7 +9,7 @@ using System.Web.Mvc;
 
 namespace Painel_Projetos.Web.Controllers
 {
-    public class CordenadorController : Controller
+    public class CoordenadorController : Controller
     {
         #region Repository
         Repository repository = new Repository();
@@ -19,7 +19,7 @@ namespace Painel_Projetos.Web.Controllers
         // GET: Cordenador
         public ActionResult List()
         {
-            IList<Cordenador> cordenadores = new List<Cordenador>();
+            IList<Coordenador> cordenadores = new List<Coordenador>();
             try
             {
                 cordenadores = repository.Cordenador.ObterTodos();
@@ -36,10 +36,10 @@ namespace Painel_Projetos.Web.Controllers
         [AutorizacaoTipo(new[] { Perfil.Cordenador })]
         public ActionResult Edit(int id = 0)
         {
-            Cordenador cordenador = new Cordenador();
+            Coordenador cordenador = new Coordenador();
             try
             {
-                cordenador = id.Equals(0) ? new Cordenador() : repository.Cordenador.ObterPor(id);
+                cordenador = id.Equals(0) ? new Coordenador() : repository.Cordenador.ObterPor(id);
                 return View(cordenador);
             }
             catch (Exception ex)
@@ -51,13 +51,13 @@ namespace Painel_Projetos.Web.Controllers
 
         [AutorizacaoTipo(new[] { Perfil.Cordenador })]
         [HttpPost]
-        public ActionResult Edit(Cordenador entity, int id = 0)
+        public ActionResult Edit(Coordenador entity, int id = 0)
         {
-            Cordenador cordenador = new Cordenador();
+            Coordenador cordenador = new Coordenador();
             Usuario usuario = new Usuario();
             try
             {
-                cordenador = id.Equals(0) ? new Cordenador() : repository.Cordenador.ObterPor(id);
+                cordenador = id.Equals(0) ? new Coordenador() : repository.Cordenador.ObterPor(id);
                 cordenador.Nome = entity.Nome;
                 cordenador.Email = entity.Email;
                 cordenador.Validar();
@@ -76,11 +76,13 @@ namespace Painel_Projetos.Web.Controllers
 
                 repository.SaveChanges();
 
-                ViewBag.Sucesso = "Registro salvo";
+                
                 if (id.Equals(0))
                 {
+                    TempData["Mensagem"] = "Sucesso";
+
                     ModelState.Clear();
-                    return View(new Cordenador());
+                    return View(new Coordenador());
                 }
                 return RedirectToAction("List");
             }
@@ -94,7 +96,7 @@ namespace Painel_Projetos.Web.Controllers
                     if (mensagens[i].Contains(cordenador.MsgEmail))
                         ModelState.AddModelError("Email", mensagens[i]);
                     else
-                        ViewBag.Mensagem = ex.Message.Replace(Environment.NewLine, "<br/>");
+                        TempData["Alerta"] = ex.Message.Replace(Environment.NewLine, "<br/>");
                 }
                 return View(entity);
             }

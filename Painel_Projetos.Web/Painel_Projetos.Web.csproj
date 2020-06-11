@@ -580,7 +580,7 @@
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AlunoController.cs" />
-    <Compile Include="Controllers\CordenadorController.cs" />
+    <Compile Include="Controllers\CoordenadorController.cs" />
     <Compile Include="Controllers\CursoController.cs" />
     <Compile Include="Controllers\EmpresaController.cs" />
     <Compile Include="Controllers\GrupoController.cs" />
@@ -622,8 +622,8 @@
     <Content Include="Views\Grupo\List.cshtml" />
     <Content Include="Views\Empresa\Edit.cshtml" />
     <Content Include="Views\Grupo\Edit.cshtml" />
-    <Content Include="Views\Cordenador\List.cshtml" />
-    <Content Include="Views\Cordenador\Edit.cshtml" />
+    <Content Include="Views\Coordenador\List.cshtml" />
+    <Content Include="Views\Coordenador\Edit.cshtml" />
     <Content Include="Views\Projeto\List.cshtml" />
     <Content Include="Views\Projeto\Edit.cshtml" />
     <Content Include="Views\Projeto\Details.cshtml" />

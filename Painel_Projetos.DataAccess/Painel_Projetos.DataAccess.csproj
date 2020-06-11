@@ -87,10 +87,14 @@
     <Compile Include="Migrations\202005160056532_remove_Unique.designer.cs">
       <DependentUpon>202005160056532_remove_Unique.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202006110113326_AlteracaoNomedaTabela.cs" />
+    <Compile Include="Migrations\202006110113326_AlteracaoNomedaTabela.designer.cs">
+      <DependentUpon>202006110113326_AlteracaoNomedaTabela.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\AlunoRepository.cs" />
-    <Compile Include="Repository\CordenadorRepository.cs" />
+    <Compile Include="Repository\CoordenadorRepository.cs" />
     <Compile Include="Repository\CursoRepository.cs" />
     <Compile Include="Repository\EmpresaRepository.cs" />
     <Compile Include="Repository\GrupoAlunosRepository.cs" />
@@ -137,6 +141,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202005160056532_remove_Unique.resx">
       <DependentUpon>202005160056532_remove_Unique.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202006110113326_AlteracaoNomedaTabela.resx">
+      <DependentUpon>202006110113326_AlteracaoNomedaTabela.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

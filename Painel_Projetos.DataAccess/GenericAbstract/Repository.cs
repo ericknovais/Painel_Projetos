@@ -67,12 +67,12 @@ namespace Painel_Projetos.DataAccess.GenericAbstract
             }
         }
 
-        ICordenadorRepository cordenador;
-        public ICordenadorRepository Cordenador
+        ICoordenadorRepository cordenador;
+        public ICoordenadorRepository Cordenador
         {
             get
             {
-                return cordenador ?? (cordenador = new CordenadorRepository(ctx));
+                return cordenador ?? (cordenador = new CoordenadorRepository(ctx));
             }
         }
 
