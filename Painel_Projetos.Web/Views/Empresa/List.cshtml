@@ -6,7 +6,59 @@
 
 <div id="layoutSidenav_content">
     <main>
-        <h2>Lista de empresas</h2>
+
+        <div class="container-fluid">
+            <div class="mt-4"></div>
+
+            <div class="card mb-4">
+                <a href="@Url.Action("Edit","Empresa")">
+                    <div class="card-header">
+                        <i class="fas fa-plus mr-1"></i>
+                        Incluir empresa
+                    </div>
+                </a>
+
+                <div class="card-body">
+                    <div class="table-responsive">
+
+                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>Editar</th>
+                                    <th>Representante</th>
+                                    <th>CNPJ</th>
+                                    <th>Razão Social</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                @foreach (var item in Model)
+                                {
+                                <tr>
+
+                                    <td>
+                                        <a class="nav-link" href="@Url.Action("Edit", "Empresa", new { id = item.ID })">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                    </td>
+                                    <td>@item.Representante.Nome</td>
+                                    <td>@item.CNPJ</td>
+                                    <td>@item.RazaoSocial</td>
+                                </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @section scripts{
+            <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/js/all.min.js" crossorigin="anonymous"></script>
+            <script src="~/Content/js/datatables-demo.js"></script>
+        }
+        
+        @*<h2>Lista de empresas</h2>
 
         <p>
             @Html.ActionLink("Cadastrar Empresa", "Edit")
@@ -45,6 +97,6 @@
                 </tr>
             }
 
-        </table>
+        </table>*@
     </main>
 </div>

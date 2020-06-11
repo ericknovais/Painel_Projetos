@@ -62,7 +62,7 @@ namespace Painel_Projetos.Web.Controllers
             }
             catch (Exception ex)
             {
-                ViewBag.Mensagem = ex.Message.Replace(Environment.NewLine, "</br>");
+                TempData["Alerta"] = ex.Message.Replace(Environment.NewLine, "</br>");
                 return View(entity);
             }
         }
@@ -136,7 +136,7 @@ namespace Painel_Projetos.Web.Controllers
                     else if(mensagens[i].Contains(aluno.MsgEmail))
                         ModelState.AddModelError("Email", mensagens[i]);
                     else
-                        ViewBag.Mensagem = ex.Message.Replace(Environment.NewLine, "<br/>");
+                        TempData["Alerta"] = ex.Message.Replace(Environment.NewLine, "<br/>");
                 }
 
                 ViewBag.CursoId = new SelectList

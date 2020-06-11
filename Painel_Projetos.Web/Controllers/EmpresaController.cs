@@ -35,6 +35,7 @@ namespace Painel_Projetos.Web.Controllers
         [AutorizacaoTipo(new[] { Perfil.Cordenador })]
         public ActionResult Edit(int id = 0)
         {
+            
             EmpresaViewModel viewModel = new EmpresaViewModel();
             try
             {
@@ -50,7 +51,7 @@ namespace Painel_Projetos.Web.Controllers
             }
             catch (Exception ex)
             {
-                ViewBag.Mensagem = ex.Message.Replace(Environment.NewLine, "<\br>");
+                TempData["Alerta"] = ex.Message.Replace(Environment.NewLine, "<\br>");
                 return View(viewModel);
             }
         }
@@ -59,7 +60,7 @@ namespace Painel_Projetos.Web.Controllers
         [HttpPost]
         public ActionResult Edit(EmpresaViewModel viewmodel, int id = 0)
         {
-
+            
             Usuario usuario = new Usuario();
 
             try
@@ -91,9 +92,9 @@ namespace Painel_Projetos.Web.Controllers
 
                 repository.SaveChanges();
 
-                ViewBag.Sucesso = "Registro salvo com sucesso";
                 if (id.Equals(0))
                 {
+                    TempData["Mensagem"] = "Sucesso";
                     ModelState.Clear();
                     return View(new EmpresaViewModel());
                 }
@@ -101,7 +102,7 @@ namespace Painel_Projetos.Web.Controllers
             }
             catch (Exception ex)
             {
-                TempData["msgErro"] = ex.Message.Replace(Environment.NewLine, "<\br>");
+                TempData["Alerta"] = ex.Message.Replace(Environment.NewLine, "<\br>");
                 return View(new EmpresaViewModel());
             }
         }

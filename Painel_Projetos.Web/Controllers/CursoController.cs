@@ -43,7 +43,7 @@ namespace Painel_Projetos.Web.Controllers
             }
             catch (Exception ex)
             {
-                ViewBag.Mensagem = ex.Message.Replace(Environment.NewLine, "</br>");
+                TempData["Alerta"] = ex.Message.Replace(Environment.NewLine, "</br>");
                 return View(curso);
             }
         }
@@ -73,7 +73,7 @@ namespace Painel_Projetos.Web.Controllers
             }
             catch (Exception ex)
             {
-                ViewBag.Mensagem = ex.Message.Replace(Environment.NewLine, "</br>");
+                TempData["Alerta"] = ex.Message.Replace(Environment.NewLine, "</br>");
                 return View();
             }
         }

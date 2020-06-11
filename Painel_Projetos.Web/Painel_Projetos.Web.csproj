@@ -617,7 +617,6 @@
     <Content Include="Views\Aluno\Edit.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Empresa\List.cshtml" />
-    <Content Include="Views\Empresa\Edit - old.cshtml" />
     <Content Include="Views\Usuario\Login.cshtml" />
     <Content Include="Views\Usuario\AlterarSenha.cshtml" />
     <Content Include="Views\Grupo\List.cshtml" />
