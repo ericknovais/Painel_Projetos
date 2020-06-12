@@ -12,10 +12,12 @@ namespace Painel_Projetos.DomainModel.Repository
         IAlunoRepository Aluno { get; }
         IEmpresaRepository Empresa { get; }
         IRepresentanteRepository Representante { get; }
-        ICordenadorRepository Cordenador { get; }
+        ICoordenadorRepository Cordenador { get; }
         IUsuarioRepository Usuario { get; }
         IGrupoRepository Grupo { get; }
         IGruposAlunosRepository GruposAlunos { get; }
+        IProjetoRepository Projeto { get; }
+        IProjetosGruposRepository ProjetosGrupos { get; }
         void SaveChanges();
     }
 }

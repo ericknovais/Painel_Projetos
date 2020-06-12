@@ -43,7 +43,7 @@ namespace Painel_Projetos.Web.Controllers
             }
             catch (Exception ex)
             {
-                ViewBag.Mensagem = ex.Message.Replace(Environment.NewLine, "</br>");
+                TempData["Alerta"] = ex.Message.Replace(Environment.NewLine, "</br>");
                 return View(curso);
             }
         }
@@ -61,9 +61,11 @@ namespace Painel_Projetos.Web.Controllers
                 curso.Validar();
                 repository.Curso.Salvar(curso);
                 repository.SaveChanges();
-                ViewBag.Mensagem = "O curso foi salvo com sucesso!";
+
+                
                 if (id.Equals(0))
                 {
+                    TempData["Mensagem"] = "Sucesso";
                     ModelState.Clear();
                     return View(new Curso());
                 }
@@ -71,7 +73,7 @@ namespace Painel_Projetos.Web.Controllers
             }
             catch (Exception ex)
             {
-                ViewBag.Mensagem = ex.Message.Replace(Environment.NewLine, "</br>");
+                TempData["Alerta"] = ex.Message.Replace(Environment.NewLine, "</br>");
                 return View();
             }
         }

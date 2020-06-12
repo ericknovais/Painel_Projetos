@@ -21,9 +21,14 @@ namespace Painel_Projetos.DataAccess.Repository
             ctx = context;
         }
 
+        public GruposAlunos ObterAlunoPor(string nome)
+        {
+            return ctx.GruposAlunos.Include("Aluno").FirstOrDefault(x => x.Aluno.Nome == nome);
+        }
+
         public new IList<GruposAlunos> ObterTodos()
         {
-            return ctx.GruposAlunos.Include("Aluno").Include("Grupo").ToList();
+            return ctx.GruposAlunos.Include("Aluno").Include("Grupo").Where(x => x.Administrador == true).ToList();
         }
     }
 }

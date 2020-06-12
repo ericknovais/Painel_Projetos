@@ -9,5 +9,6 @@ namespace Painel_Projetos.DomainModel.Repository
 {
     public interface IRepresentanteRepository : IRepositoryBase<Representante>
     {
+        Representante ObterPorNome(string nome);
     }
 }

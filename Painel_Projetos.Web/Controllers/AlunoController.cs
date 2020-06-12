@@ -5,6 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity.Core;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 
@@ -59,7 +62,7 @@ namespace Painel_Projetos.Web.Controllers
             }
             catch (Exception ex)
             {
-                ViewBag.Mensagem = ex.Message.Replace(Environment.NewLine, "</br>");
+                TempData["Alerta"] = ex.Message.Replace(Environment.NewLine, "</br>");
                 return View(entity);
             }
         }
@@ -68,12 +71,24 @@ namespace Painel_Projetos.Web.Controllers
         [HttpPost]
         public ActionResult Edit(Aluno entity, int id = 0)
         {
+            if (entity.CursoID == 0)
+            {
+                ModelState.AddModelError("CursoID", "Selecione um curso");
+                ViewBag.CursoId = new SelectList
+                   (
+                       repository.Curso.ObterCursoAtivo(),
+                       "Id",
+                       "Descricao",
+                       entity.CursoID
+                   );
+                return View(entity);
+            }
+
             Aluno aluno = new Aluno();
             Usuario usuario = new Usuario();
             try
             {
                 aluno = id.Equals(0) ? new Aluno() : repository.Aluno.ObterPor(id);
-                //aluno.ID = entity.ID;
                 aluno.Nome = entity.Nome;
                 aluno.RA = entity.RA;
                 aluno.Email = entity.Email;
@@ -86,17 +101,20 @@ namespace Painel_Projetos.Web.Controllers
                 {
                     usuario.Aluno = aluno;
                     usuario.Login = Usuario.SepararEmail(aluno.Email);
-                    usuario.Senha = Usuario.Encriptar("impacta2020");
+                    var senha = Usuario.geraSenha();
+                    usuario.Senha = Usuario.Encriptar(senha);
                     usuario.Perfil = Perfil.Aluno;
                     usuario.Validar();
                     repository.Usuario.Salvar(usuario);
+                    Usuario.EnviarEmailDeLogin(aluno.Nome, aluno.Email, senha);
                 }
 
                 repository.SaveChanges();
-
-                ViewBag.Mensagem = "Registro Salvo";
+                
+                
                 if (id.Equals(0))
                 {
+                    TempData["Mensagem"] = "Sucesso";
                     ModelState.Clear();
                     ViewBag.CursoId = new SelectList
                    (
@@ -108,10 +126,28 @@ namespace Painel_Projetos.Web.Controllers
                 }
                 return RedirectToAction("List");
             }
-            catch (EntityException ex)
+            catch (Exception ex)
             {
-                ViewBag.Mensagem = ex.Message.Replace(Environment.NewLine, "<br/>");
-                return View("List", repository.Aluno.ObterTodos());
+                string[] mensagens = ex.Message.Replace("\r\n", "x").Split('x');
+
+                for (int i = 0; i < mensagens.Count() - 1; i++)
+                {
+                    if (mensagens[i].Contains(aluno.MsgRA))
+                        ModelState.AddModelError("RA", mensagens[i]);
+                    else if(mensagens[i].Contains(aluno.MsgEmail))
+                        ModelState.AddModelError("Email", mensagens[i]);
+                    else
+                        TempData["Alerta"] = ex.Message.Replace(Environment.NewLine, "<br/>");
+                }
+
+                ViewBag.CursoId = new SelectList
+                  (
+                      repository.Curso.ObterCursoAtivo(),
+                      "Id",
+                      "Descricao",
+                      entity.CursoID
+                  );
+                return View(entity);
             }
         }
     }

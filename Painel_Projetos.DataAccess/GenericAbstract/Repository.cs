@@ -67,12 +67,12 @@ namespace Painel_Projetos.DataAccess.GenericAbstract
             }
         }
 
-        ICordenadorRepository cordenador;
-        public ICordenadorRepository Cordenador
+        ICoordenadorRepository cordenador;
+        public ICoordenadorRepository Cordenador
         {
             get
             {
-                return cordenador ?? (cordenador = new CordenadorRepository(ctx));
+                return cordenador ?? (cordenador = new CoordenadorRepository(ctx));
             }
         }
 
@@ -91,6 +91,24 @@ namespace Painel_Projetos.DataAccess.GenericAbstract
             get
             {
                 return gruposAlunos ?? (gruposAlunos = new GrupoAlunosRepository(ctx));
+            }
+        }
+
+        IProjetoRepository projeto;
+        public IProjetoRepository Projeto
+        {
+            get
+            {
+                return projeto ?? (projeto = new ProjetoRepository(ctx));
+            }
+        }
+
+        IProjetosGruposRepository projetosGrupos;
+        public IProjetosGruposRepository ProjetosGrupos
+        {
+            get
+            {
+                return projetosGrupos ?? (projetosGrupos = new ProjetosGruposRepository(ctx));
             }
         }
 

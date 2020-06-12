@@ -1,0 +1,38 @@
+﻿@model Painel_Projetos.DomainModel.Class.Projeto
+
+@{
+    ViewBag.Title = "Details";
+}
+<div id="layoutSidenav_content">
+    <main>
+        <div class="container-fluid">
+            <div class="mt-4"></div>
+
+            <div class="card mb-4">
+
+                <div class="card-header">
+                    <h1>@Html.DisplayFor(model => model.Titulo)</h1>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        @Html.Raw(Model.Descricao)
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        @section scripts{
+            <script src="~/Scripts/jquery.validate.min.js"></script>
+            <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+            <script src="~/Content/ckeditor/ckeditor.js"></script>
+            <script>
+                $(document).ready(function () {
+                    $("#Descricao").addClass("disable");
+                });
+            </script>
+            <script type="text/javascript">
+                CKEDITOR.replace('Descricao', { customConfig: "Content/ckeditor/config.js" });
+            </script>
+        }
+    </main>
+</div>

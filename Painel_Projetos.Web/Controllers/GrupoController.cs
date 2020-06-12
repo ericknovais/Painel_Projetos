@@ -26,7 +26,7 @@ namespace Painel_Projetos.Web.Controllers
             }
             catch (Exception ex)
             {
-
+                TempData["Alerta"] = ex.Message.Replace(Environment.NewLine, "</br>");
                 return View(lista);
             }
 
@@ -36,17 +36,24 @@ namespace Painel_Projetos.Web.Controllers
         public ActionResult Edit(int id = 0)
         {
             GrupoViewModel viewModel = new GrupoViewModel();
+            var aluno = repository.GruposAlunos.ObterAlunoPor(User.Identity.Name);
+            if (aluno != null && aluno.ID != id)
+            {
+                TempData["Alerta"] = "Você já esta em um grupo, por isso não pode criar outro!";
+                return RedirectToAction("List");
+            }
             try
             {
-                Grupo grupo = id.Equals(0) ? new Grupo() : repository.Grupo.ObterPor(id);
+                GruposAlunos gruposAlunos = id.Equals(0) ? new GruposAlunos() : repository.GruposAlunos.ObterPor(id);
+                Grupo grupo = gruposAlunos.GrupoID.Equals(0) ? new Grupo() : repository.Grupo.ObterPor(gruposAlunos.GrupoID);
                 viewModel.NomeAluno = User.Identity.Name;
                 viewModel.NomeGrupo = grupo.Nome;
                 return View(viewModel);
             }
             catch (Exception ex)
             {
+                TempData["Alerta"] = ex.Message.Replace(Environment.NewLine, "</br>");
                 return View(viewModel);
-                throw;
             }
 
         }
@@ -58,7 +65,7 @@ namespace Painel_Projetos.Web.Controllers
             {
                 GruposAlunos gruposAlunos = id.Equals(0) ? new GruposAlunos() : repository.GruposAlunos.ObterPor(id);
                 Grupo grupo = id.Equals(0) ? new Grupo() : repository.Grupo.ObterPor(gruposAlunos.GrupoID);
-                
+
                 Aluno aluno = repository.Aluno.ObterPor(User.Identity.Name);
 
                 grupo.Nome = viewModel.NomeGrupo;
@@ -80,10 +87,10 @@ namespace Painel_Projetos.Web.Controllers
 
                 return RedirectToAction("List");
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                TempData["Alerta"] = ex.Message.Replace(Environment.NewLine, "</br>");
+                return View(viewModel);
             }
         }
     }
