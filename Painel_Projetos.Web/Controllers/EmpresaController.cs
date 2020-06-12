@@ -84,10 +84,11 @@ namespace Painel_Projetos.Web.Controllers
                 {
                     usuario.Representante = representante;
                     usuario.Login = Usuario.SepararEmail(representante.Email);
-                    usuario.Senha = Usuario.Encriptar(Usuario.SenhaPadrao);
+                    var senha = Usuario.geraSenha();
+                    usuario.Senha = Usuario.Encriptar(senha);
                     usuario.Perfil = Perfil.Representante;
                     repository.Usuario.Salvar(usuario);
-                    Usuario.EnviarEmailDeLogin(representante.Nome, representante.Email);
+                    Usuario.EnviarEmailDeLogin(representante.Nome, representante.Email, senha);
                 }
 
                 repository.SaveChanges();

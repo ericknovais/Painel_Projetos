@@ -21,7 +21,7 @@ namespace Painel_Projetos.DataAccess.Repository
 
         public Usuario ObterAluno(int idAluno)
         {
-            return ctx.Usuarios.FirstOrDefault(x => x.AlunoID == idAluno); ;
+            return ctx.Usuarios.Include("Aluno").FirstOrDefault(x => x.AlunoID == idAluno); ;
         }
 
         public Usuario ObterRepresentante(int idRepresentante)
@@ -29,7 +29,7 @@ namespace Painel_Projetos.DataAccess.Repository
             return ctx.Usuarios.FirstOrDefault(x => x.RepresentanteID == idRepresentante);
         }
 
-        public Usuario ObterSenhaPor(string login)
+        public Usuario ObterPeloLogin(string login)
         {
             return ctx.Usuarios.FirstOrDefault(x => x.Login == login);
         }

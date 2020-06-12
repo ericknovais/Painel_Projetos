@@ -600,6 +600,7 @@
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\AlterarSenhaViewModel.cs" />
     <Compile Include="ViewModels\EmpresaViewModel.cs" />
+    <Compile Include="ViewModels\EsqueciSenhaViewModel.cs" />
     <Compile Include="ViewModels\GrupoViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
   </ItemGroup>
@@ -627,6 +628,7 @@
     <Content Include="Views\Projeto\List.cshtml" />
     <Content Include="Views\Projeto\Edit.cshtml" />
     <Content Include="Views\Projeto\Details.cshtml" />
+    <Content Include="Views\Usuario\EsqueciSenha.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -28,10 +28,11 @@ namespace Painel_Projetos.Web.Controllers
         [HttpPost]
         public ActionResult Login(LoginViewModel entity)
         {
+
             if (!ModelState.IsValid)
                 return View(entity);
 
-            Usuario usuario = repository.Usuario.ObterSenhaPor(entity.Login);
+            Usuario usuario = repository.Usuario.ObterPeloLogin(entity.Login);
 
             if (usuario == null)
             {
@@ -50,7 +51,7 @@ namespace Painel_Projetos.Web.Controllers
             switch (usuario.Perfil)
             {
                 case Perfil.Cordenador:
-                    var cordenador = repository.Cordenador.ObterPor(Convert.ToInt32(usuario.CordenadorID));
+                    var cordenador = repository.Cordenador.ObterPor(Convert.ToInt32(usuario.CoordenadorID));
                     identity = new ClaimsIdentity(new[]
                     {
                         new Claim(ClaimTypes.Name, cordenador.Nome),
@@ -106,8 +107,8 @@ namespace Painel_Projetos.Web.Controllers
 
             var identity = User.Identity as ClaimsIdentity;
             var login = identity.Claims.FirstOrDefault(x => x.Type == "Login").Value;
-            
-            var usuario = repository.Usuario.ObterSenhaPor(login);
+
+            var usuario = repository.Usuario.ObterPeloLogin(login);
 
             if (Usuario.Encriptar(viewModel.SenhaAtual) != usuario.Senha)
             {
@@ -133,7 +134,108 @@ namespace Painel_Projetos.Web.Controllers
                 TempData["Alerta"] = ex.Message.Replace(Environment.NewLine, "</br>");
                 return View();
             }
-            
+
+        }
+
+        public ActionResult EsqueciSenha()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult EsqueciSenha(EsqueciSenhaViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+                return View();
+
+            var usuairo = repository.Usuario.ObterPeloLogin(Usuario.SepararEmail(viewModel.Email));
+            if (usuairo.ID > 0)
+            {
+                switch (usuairo.Perfil)
+                {
+                    case Perfil.Cordenador:
+                        if (usuairo.Coordenador.Email == viewModel.Email)
+                        {
+                            string novaSenha = Usuario.geraSenha();
+                            usuairo.Senha = novaSenha;
+                            try
+                            {
+                                repository.Usuario.Salvar(usuairo);
+                                repository.SaveChanges();
+                                Usuario.EnviarEmailDeNovaSenha(usuairo.Coordenador.Nome, usuairo.Coordenador.Email, novaSenha);
+                                TempData["Sucesso"] = "Sucesso";
+                            }
+                            catch (Exception ex)
+                            {
+                                TempData["Alerta"] = ex.Message.Replace(Environment.NewLine, "</br>");
+                                return View(viewModel);
+                            }
+                        }
+                        else
+                        {
+                            TempData["Alerta"] = "E-mail informado não localizado no cadastro";
+                            return View(viewModel);
+                        }
+                        break;
+                    case Perfil.Aluno:
+                        var aluno = repository.Usuario.ObterAluno(Convert.ToInt32(usuairo.AlunoID));
+
+                        if (aluno.Aluno.Email == viewModel.Email)
+                        {
+                            string novaSenha = Usuario.geraSenha();
+                            usuairo.Senha = Usuario.Encriptar(novaSenha);
+                            try
+                            {
+                                repository.Usuario.Salvar(usuairo);
+                                repository.SaveChanges();
+                                Usuario.EnviarEmailDeNovaSenha(aluno.Aluno.Nome, aluno.Aluno.Email, novaSenha);
+                                TempData["Sucesso"] = "Sucesso";
+                            }
+                            catch (Exception ex)
+                            {
+                                TempData["Alerta"] = ex.Message.Replace(Environment.NewLine, "</br>");
+                                return View(viewModel);
+                            }
+                        }
+                        else
+                        {
+                            TempData["Alerta"] = "E-mail informado não localizado no cadastro";
+                            return View(viewModel);
+                        }
+                        break;
+                    case Perfil.Representante:
+                        if (usuairo.Representante.Email == viewModel.Email)
+                        {
+                            string novaSenha = Usuario.geraSenha();
+                            usuairo.Senha = novaSenha;
+                            try
+                            {
+                                repository.Usuario.Salvar(usuairo);
+                                repository.SaveChanges();
+                                Usuario.EnviarEmailDeNovaSenha(usuairo.Representante.Nome, usuairo.Representante.Email, novaSenha);
+                                TempData["Sucesso"] = "Sucesso";
+                            }
+                            catch (Exception ex)
+                            {
+                                TempData["Alerta"] = ex.Message.Replace(Environment.NewLine, "</br>");
+                                return View(viewModel);
+                            }
+                        }
+                        else
+                        {
+                            TempData["Alerta"] = "E-mail informado não localizado no cadastro";
+                            return View(viewModel);
+                        }
+                        break;
+                }
+            }
+            else
+            {
+                TempData["Alerta"] = "E-mail informado não localizado no cadastro";
+                return View(viewModel);
+            }
+            ModelState.Clear();
+            return View();
         }
     }
 }

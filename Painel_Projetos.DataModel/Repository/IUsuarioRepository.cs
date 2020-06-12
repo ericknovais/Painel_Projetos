@@ -11,6 +11,6 @@ namespace Painel_Projetos.DomainModel.Repository
     {
         Usuario ObterAluno(int idAluno);
         Usuario ObterRepresentante(int idRepresentante);
-        Usuario ObterSenhaPor(string login);
+        Usuario ObterPeloLogin(string login);
     }
 }

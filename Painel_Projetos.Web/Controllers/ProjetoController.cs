@@ -23,7 +23,7 @@ namespace Painel_Projetos.Web.Controllers
             {
                 var identity = User.Identity as ClaimsIdentity;
                 var login = identity.Claims.FirstOrDefault(x => x.Type == "Login").Value;
-                var usuario = repository.Usuario.ObterSenhaPor(login);
+                var usuario = repository.Usuario.ObterPeloLogin(login);
                 if (usuario.Perfil.Equals(Perfil.Representante))
                 {
                     lista = repository.ProjetosGrupos.ObterProjetoRepresentante(Convert.ToInt32(usuario.RepresentanteID));

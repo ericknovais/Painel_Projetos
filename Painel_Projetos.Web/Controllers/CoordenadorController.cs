@@ -65,13 +65,14 @@ namespace Painel_Projetos.Web.Controllers
 
                 if (id.Equals(0))
                 {
-                    usuario.Cordenador = cordenador;
+                    usuario.Coordenador = cordenador;
                     usuario.Login = Usuario.SepararEmail(cordenador.Email);
-                    usuario.Senha = Usuario.Encriptar(Usuario.SenhaPadrao);
+                    var senha = Usuario.geraSenha();
+                    usuario.Senha = Usuario.Encriptar(senha);
                     usuario.Perfil = Perfil.Cordenador;
                     usuario.Validar();
                     repository.Usuario.Salvar(usuario);
-                    Usuario.EnviarEmailDeLogin(cordenador.Nome, cordenador.Email);
+                    Usuario.EnviarEmailDeLogin(cordenador.Nome, cordenador.Email, senha);
                 }
 
                 repository.SaveChanges();

@@ -101,11 +101,12 @@ namespace Painel_Projetos.Web.Controllers
                 {
                     usuario.Aluno = aluno;
                     usuario.Login = Usuario.SepararEmail(aluno.Email);
-                    usuario.Senha = Usuario.Encriptar(Usuario.SenhaPadrao);
+                    var senha = Usuario.geraSenha();
+                    usuario.Senha = Usuario.Encriptar(senha);
                     usuario.Perfil = Perfil.Aluno;
                     usuario.Validar();
                     repository.Usuario.Salvar(usuario);
-                    Usuario.EnviarEmailDeLogin(aluno.Nome, aluno.Email);
+                    Usuario.EnviarEmailDeLogin(aluno.Nome, aluno.Email, senha);
                 }
 
                 repository.SaveChanges();
