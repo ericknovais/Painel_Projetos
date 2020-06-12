@@ -52,6 +52,7 @@ namespace Painel_Projetos.Web.Controllers
             }
             catch (Exception ex)
             {
+                TempData["Alerta"] = ex.Message.Replace(Environment.NewLine, "</br>");
                 return View(viewModel);
             }
 
@@ -86,10 +87,10 @@ namespace Painel_Projetos.Web.Controllers
 
                 return RedirectToAction("List");
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                TempData["Alerta"] = ex.Message.Replace(Environment.NewLine, "</br>");
+                return View(viewModel);
             }
         }
     }

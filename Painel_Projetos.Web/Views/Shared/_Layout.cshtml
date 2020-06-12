@@ -29,10 +29,18 @@
                             <i class="fa fa-user-circle fa-2x"></i>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-                            <li>@Html.ActionLink("Alterar senha", "AlterarSenha", "Usuario", new { area = "" }, new { @class = "dropdown-item" })</li>
-                            <hr />
                             <li>
-                                @Html.ActionLink("Sair", "Logout", "Usuario", new { area = "" }, new { @class = "dropdown-item" })
+                                <a class="dropdown-item" href="@Url.Action("AlterarSenha", "Usuario")">
+                                    <i class="fas fa-cog"></i>
+                                    Alterar senha
+                                </a>
+                            </li>
+                            <li><hr /></li>
+                            <li>
+                                <a class="dropdown-item" href="@Url.Action("Logout", "Usuario")">
+                                    <i class="fas fa-power-off"></i>
+                                    Logout
+                                </a>
                             </li>
                         </ul>
                     </li>
