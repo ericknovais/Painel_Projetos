@@ -8,7 +8,7 @@ namespace Painel_Projetos.Web.ViewModels
 {
     public class EsqueciSenhaViewModel
     {
-        [Required(ErrorMessage = "Informe sua senha atual")]
+        [Required(ErrorMessage = "Informe seu e-mail")]
         public string Email { get; set; }
     }
 }

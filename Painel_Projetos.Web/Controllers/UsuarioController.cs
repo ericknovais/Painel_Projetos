@@ -154,16 +154,17 @@ namespace Painel_Projetos.Web.Controllers
                 switch (usuairo.Perfil)
                 {
                     case Perfil.Cordenador:
-                        if (usuairo.Coordenador.Email == viewModel.Email)
+                        var coordenador = repository.Usuario.ObterCoordenador(Convert.ToInt32(usuairo.CoordenadorID));
+
+                        if (coordenador.Coordenador.Email == viewModel.Email)
                         {
                             string novaSenha = Usuario.geraSenha();
-                            usuairo.Senha = novaSenha;
+                            usuairo.Senha = Usuario.Encriptar(novaSenha);
                             try
                             {
                                 repository.Usuario.Salvar(usuairo);
                                 repository.SaveChanges();
-                                Usuario.EnviarEmailDeNovaSenha(usuairo.Coordenador.Nome, usuairo.Coordenador.Email, novaSenha);
-                                TempData["Sucesso"] = "Sucesso";
+                                Usuario.EnviarEmailDeNovaSenha(coordenador.Coordenador.Nome, coordenador.Coordenador.Email, novaSenha);
                             }
                             catch (Exception ex)
                             {
@@ -189,7 +190,6 @@ namespace Painel_Projetos.Web.Controllers
                                 repository.Usuario.Salvar(usuairo);
                                 repository.SaveChanges();
                                 Usuario.EnviarEmailDeNovaSenha(aluno.Aluno.Nome, aluno.Aluno.Email, novaSenha);
-                                TempData["Sucesso"] = "Sucesso";
                             }
                             catch (Exception ex)
                             {
@@ -204,16 +204,17 @@ namespace Painel_Projetos.Web.Controllers
                         }
                         break;
                     case Perfil.Representante:
-                        if (usuairo.Representante.Email == viewModel.Email)
+                        var representante = repository.Usuario.ObterRepresentante(Convert.ToInt32(usuairo.RepresentanteID));
+
+                        if (representante.Representante.Email == viewModel.Email)
                         {
                             string novaSenha = Usuario.geraSenha();
-                            usuairo.Senha = novaSenha;
+                            usuairo.Senha = Usuario.Encriptar(novaSenha);
                             try
                             {
                                 repository.Usuario.Salvar(usuairo);
                                 repository.SaveChanges();
-                                Usuario.EnviarEmailDeNovaSenha(usuairo.Representante.Nome, usuairo.Representante.Email, novaSenha);
-                                TempData["Sucesso"] = "Sucesso";
+                                Usuario.EnviarEmailDeNovaSenha(representante.Representante.Nome, representante.Representante.Email, novaSenha);
                             }
                             catch (Exception ex)
                             {
@@ -235,6 +236,7 @@ namespace Painel_Projetos.Web.Controllers
                 return View(viewModel);
             }
             ModelState.Clear();
+            TempData["Mensagem"] = "Sucesso";
             return View();
         }
     }

@@ -26,12 +26,17 @@ namespace Painel_Projetos.DataAccess.Repository
 
         public Usuario ObterRepresentante(int idRepresentante)
         {
-            return ctx.Usuarios.FirstOrDefault(x => x.RepresentanteID == idRepresentante);
+            return ctx.Usuarios.Include("Representante").FirstOrDefault(x => x.RepresentanteID == idRepresentante);
         }
 
         public Usuario ObterPeloLogin(string login)
         {
             return ctx.Usuarios.FirstOrDefault(x => x.Login == login);
+        }
+
+        public Usuario ObterCoordenador(int idCoordenador)
+        {
+            return ctx.Usuarios.Include("Coordenador").FirstOrDefault(x => x.CoordenadorID == idCoordenador);
         }
     }
 }
