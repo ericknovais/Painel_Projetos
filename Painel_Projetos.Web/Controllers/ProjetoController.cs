@@ -3,6 +3,7 @@ using Painel_Projetos.DomainModel.Class;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Web;
 using System.Web.Mvc;
 
@@ -20,12 +21,24 @@ namespace Painel_Projetos.Web.Controllers
             IList<ProjetosGrupos> lista = new List<ProjetosGrupos>();
             try
             {
-                lista = repository.ProjetosGrupos.ObterTodos();
+                var identity = User.Identity as ClaimsIdentity;
+                var login = identity.Claims.FirstOrDefault(x => x.Type == "Login").Value;
+                var usuario = repository.Usuario.ObterSenhaPor(login);
+                if (usuario.Perfil.Equals(Perfil.Representante))
+                {
+                    lista = repository.ProjetosGrupos.ObterProjetoRepresentante(Convert.ToInt32(usuario.RepresentanteID));
+                    if (lista.Count.Equals(0))
+                        TempData["ListaVazia"] = "Sim";
+                }
+                else
+                {
+                    lista = repository.ProjetosGrupos.ObterTodos();
+                }
                 return View(lista);
             }
             catch (Exception ex)
             {
-                ViewBag.Mensagem = ex.Message.Replace(Environment.NewLine, "</br>");
+                TempData["Alerta"] = ex.Message.Replace(Environment.NewLine, "</br>");
                 return View(lista);
             }
         }
@@ -40,7 +53,7 @@ namespace Painel_Projetos.Web.Controllers
             }
             catch (Exception ex)
             {
-                ViewBag.Mensagem = ex.Message.Replace(Environment.NewLine, "</br>");
+                TempData["Alerta"] = ex.Message.Replace(Environment.NewLine, "</br>");
                 return View(projeto);
             }
         }
@@ -69,11 +82,9 @@ namespace Painel_Projetos.Web.Controllers
                 }
 
                 repository.SaveChanges();
-
-                ViewBag.Sucesso = "Projeto cadastrado com sucesso";
-
                 if (id.Equals(0))
                 {
+                    TempData["Mensagem"] = "Sucesso";
                     ModelState.Clear();
                     return View(new Projeto());
                 }
@@ -81,7 +92,7 @@ namespace Painel_Projetos.Web.Controllers
             }
             catch (Exception ex)
             {
-                ViewBag.Mensagem = ex.Message.Replace(Environment.NewLine, "</br>");
+                TempData["Alerta"] = ex.Message.Replace(Environment.NewLine, "</br>");
                 return View(entity);
             }
         }
@@ -96,7 +107,7 @@ namespace Painel_Projetos.Web.Controllers
             }
             catch (Exception ex)
             {
-                ViewBag.Mensagem = ex.Message.Replace(Environment.NewLine, "</br>");
+                TempData["Alerta"] = ex.Message.Replace(Environment.NewLine, "</br>");
                 return View(projeto);
             }
         }

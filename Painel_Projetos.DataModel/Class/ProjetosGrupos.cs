@@ -12,11 +12,14 @@ namespace Painel_Projetos.DomainModel.Class
     {
         public Representante Representante { get; set; }
         public int RepresentanteId{ get; set; }
+
         public Projeto Projeto{ get; set; }
-        
         public int ProjetoID { get; set; }
+
         public Grupo Grupo { get; set; }
-        
         public int? GrupoID { get; set; }
+
+        public Empresa Empresa { get; set; }
+        public int? EmpresaID { get; set; }
     }
 }

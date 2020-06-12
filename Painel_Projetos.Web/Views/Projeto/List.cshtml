@@ -6,55 +6,104 @@
 
 <div id="layoutSidenav_content">
     <main>
-        <h2>Projetos</h2>
+        <div class="container-fluid">
+            <div class="mt-4"></div>
 
-        @if (User.IsInRole("Representante"))
-        {
-            <p>
-                @Html.ActionLink("Cadastar novo projeto", "Edit")
-            </p>
-        }
-
-        <table class="table">
-            <tr>
+            <div class="card mb-4">
                 @if (User.IsInRole("Representante"))
                 {
-                    <th>
-
-                    </th>
+                    <a href="@Url.Action("Edit", "Projeto")">
+                        <div class="card-header">
+                            <i class="fas fa-plus mr-1"></i>
+                            Cadastrar Projeto
+                        </div>
+                    </a>
                 }
-                <th>
+                else
+                {
+                    <div class="card-header">
+                        <i class="fas fa-scroll"></i>
+                        Projetos
+                    </div>
+                }
 
-                </th>
-                <th>
-                    Representante
-                </th>
-                <th>
-                    Projeto
-                </th>
-            </tr>
 
-            @foreach (var item in Model)
-            {
-                <tr>
-                    @if (User.IsInRole("Representante"))
-                    {
-                        <td>
-                            @Html.ActionLink("Editar", "Edit", new { id = item.ProjetoID })
-                        </td>
-                    }
-                    <td>
-                        @Html.ActionLink("Detalhes", "Details", new { id = item.ProjetoID })
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Representante.Nome)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Projeto.Titulo)
-                    </td>
-                </tr>
-            }
+                <div class="card-body">
+                    <div class="table-responsive">
+                        @if (TempData["ListaVazia"] != null)
+                        {
+                            <div class="container">
+                                <div class="row justify-content-center">
+                                    <h4>
+                                        Você não possui projetos cadastrados
+                                        <i class="fas fa-exclamation"></i>
+                                    </h4>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        @if (User.IsInRole("Representante"))
+                                        {
+                                            <th>Editar</th>
+                                        }
+                                        <th>Detalhes</th>
+                                        <th>Projeto</th>
 
-        </table>
+                                        @if (!User.IsInRole("Representante"))
+                                        {
+                                            <th>Empresa</th>
+                                            <th>Representante</th>
+                                        }
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            @if (User.IsInRole("Representante"))
+                                            {
+                                                <td>
+                                                    <a class="nav-link" href="@Url.Action("Edit", "Projeto", new { id = item.ID })">
+                                                        <i class="fas fa-edit"></i>
+                                                    </a>
+                                                </td>
+                                            }
+                                            <td>
+                                                <a class="nav-link" href="@Url.Action("Details", "Projeto", new { id = item.ID })">
+                                                    <i class="far fa-eye"></i>
+                                                </a>
+                                            </td>
+                                            <td>
+                                                @item.Projeto.Titulo
+                                            </td>
+
+                                            @if (!User.IsInRole("Representante"))
+                                            {
+                                                <td>
+                                                    @item.Empresa.RazaoSocial
+                                                </td>
+                                                <td>
+                                                    @item.Representante.Nome
+                                                </td>
+                                            }
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+        @section scripts{
+            <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/js/all.min.js" crossorigin="anonymous"></script>
+            <script src="~/Content/js/datatables-demo.js"></script>
+        }
     </main>
 </div>

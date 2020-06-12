@@ -25,9 +25,20 @@ namespace Painel_Projetos.DataAccess.Repository
             return ctx.ProjetosGrupos.FirstOrDefault(x => x.ProjetoID == id);
         }
 
+        public List<ProjetosGrupos> ObterProjetoRepresentante(int representanteID)
+        {
+            return ctx.ProjetosGrupos.Include("Representante").Include("Projeto").Where(x => x.RepresentanteId == representanteID).ToList();
+        }
+
         public new IList<ProjetosGrupos> ObterTodos()
         {
-            return ctx.ProjetosGrupos.Include("Representante").Include("Projeto").ToList();
+            return  ctx.ProjetosGrupos
+                    .Include("Representante")
+                    .Include("Projeto")
+                    .Include("Empresa")
+                    .Where(x => x.GrupoID == null)
+                    .OrderBy(i => i.Empresa.RazaoSocial)
+                    .ToList();
         }
     }
 }

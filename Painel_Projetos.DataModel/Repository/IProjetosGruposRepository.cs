@@ -10,5 +10,6 @@ namespace Painel_Projetos.DomainModel.Repository
     public interface IProjetosGruposRepository : IRepositoryBase<ProjetosGrupos>
     {
         ProjetosGrupos ObterPorIdProjeto(int id);
+        List<ProjetosGrupos> ObterProjetoRepresentante(int representanteID);
     }
 }

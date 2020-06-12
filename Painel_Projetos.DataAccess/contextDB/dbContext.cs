@@ -46,6 +46,7 @@ namespace Painel_Projetos.DataAccess.contextDB
             modelBuilder.Entity<Usuario>().Property(prop => prop.AlunoID).IsOptional();
             modelBuilder.Entity<Usuario>().Property(prop => prop.CordenadorID).IsOptional();
             modelBuilder.Entity<ProjetosGrupos>().Property(prop => prop.GrupoID).IsOptional();
+            modelBuilder.Entity<ProjetosGrupos>().Property(prop => prop.EmpresaID).IsOptional();
             modelBuilder.Properties().Configure(p => p.IsRequired());
         }
 
