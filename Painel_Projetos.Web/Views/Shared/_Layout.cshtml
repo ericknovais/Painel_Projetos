@@ -57,14 +57,16 @@
 
                         @if (User.Identity.IsAuthenticated)
                         {
-
-
-                            if (User.IsInRole("Cordenador"))
+                            if (User.IsInRole("Coordenador"))
                             {
                                 <div class="sb-sidenav-menu-heading">Coordenador</div>
                                 <a class="nav-link" href="@Url.Action("List","Curso")">
                                     <div class="sb-nav-link-icon"><i class="fa fa-list"></i></div>
                                     Cursos
+                                </a>
+                                <a class="nav-link" href="@Url.Action("List","Turma")">
+                                    <div class="sb-nav-link-icon"><i class="fa fa-list"></i></div>
+                                    Turmas
                                 </a>
                                 <a class="nav-link" href="@Url.Action("List","Aluno")">
                                     <div class="sb-nav-link-icon"><i class="fa fa-list"></i></div>
@@ -80,7 +82,16 @@
                                 </a>
                             }
 
+
                             <div class="sb-sidenav-menu-heading">Alunos</div>
+
+                            if (User.IsInRole("Aluno"))
+                            {
+                                <a class="nav-link" href="@Url.Action("List", "Aluno")">
+                                    <div class="sb-nav-link-icon"><i class="fa fa-list"></i></div>
+                                    Turma
+                                </a>
+                            }
                             <a class="nav-link" href="@Url.Action("List","Grupo")">
                                 <div class="sb-nav-link-icon"><i class="fa fa-list"></i></div>
                                 Grupos

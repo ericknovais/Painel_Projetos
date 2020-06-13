@@ -16,7 +16,7 @@ namespace Painel_Projetos.Web.Controllers
         Repository repository = new Repository();
         #endregion
 
-        [AutorizacaoTipo(new[] { Perfil.Cordenador })]
+        [AutorizacaoTipo(new[] { Perfil.Coordenador })]
         public ActionResult List()
         {
             IList<Empresa> empresas = new List<Empresa>();
@@ -32,7 +32,7 @@ namespace Painel_Projetos.Web.Controllers
             }
         }
 
-        [AutorizacaoTipo(new[] { Perfil.Cordenador })]
+        [AutorizacaoTipo(new[] { Perfil.Coordenador })]
         public ActionResult Edit(int id = 0)
         {
             
@@ -56,7 +56,7 @@ namespace Painel_Projetos.Web.Controllers
             }
         }
 
-        [AutorizacaoTipo(new[] { Perfil.Cordenador })]
+        [AutorizacaoTipo(new[] { Perfil.Coordenador })]
         [HttpPost]
         public ActionResult Edit(EmpresaViewModel viewmodel, int id = 0)
         {

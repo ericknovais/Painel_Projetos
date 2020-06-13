@@ -18,9 +18,21 @@ namespace Painel_Projetos.DataAccess.Repository
             ctx = context;
         }
 
+        public IList<Aluno> ObterAlunosTurma(int curso, int turma)
+        {
+            return ctx.Alunos.Include("Curso").Include("Turma").Where(x =>x.CursoID == curso && x.TurmaId == turma).OrderBy(x => x.Nome).ToList();
+        }
+
+     
+
         public Aluno ObterPor(string nome)
         {
             return ctx.Alunos.FirstOrDefault(x => x.Nome == nome);
+        }
+
+        public new IList<Aluno> ObterTodos()
+        {
+            return ctx.Alunos.Include("Curso").Include("Turma").OrderBy(x => x.Nome).ToList();
         }
     }
 }

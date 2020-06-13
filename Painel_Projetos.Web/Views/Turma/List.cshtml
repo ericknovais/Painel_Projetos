@@ -1,0 +1,140 @@
+﻿@model IEnumerable<Painel_Projetos.DomainModel.Class.Turma>
+
+@{
+    ViewBag.Title = "List";
+}
+<div id="layoutSidenav_content">
+    <main>
+        <div class="container-fluid">
+            <div class="mt-4"></div>
+
+            <div class="card mb-4">
+                <a href="@Url.Action("Edit","Turma")">
+                    <div class="card-header">
+                        <i class="fas fa-plus mr-1"></i>
+                        Incluir Turma
+                    </div>
+                </a>
+                @if (TempData["ListaVazia"] != null)
+                {
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <h4>
+                                @TempData["ListaVazia"]
+                                <i class="fas fa-exclamation"></i>
+                            </h4>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="card-body">
+                        <div class="table-responsive">
+
+                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th>Editar</th>
+                                        <th>Curso</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+
+                                            <td>
+                                                <a class="nav-link" href="@Url.Action("Edit", "Turma", new { id = item.ID })">
+                                                    <i class="fas fa-edit"></i>
+                                                </a>
+                                            </td>
+                                            <td>
+                                                @item.Descricao
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                }
+
+                <!-- Botão oculto que abre o modal de Alerta -->
+                <button id="btnModalErro" type="button" style="display: none;" data-toggle="modal" data-target="#modalErro"></button>
+
+                @if (TempData["Alerta"] != null)
+                {
+                    <!-- Modal -->
+                    <div id="modalErro" class="modal fade" role="dialog">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+
+                                <!-- Cabeçalho do modal -->
+                                <div class="modal-header">
+                                    <h4 class="modal-title">
+                                        ATENÇÃO
+                                        <i class="fas fa-exclamation-triangle"></i>
+                                    </h4>
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                </div>
+                                <!-- Corpo do modal -->
+                                <div class="modal-body">
+                                    <p>@TempData["Alerta"]</p>
+                                </div>
+
+                                <!-- Rodapé do modal-->
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Fechar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+
+        @section scripts{
+            <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/js/all.min.js" crossorigin="anonymous"></script>
+            <script src="~/Content/js/datatables-demo.js"></script>
+
+            <script>
+                $(document).ready(function () {
+                    $("#btnModalSucesso").click()
+                    $("#btnModalErro").click()
+                });
+            </script>
+}
+
+</main>
+</div>
+
+
+@*<h2>List</h2>
+
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Descricao)
+            </th>
+            <th></th>
+        </tr>
+
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Descricao)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
+                @Html.ActionLink("Details", "Details", new { id=item.ID }) |
+                @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+            </td>
+        </tr>
+    }
+
+    </table>*@

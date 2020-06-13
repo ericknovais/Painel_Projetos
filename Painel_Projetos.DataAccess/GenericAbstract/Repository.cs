@@ -112,6 +112,15 @@ namespace Painel_Projetos.DataAccess.GenericAbstract
             }
         }
 
+        ITurmarepository turma;
+        public ITurmarepository Turma
+        {
+            get
+            {
+                return turma ?? (turma = new TurmaRepository(ctx));
+            }
+        }
+
         public void SaveChanges()
         {
             ctx.SaveChanges();

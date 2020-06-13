@@ -15,7 +15,6 @@ namespace Painel_Projetos.DomainModel.Class
         public Aluno()
         {
             GrupoAlunos = new HashSet<GruposAlunos>();
-            DataNascimento = DateTime.Now;
         }
 
         [Required(ErrorMessage = "Informe o número do Ra ")]
@@ -25,12 +24,22 @@ namespace Painel_Projetos.DomainModel.Class
         public Curso Curso { get; set; }
         [Required(ErrorMessage = "Selecione um curso")]
         public int CursoID { get; set; }
+
+        //[DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         [DataType(DataType.Date)]
         [Required(ErrorMessage = "Informe a data de nascimento")]
         public DateTime DataNascimento { get; set; }
         [Required(ErrorMessage = "Informe um E-mail")]
         public string Email { get; set; }
         public ICollection<GruposAlunos> GrupoAlunos { get; set; }
+
+        public Turma Turma { get; set; }
+        [Required(ErrorMessage = "Selecione um turma")]
+        public int TurmaId { get; set; }
+
+        [Required(ErrorMessage = "Selecione um periodo")]
+        public Periodo Periodo { get; set; }
 
         [NotMapped]
         public string MsgEmail { get; } = "E-mail invalido";

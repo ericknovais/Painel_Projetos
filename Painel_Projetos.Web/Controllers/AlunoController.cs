@@ -7,6 +7,7 @@ using System.Data.Entity.Core;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
+using System.Security.Claims;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
@@ -19,36 +20,62 @@ namespace Painel_Projetos.Web.Controllers
         Repository repository = new Repository();
         #endregion
 
-        [AutorizacaoTipo(new[] { Perfil.Cordenador })]
+        [AutorizacaoTipo(new[] { Perfil.Coordenador, Perfil.Aluno })]
         // GET: Aluno
         public ActionResult List()
+        {
+            #region ViewBag.Curso
+            ViewBag.CursoId = new SelectList
+                (
+                    repository.Curso.ObterCursoAtivo(),
+                    "Id",
+                    "Descricao"
+                );
+            #endregion
+
+            #region ViewBag.Turma
+            ViewBag.TurmaId = new SelectList
+                (
+                    repository.Turma.ObterTodos(),
+                    "Id",
+                    "Descricao"
+
+                );
+            #endregion
+
+            var identity = User.Identity as ClaimsIdentity;
+            var login = identity.Claims.FirstOrDefault(x => x.Type == "Login").Value;
+            var usuario = repository.Usuario.ObterPeloLogin(login);
+            var aluno = repository.Usuario.ObterAluno(Convert.ToInt32(usuario.AlunoID));
+            IList<Aluno> lista = new List<Aluno>();
+            if (usuario.Perfil == Perfil.Aluno)
+            {
+                try
+                {
+                    lista = repository.Aluno.ObterAlunosTurma(aluno.Aluno.CursoID, aluno.Aluno.TurmaId);
+                    TempData["Turma"] = $" <b>Curso</b>: {aluno.Aluno.Curso.Descricao} <b>Turma</b>: {aluno.Aluno.Turma.Descricao}";
+                    if (lista.Count.Equals(0))
+                        TempData["ListaVazia"] = "Não foi encontrado alunos";
+                }
+                catch (Exception ex)
+                {
+                    TempData["Alerta"] = ex.Message.Replace(Environment.NewLine, "</br>");
+                }
+            }
+            else
+            {
+                TempData["ListaVazia"] = "Não foi encontrado alunos";
+            }
+            return View(lista);
+        }
+
+        [HttpPost]
+        public ActionResult List(Aluno entity)
         {
             IList<Aluno> lista = new List<Aluno>();
             try
             {
-                lista = repository.Aluno.ObterTodos();
-                ViewBag.CursoID = new SelectList(
-                    repository.Curso.ObterTodos(),
-                    "Id",
-                    "Descricao"
-                );
-                return View(lista);
-            }
-            catch (Exception ex)
-            {
-                ViewBag.Mensagem = ex.Message.Replace(Environment.NewLine, "</br>");
-                return View(lista);
-            }
-        }
-
-        [AutorizacaoTipo(new[] { Perfil.Cordenador })]
-        public ActionResult Edit(int id = 0)
-        {
-            Aluno entity = new Aluno();
-            try
-            {
-                entity = id.Equals(0) ? new Aluno() : repository.Aluno.ObterPor(id);
-                #region ViewBag.CursoId
+                #region ViewBag.Curso
                 ViewBag.CursoId = new SelectList
                     (
                         repository.Curso.ObterCursoAtivo(),
@@ -56,6 +83,66 @@ namespace Painel_Projetos.Web.Controllers
                         "Descricao",
                         entity.CursoID
                     );
+                #endregion
+
+                #region ViewBag.Turma
+                ViewBag.TurmaId = new SelectList
+                    (
+                        repository.Turma.ObterTodos(),
+                        "Id",
+                        "Descricao",
+                        entity.TurmaId
+                    );
+                #endregion
+
+                lista = repository.Aluno.ObterAlunosTurma(entity.CursoID, entity.TurmaId);
+                if (lista.Count.Equals(0))
+                    TempData["ListaVazia"] = "Não foi encontrado alunos";
+            }
+            catch (Exception ex)
+            {
+
+                TempData["Alerta"] = ex.Message.Replace(Environment.NewLine, "</br>");
+            }
+            return View(lista);
+        }
+
+        [AutorizacaoTipo(new[] { Perfil.Coordenador })]
+        public ActionResult Edit(int id = 0)
+        {
+            Aluno entity = new Aluno();
+            try
+            {
+                entity = id.Equals(0) ? new Aluno() : repository.Aluno.ObterPor(id);
+                //entity.DataNascimento = entity.DataNascimento.Equals(DateTime.MinValue) ? DateTime.Now : entity.DataNascimento.Date;
+                #region ViewBag.Curso
+                ViewBag.CursoId = new SelectList
+                    (
+                        repository.Curso.ObterCursoAtivo(),
+                        "Id",
+                        "Descricao",
+                        entity.CursoID
+                    );
+                #endregion
+
+                #region ViewBag.Turma
+                ViewBag.TurmaId = new SelectList
+                    (
+                        repository.Turma.ObterTodos(),
+                        "Id",
+                        "Descricao",
+                        entity.TurmaId
+                    );
+                #endregion
+
+                #region ViewBag.Periodo
+                ViewBag.Periodo = from Periodo pn in Enum.GetValues(typeof(Periodo))
+                                  select new SelectListItem
+                                  {
+                                      Value = ((int)pn).ToString(),
+                                      Text = Enum.GetName(typeof(Periodo), pn),
+                                      Selected = Convert.ToBoolean(entity.Periodo)
+                                  };
                 #endregion
 
                 return View(entity);
@@ -67,13 +154,20 @@ namespace Painel_Projetos.Web.Controllers
             }
         }
 
-        [AutorizacaoTipo(new[] { Perfil.Cordenador })]
+        [AutorizacaoTipo(new[] { Perfil.Coordenador })]
         [HttpPost]
         public ActionResult Edit(Aluno entity, int id = 0)
         {
-            if (entity.CursoID == 0)
+            if (entity.CursoID == 0 || entity.TurmaId == 0 || entity.Periodo == 0)
             {
-                ModelState.AddModelError("CursoID", "Selecione um curso");
+                if (entity.CursoID == 0)
+                    ModelState.AddModelError("CursoID", "Selecione um curso");
+                if (entity.TurmaId == 0)
+                    ModelState.AddModelError("TurmaID", "Selecione uma turma");
+                if (entity.Periodo == 0)
+                    ModelState.AddModelError("PeriodoID", "Selecione um periodo");
+
+                #region Curso
                 ViewBag.CursoId = new SelectList
                    (
                        repository.Curso.ObterCursoAtivo(),
@@ -81,6 +175,28 @@ namespace Painel_Projetos.Web.Controllers
                        "Descricao",
                        entity.CursoID
                    );
+                #endregion
+
+                #region Turma
+                ViewBag.TurmaId = new SelectList
+                   (
+                       repository.Turma.ObterTodos(),
+                       "Id",
+                       "Descricao",
+                       entity.TurmaId
+                   );
+                #endregion
+
+                #region Periodo
+                ViewBag.Periodo = from Periodo pn in Enum.GetValues(typeof(Periodo))
+                                  select new SelectListItem
+                                  {
+                                      Value = ((int)pn).ToString(),
+                                      Text = Enum.GetName(typeof(Periodo), pn),
+                                      Selected = Convert.ToBoolean(entity.Periodo)
+                                  };
+                #endregion
+
                 return View(entity);
             }
 
@@ -94,34 +210,58 @@ namespace Painel_Projetos.Web.Controllers
                 aluno.Email = entity.Email;
                 aluno.DataNascimento = entity.DataNascimento.Date;
                 aluno.Curso = repository.Curso.ObterPor(entity.CursoID);
+                aluno.Turma = repository.Turma.ObterPor(entity.TurmaId);
+                aluno.Periodo = entity.Periodo;
                 aluno.Validar();
                 repository.Aluno.Salvar(aluno);
+                var senha = "";
 
                 if (id.Equals(0))
                 {
                     usuario.Aluno = aluno;
                     usuario.Login = Usuario.SepararEmail(aluno.Email);
-                    var senha = Usuario.geraSenha();
+                    senha = Usuario.geraSenha();
                     usuario.Senha = Usuario.Encriptar(senha);
                     usuario.Perfil = Perfil.Aluno;
                     usuario.Validar();
                     repository.Usuario.Salvar(usuario);
-                    Usuario.EnviarEmailDeLogin(aluno.Nome, aluno.Email, senha);
                 }
 
                 repository.SaveChanges();
-                
-                
+
                 if (id.Equals(0))
                 {
+                    Usuario.EnviarEmailDeLogin(aluno.Nome, aluno.Email, senha);
                     TempData["Mensagem"] = "Sucesso";
                     ModelState.Clear();
+
+                    #region ViewBag.Curso
                     ViewBag.CursoId = new SelectList
-                   (
-                       repository.Curso.ObterCursoAtivo(),
-                       "Id",
-                       "Descricao"
-                   );
+                        (
+                            repository.Curso.ObterCursoAtivo(),
+                            "Id",
+                            "Descricao"
+                        );
+                    #endregion
+
+                    #region ViewBag.Turma
+                    ViewBag.TurmaId = new SelectList
+                        (
+                            repository.Turma.ObterTodos(),
+                            "Id",
+                            "Descricao"
+                        );
+                    #endregion
+
+                    #region ViewBag.Periodo
+                    ViewBag.Periodo = from Periodo pn in Enum.GetValues(typeof(Periodo))
+                                      select new SelectListItem
+                                      {
+                                          Value = ((int)pn).ToString(),
+                                          Text = Enum.GetName(typeof(Periodo), pn)
+                                      };
+                    #endregion
+
                     return View(new Aluno());
                 }
                 return RedirectToAction("List");
@@ -134,19 +274,42 @@ namespace Painel_Projetos.Web.Controllers
                 {
                     if (mensagens[i].Contains(aluno.MsgRA))
                         ModelState.AddModelError("RA", mensagens[i]);
-                    else if(mensagens[i].Contains(aluno.MsgEmail))
+                    else if (mensagens[i].Contains(aluno.MsgEmail))
                         ModelState.AddModelError("Email", mensagens[i]);
                     else
                         TempData["Alerta"] = ex.Message.Replace(Environment.NewLine, "<br/>");
                 }
 
+                #region ViewBag.Curso
                 ViewBag.CursoId = new SelectList
-                  (
-                      repository.Curso.ObterCursoAtivo(),
-                      "Id",
-                      "Descricao",
-                      entity.CursoID
-                  );
+                    (
+                        repository.Curso.ObterCursoAtivo(),
+                        "Id",
+                        "Descricao",
+                        entity.CursoID
+                    );
+                #endregion
+
+                #region ViewBag.Turma
+                ViewBag.TurmaId = new SelectList
+                    (
+                        repository.Turma.ObterTodos(),
+                        "Id",
+                        "Descricao",
+                        entity.TurmaId
+                    );
+                #endregion
+
+                #region ViewBag.Periodo
+                ViewBag.Periodo = from Periodo pn in Enum.GetValues(typeof(Periodo))
+                                  select new SelectListItem
+                                  {
+                                      Value = ((int)pn).ToString(),
+                                      Text = Enum.GetName(typeof(Periodo), pn),
+                                      Selected = Convert.ToBoolean(entity.Periodo)
+                                  };
+                #endregion
+
                 return View(entity);
             }
         }

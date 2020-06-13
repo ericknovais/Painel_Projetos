@@ -26,6 +26,16 @@ namespace Painel_Projetos.DataAccess.Repository
             return ctx.GruposAlunos.Include("Aluno").FirstOrDefault(x => x.Aluno.Nome == nome);
         }
 
+        public GruposAlunos ObterAlunoPor(int idAluno)
+        {
+            return ctx.GruposAlunos.FirstOrDefault(x => x.AlunoID == idAluno);
+        }
+
+        public IList<GruposAlunos> ObterProprioGrupo(int idAluno)
+        {
+            return ctx.GruposAlunos.Include("Aluno").Include("Grupo").Where(x => x.Administrador == true && x.AlunoID == idAluno).ToList();
+        }
+
         public new IList<GruposAlunos> ObterTodos()
         {
             return ctx.GruposAlunos.Include("Aluno").Include("Grupo").Where(x => x.Administrador == true).ToList();

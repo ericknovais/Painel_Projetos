@@ -28,11 +28,13 @@ namespace Painel_Projetos.Web.Controllers
                 {
                     lista = repository.ProjetosGrupos.ObterProjetoRepresentante(Convert.ToInt32(usuario.RepresentanteID));
                     if (lista.Count.Equals(0))
-                        TempData["ListaVazia"] = "Sim";
+                        TempData["ListaVazia"] = "Você não possui projetos cadastrados";
                 }
                 else
                 {
                     lista = repository.ProjetosGrupos.ObterTodos();
+                    if (lista.Count.Equals(0))
+                        TempData["ListaVazia"] = "Não a projetos disponiveis no momento";
                 }
                 return View(lista);
             }

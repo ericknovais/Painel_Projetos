@@ -39,6 +39,8 @@ namespace Painel_Projetos.DataAccess.contextDB
         public DbSet<Projeto> Projetos { get; set; }
         public DbSet<ProjetosGrupos> ProjetosGrupos { get; set; }
 
+        public DbSet<Turma> Turmas { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Properties<string>().Configure(p => p.HasColumnType("VARCHAR"));

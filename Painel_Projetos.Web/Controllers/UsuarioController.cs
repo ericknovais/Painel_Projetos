@@ -50,11 +50,11 @@ namespace Painel_Projetos.Web.Controllers
 
             switch (usuario.Perfil)
             {
-                case Perfil.Cordenador:
-                    var cordenador = repository.Cordenador.ObterPor(Convert.ToInt32(usuario.CoordenadorID));
+                case Perfil.Coordenador:
+                    var coordenador = repository.Cordenador.ObterPor(Convert.ToInt32(usuario.CoordenadorID));
                     identity = new ClaimsIdentity(new[]
                     {
-                        new Claim(ClaimTypes.Name, cordenador.Nome),
+                        new Claim(ClaimTypes.Name, coordenador.Nome),
                         new Claim("Login", usuario.Login),
                         new Claim(ClaimTypes.Role, usuario.Perfil.ToString()),
                     }, "ApplicationCookie");
@@ -153,7 +153,7 @@ namespace Painel_Projetos.Web.Controllers
             {
                 switch (usuairo.Perfil)
                 {
-                    case Perfil.Cordenador:
+                    case Perfil.Coordenador:
                         var coordenador = repository.Usuario.ObterCoordenador(Convert.ToInt32(usuairo.CoordenadorID));
 
                         if (coordenador.Coordenador.Email == viewModel.Email)

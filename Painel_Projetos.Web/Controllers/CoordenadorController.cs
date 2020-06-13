@@ -15,7 +15,7 @@ namespace Painel_Projetos.Web.Controllers
         Repository repository = new Repository();
         #endregion
 
-        [AutorizacaoTipo(new[] { Perfil.Cordenador })]
+        [AutorizacaoTipo(new[] { Perfil.Coordenador })]
         // GET: Cordenador
         public ActionResult List()
         {
@@ -33,7 +33,7 @@ namespace Painel_Projetos.Web.Controllers
             }
         }
 
-        [AutorizacaoTipo(new[] { Perfil.Cordenador })]
+        [AutorizacaoTipo(new[] { Perfil.Coordenador })]
         public ActionResult Edit(int id = 0)
         {
             Coordenador cordenador = new Coordenador();
@@ -49,7 +49,7 @@ namespace Painel_Projetos.Web.Controllers
             }
         }
 
-        [AutorizacaoTipo(new[] { Perfil.Cordenador })]
+        [AutorizacaoTipo(new[] { Perfil.Coordenador })]
         [HttpPost]
         public ActionResult Edit(Coordenador entity, int id = 0)
         {
@@ -69,7 +69,7 @@ namespace Painel_Projetos.Web.Controllers
                     usuario.Login = Usuario.SepararEmail(cordenador.Email);
                     var senha = Usuario.geraSenha();
                     usuario.Senha = Usuario.Encriptar(senha);
-                    usuario.Perfil = Perfil.Cordenador;
+                    usuario.Perfil = Perfil.Coordenador;
                     usuario.Validar();
                     repository.Usuario.Salvar(usuario);
                     Usuario.EnviarEmailDeLogin(cordenador.Nome, cordenador.Email, senha);

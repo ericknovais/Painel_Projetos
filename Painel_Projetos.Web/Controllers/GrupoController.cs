@@ -5,6 +5,7 @@ using Painel_Projetos.Web.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Web;
 using System.Web.Mvc;
 
@@ -21,7 +22,28 @@ namespace Painel_Projetos.Web.Controllers
             IList<GruposAlunos> lista = new List<GruposAlunos>();
             try
             {
-                lista = repository.GruposAlunos.ObterTodos();
+                var identity = User.Identity as ClaimsIdentity;
+                var login = identity.Claims.FirstOrDefault(x => x.Type == "Login").Value;
+                var usuario = repository.Usuario.ObterPeloLogin(login);
+
+                if (usuario.Perfil.Equals(Perfil.Aluno))
+                {
+                    var aluno = repository.GruposAlunos.ObterAlunoPor(Convert.ToInt32(usuario.AlunoID));
+                    if (aluno == null)
+                    {
+                        lista = repository.GruposAlunos.ObterTodos();
+                    }
+                    else
+                    {
+                        lista = repository.GruposAlunos.ObterProprioGrupo(Convert.ToInt32(usuario.AlunoID));
+                    }
+
+                }
+                else
+                {
+                    lista = repository.GruposAlunos.ObterTodos();
+                }
+
                 return View(lista);
             }
             catch (Exception ex)

@@ -15,7 +15,7 @@ namespace Painel_Projetos.Web.Controllers
         Repository repository = new Repository();
         #endregion
 
-        [AutorizacaoTipo(new[] { Perfil.Cordenador })]
+        [AutorizacaoTipo(new[] { Perfil.Coordenador })]
         // GET: Curso
         public ActionResult List()
         {
@@ -32,7 +32,7 @@ namespace Painel_Projetos.Web.Controllers
             }
         }
 
-        [AutorizacaoTipo(new[] { Perfil.Cordenador })]
+        [AutorizacaoTipo(new[] { Perfil.Coordenador })]
         public ActionResult Edit(int id = 0)
         {
             Curso curso = new Curso();
@@ -48,7 +48,7 @@ namespace Painel_Projetos.Web.Controllers
             }
         }
 
-        [AutorizacaoTipo(new[] { Perfil.Cordenador })]
+        [AutorizacaoTipo(new[] { Perfil.Coordenador })]
         [HttpPost]
         public ActionResult Edit(Curso entity, int id = 0)
         {

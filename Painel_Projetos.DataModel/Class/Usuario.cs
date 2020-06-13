@@ -80,20 +80,24 @@ namespace Painel_Projetos.DomainModel.Class
 
         public static string geraSenha()
         {
+
             // Determia as letras que poderão estar presente nas chaves
             string letras = "ABCDEFGHIJKLMNOPQRSTUVYWXZ";
+            // Determia os numero que poderão estar presente nas chaves
+
             string numeros = "01234567689";
+
+            // Determia o cataracter especial que poderão estar presente nas chaves
+            string especiais = "!@#$%&";
+
             Random random = new Random();
-            var armazenaChaves = "";
-            //for (int i = 0; i < 1; i++)
-            //{
-            armazenaChaves = letras.Substring(random.Next(1, 26), 1) +
-                                letras.Substring(random.Next(1, 26), 1) +
-                                letras.Substring(random.Next(1, 26), 1) +
-                                numeros.Substring(random.Next(1, 8), 1) +
-                                numeros.Substring(random.Next(1, 8), 1) +
-                                numeros.Substring(random.Next(1, 8), 1);
-            //}
+            var armazenaChaves = letras.Substring(random.Next(1, 26), 1) +
+                                    letras.Substring(random.Next(1, 26), 1) +
+                                    letras.Substring(random.Next(1, 26), 1) +
+                                    especiais.Substring(random.Next(1, 6), 1) +
+                                    numeros.Substring(random.Next(1, 8), 1) +
+                                    numeros.Substring(random.Next(1, 8), 1) +
+                                    numeros.Substring(random.Next(1, 8), 1);
 
             // Chamada da função que determinará o indice em que a chave gerada deverá ser colocada
             return armazenaChaves;

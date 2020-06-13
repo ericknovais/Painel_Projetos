@@ -1,4 +1,4 @@
-﻿@model Painel_Projetos.DomainModel.Class.Curso
+﻿@model Painel_Projetos.DomainModel.Class.Turma
 
 @{
     ViewBag.Title = "Edit";
@@ -7,9 +7,9 @@
     <main>
         <div class="container">
             <div class="row justify-content-center">
-                <div class="col-lg-6">
+                <div class="col-lg-4">
                     <div class="card shadow-lg border-0 rounded-lg mt-5">
-                        <div class="card-header"><h3 class="text-center font-weight-light my-4">Cadastro de Curso</h3></div>
+                        <div class="card-header"><h3 class="text-center font-weight-light my-4">Cadastro de Turma</h3></div>
                         <div class="card-body">
 
                             @using (Html.BeginForm())
@@ -20,16 +20,8 @@
                                         <div class="col-md-12">
                                             @Html.LabelFor(model => model.Descricao, htmlAttributes: new { @class = "small mb-1" })
                                             <div class="form-group">
-                                                @Html.EditorFor(model => model.Descricao, "Curso", new { htmlAttributes = new { @class = "form-control py-6" } })
+                                                @Html.EditorFor(model => model.Descricao, new { htmlAttributes = new { @class = "form-control py-6" } })
                                                 @Html.ValidationMessageFor(model => model.Descricao, "", new { @class = "text-danger" })
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-row">
-                                        <div class="col-md-6">
-                                            <div class="checkbox">
-                                                @Html.EditorFor(model => model.Ativo)
-                                                @Html.LabelFor(model => model.Ativo, "Curso Ativo?")
                                             </div>
                                         </div>
                                     </div>
@@ -61,7 +53,7 @@
                                             </div>
                                             <!-- Corpo do modal -->
                                             <div class="modal-body">
-                                                <p>Foi incluído um novo curso no sistema </p>
+                                                <p>Foi incluído uma nova turma no sistema </p>
                                             </div>
 
                                             <!-- Rodapé do modal-->
@@ -121,5 +113,36 @@
                 });
             </script>
         }
+        @*<h2>Edit</h2>
+
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-horizontal">
+                    <h4>Turma</h4>
+                    <hr />
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    @Html.HiddenFor(model => model.ID)
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Descricao, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Descricao, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Descricao, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Save" class="btn btn-default" />
+                        </div>
+                    </div>
+                </div>
+            }
+
+            <div>
+                @Html.ActionLink("Back to List", "Index")
+            </div>*@
     </main>
 </div>

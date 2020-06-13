@@ -10,5 +10,7 @@ namespace Painel_Projetos.DomainModel.Repository
     public interface IGruposAlunosRepository : IRepositoryBase<GruposAlunos>
     {
         GruposAlunos ObterAlunoPor(string nome);
+        GruposAlunos ObterAlunoPor(int idAluno);
+        IList<GruposAlunos> ObterProprioGrupo(int idAluno);
     }
 }

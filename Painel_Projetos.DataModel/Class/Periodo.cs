@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace Painel_Projetos.DomainModel.Class
 {
-    public enum Perfil
+    public enum Periodo
     {
-        Coordenador = 1,
-        Aluno = 2,
-        Representante = 3
+        Diurno = 1,
+        Noturno = 2
     }
 }

@@ -7,10 +7,7 @@ using System.Threading.Tasks;
 
 namespace Painel_Projetos.DomainModel.Repository
 {
-    public interface IAlunoRepository : IRepositoryBase<Aluno>
+    public interface ITurmarepository : IRepositoryBase<Turma>
     {
-        Aluno ObterPor(string nome);
-        IList<Aluno> ObterAlunosTurma(int curso, int turma);
-
     }
 }
