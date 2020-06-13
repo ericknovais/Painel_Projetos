@@ -35,7 +35,7 @@ namespace Painel_Projetos.Web.Controllers
         [AutorizacaoTipo(new[] { Perfil.Coordenador })]
         public ActionResult Edit(int id = 0)
         {
-            
+
             EmpresaViewModel viewModel = new EmpresaViewModel();
             try
             {
@@ -60,13 +60,21 @@ namespace Painel_Projetos.Web.Controllers
         [HttpPost]
         public ActionResult Edit(EmpresaViewModel viewmodel, int id = 0)
         {
-            
+
             Usuario usuario = new Usuario();
 
             try
             {
+
                 Empresa empresa = id.Equals(0) ? new Empresa() : repository.Empresa.ObterPor(id);
+                var teste = Empresa.IsCnpj(viewmodel.CNPJ);
+                if (Empresa.IsCnpj(viewmodel.CNPJ).Equals(false))
+                {
+                    ModelState.AddModelError("CNPJ", "CNPJ invalido");
+                    return View(viewmodel);
+                }
                 Representante representante = empresa.RepresentanteId.Equals(0) ? new Representante() : repository.Representante.ObterPor(empresa.RepresentanteId);
+
 
                 empresa.RazaoSocial = viewmodel.RazaoSocial;
                 empresa.CNPJ = viewmodel.CNPJ;
