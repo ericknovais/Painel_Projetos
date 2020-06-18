@@ -25,6 +25,8 @@ namespace Painel_Projetos.DomainModel.Class
         public string Senha { get; set; }
         public Perfil Perfil { get; set; }
 
+        [NotMapped]
+        public static string URL { get; } = "http://localhost:8080";
         #region Metodos publicos 
 
         /// <summary>
@@ -58,11 +60,11 @@ namespace Painel_Projetos.DomainModel.Class
                                 $"<h1>Olá</h1>" +
                                 $"<p><b>{nome}</b> foi realizado um cadastro na nossa plataforma seu</p>" +
                                 $"<p><b>Login:</b> {Usuario.SepararEmail(email)}</p>" +
-                                $"<p><b>Senha:</b> {senha}</p>");
+                                $"<p><b>Senha:</b> {senha}</p>" +
+                                $"Click <a href='{URL}'>aqui</a> para efetuar seu Login!");
             mail.Body = corpo.ToString();
             mail.IsBodyHtml = true;
             mail.Priority = MailPriority.High;
-
 
             try
             {
@@ -118,7 +120,42 @@ namespace Painel_Projetos.DomainModel.Class
             corpo.AppendFormat(
                                 $"<h1>Olá</h1>" +
                                 $"<p><b>{nome}</b> foi solicitado uma nova senha para acessar o Painel de projetos</p>" +
-                                $"<p><b>Nova senha:</b> {novaSenha}</p>");
+                                $"<p><b>Nova senha:</b> {novaSenha}</p>" +
+                                $"Click <a href='{URL}'>aqui</a> para efetuar seu Login!");
+            mail.Body = corpo.ToString();
+            mail.IsBodyHtml = true;
+            mail.Priority = MailPriority.High;
+            try
+            {
+                client.Send(mail);
+            }
+            catch (System.Exception erro)
+            {
+                throw new Exception(erro.ToString());
+            }
+            finally
+            {
+                mail = null;
+            }
+        }
+
+        public static void EnviarEmailDeConvite(string nomeAdmin, string emailAdmin, string nomeConvidado, string emailConvidade, string nomeGrupo)
+        {
+            SmtpClient client = new SmtpClient();
+            client.Host = "smtp.gmail.com";
+            client.EnableSsl = true;
+            client.Credentials = new System.Net.NetworkCredential("painel.suport@gmail.com", "impacta2020");
+            MailMessage mail = new MailMessage();
+            mail.Sender = new MailAddress(emailAdmin, "Painel De Projetos");
+            mail.From = new MailAddress(emailAdmin, nomeAdmin);
+            mail.To.Add(new MailAddress(emailConvidade, nomeConvidado));
+            mail.Subject = $"Convite para participar do grupo {nomeGrupo}";
+            StringBuilder corpo = new StringBuilder();
+            corpo.AppendFormat(
+                                $"<h1>Olá</h1>" +
+                                $"<p><b>{nomeConvidado}</b></p>" +
+                                $"<p>O aluno <b>{nomeAdmin}</b> está te convidado para participar do grupo: {nomeGrupo}</p>" +
+                                $"Click <a href='{URL}/Aluno/List'>aqui</a> se desejá fazer parte do grupo");
             mail.Body = corpo.ToString();
             mail.IsBodyHtml = true;
             mail.Priority = MailPriority.High;

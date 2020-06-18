@@ -40,16 +40,33 @@
                     }
                     else
                     {
-                        <div>
-                            <i class="fas fa-users"></i>
-                            @Html.Raw(TempData["Turma"])
-                        </div>
+                        using (Html.BeginForm())
+                        {
+                            <div class="form-row">
+                                <div class="col-md-5">
+                                    <i class="fas fa-users"></i>
+                                    @Html.Raw(TempData["Turma"])
+                                </div>
+                                @if (TempData["Admin"] != null)
+                                {
+                                    <div class="col-md-2">
+                                        @Html.RadioButton("Alunos", 1, new { @Onclick = "SelecinouRadio()" })
+                                        <label> Todos Alunos</label>
+                                    </div>
+                                    <div class="col-md-2">
+                                        @Html.RadioButton("Alunos", 2, new { @Onclick = "SelecinouRadio()" })
+                                        <label> Alunos sem grupo</label>
+                                    </div>
+                                    <input type="submit" style="display:none" id="btnPesquisaRadio" class="btn btn-primary" />
+                                }
+                            </div>
+                        }
                     }
                 </div>
 
                 <div class="card-body">
                     <div class="table-responsive">
-                        @if (TempData["ListaVazia"] != null)
+                        @if (TempData["ListaVazia"] != null || TempData["Alerta"] != null)
                         {
                             <div class="container">
                                 <div class="row justify-content-center">
@@ -69,6 +86,10 @@
                                         {
                                             <th>Editar</th>
                                         }
+                                        @if (TempData["PoderConvidar"] != null)
+                                        {
+                                            <th>Convidar</th>
+                                        }
                                         <th>RA</th>
                                         <th>Aluno</th>
                                         <th>Data de nascimento</th>
@@ -80,24 +101,69 @@
 
                                     @foreach (var item in Model)
                                     {
-                                        <tr>
-                                            @if (User.IsInRole("Coordenador"))
-                                            {
-                                                <td>
-                                                    <a class="nav-link" href="@Url.Action(" Edit", "Aluno", new { id = item.ID })">
-                                                        <i class="fas fa-edit"></i>
-                                                    </a>
-                                                </td>
-                                            }
-                                            <td>@item.RA</td>
-                                            <td>@item.Nome</td>
-                                            <td>@item.DataNascimento.ToShortDateString()</td>
-                                            <td>@item.Email</td>
-                                        </tr>
+                                    <tr>
+                                        @if (User.IsInRole("Coordenador"))
+                                        {
+                                            <td>
+                                                <a class="nav-link" href="@Url.Action(" Edit", "Aluno", new { id = item.ID })">
+                                                    <i class="fas fa-edit"></i>
+                                                </a>
+                                            </td>
+                                        }
+                                        @if (TempData["PoderConvidar"] != null)
+                                        {
+                                            <th>
+                                                <a title="Enviar um convide a esse aluno para entrar no seu grupo" class="nav-link"  href="@Url.Action("EnviarConvite", "Aluno", new { id = item.ID })" >
+                                                    <i class="fa fa-envelope"></i>
+                                                </a>
+                                            </th>
+                                        }
+                                        <td>@item.RA</td>
+                                        <td>@item.Nome</td>
+                                        <td>@item.DataNascimento.ToShortDateString()</td>
+                                        <td>@item.Email</td>
+                                    </tr>
                                     }
                                 </tbody>
                             </table>
                         }
+
+                        <!-- Botão oculto que abre o modal de Alerta -->
+                        <button id="btnModalErro" type="button" style="display: none;" data-toggle="modal" data-target="#modalErro"></button>
+
+                        @if (TempData["Alerta"] != null)
+                        {
+                            <!-- Modal -->
+                            <div id="modalErro" class="modal fade" role="dialog">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+
+                                        <!-- Cabeçalho do modal -->
+                                        <div class="modal-header">
+                                            <h4 class="modal-title">
+                                                ATENÇÃO
+                                                <i class="fas fa-exclamation-triangle"></i>
+                                            </h4>
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        </div>
+                                        <!-- Corpo do modal -->
+                                        <div class="modal-body">
+                                            <p>@TempData["Alerta"]</p>
+                                        </div>
+
+                                        <!-- Rodapé do modal-->
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-danger" data-dismiss="modal">Fechar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        <script>
+                            function SelecinouRadio() {
+                                $("#btnPesquisaRadio").click();
+                            }
+                        </script>
                     </div>
                 </div>
             </div>

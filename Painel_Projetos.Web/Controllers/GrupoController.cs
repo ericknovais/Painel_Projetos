@@ -25,25 +25,27 @@ namespace Painel_Projetos.Web.Controllers
                 var identity = User.Identity as ClaimsIdentity;
                 var login = identity.Claims.FirstOrDefault(x => x.Type == "Login").Value;
                 var usuario = repository.Usuario.ObterPeloLogin(login);
-
+                
                 if (usuario.Perfil.Equals(Perfil.Aluno))
                 {
-                    var aluno = repository.GruposAlunos.ObterAlunoPor(Convert.ToInt32(usuario.AlunoID));
-                    if (aluno == null)
+                    var aluno = repository.Usuario.ObterAluno(Convert.ToInt32(usuario.AlunoID));
+                    var naoTemGrupo = repository.GruposAlunos.ObterAlunoPor(Convert.ToInt32(usuario.AlunoID));
+                    if (naoTemGrupo == null)
                     {
-                        lista = repository.GruposAlunos.ObterTodos();
+                        lista = repository.GruposAlunos.ObterGrupoPorCursoETurma(aluno.Aluno.CursoID, aluno.Aluno.TurmaId, aluno.Aluno.Periodo);
+
                     }
                     else
                     {
                         lista = repository.GruposAlunos.ObterProprioGrupo(Convert.ToInt32(usuario.AlunoID));
                     }
-
                 }
                 else
                 {
                     lista = repository.GruposAlunos.ObterTodos();
                 }
-
+                if (lista.Count == 0)
+                    TempData["ListaVazia"] = "Essa turma ainda contem grupo criado";
                 return View(lista);
             }
             catch (Exception ex)

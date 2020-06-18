@@ -34,7 +34,7 @@ namespace Painel_Projetos.Web.Controllers
                 {
                     lista = repository.ProjetosGrupos.ObterTodos();
                     if (lista.Count.Equals(0))
-                        TempData["ListaVazia"] = "Não a projetos disponiveis no momento";
+                        TempData["ListaVazia"] = "Não ha projetos disponíveis no momento";
                 }
                 return View(lista);
             }

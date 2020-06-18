@@ -18,6 +18,20 @@ namespace Painel_Projetos.DataAccess.Repository
             ctx = context;
         }
 
+        public IList<Aluno> ObterAlunosQueNaoEstaoEmGrupo(int curso, int turma, Periodo periodo)
+        {
+            var alunos = from aluno in ctx.Alunos
+                        join aluGp in ctx.GruposAlunos on aluno.ID equals aluGp.AlunoID into aluGp
+                        from alunoGrupo in aluGp.DefaultIfEmpty()
+                        where   aluno.CursoID.Equals(curso)
+                                & aluno.TurmaId.Equals(turma)
+                                & aluno.Periodo == periodo
+                                & alunoGrupo.AlunoID.Equals(null)  
+                        select aluno;
+
+            return alunos.ToList();
+        }
+
         public IList<Aluno> ObterAlunosTurma(int curso, int turma)
         {
             return ctx.Alunos.Include("Curso").Include("Turma").Where(x =>x.CursoID == curso && x.TurmaId == turma).OrderBy(x => x.Nome).ToList();

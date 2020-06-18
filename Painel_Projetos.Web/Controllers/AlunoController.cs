@@ -20,6 +20,11 @@ namespace Painel_Projetos.Web.Controllers
         Repository repository = new Repository();
         #endregion
 
+        public string CursoTela { get; set; }
+        public string TurmaTela { get; set; }
+
+        public string Teste { get; set; }
+
         [AutorizacaoTipo(new[] { Perfil.Coordenador, Perfil.Aluno })]
         // GET: Aluno
         public ActionResult List()
@@ -50,6 +55,10 @@ namespace Painel_Projetos.Web.Controllers
             IList<Aluno> lista = new List<Aluno>();
             if (usuario.Perfil == Perfil.Aluno)
             {
+                //If para saber se o aluno que esta logado é admim de um grupo para poder convidar outros alunos para o grupo dele                
+                if (repository.GruposAlunos.ObterAlunoPor(Convert.ToInt32(aluno.AlunoID)).Administrador.Equals(true))
+                    TempData["Admin"] = "sim";
+
                 try
                 {
                     lista = repository.Aluno.ObterAlunosTurma(aluno.Aluno.CursoID, aluno.Aluno.TurmaId);
@@ -70,39 +79,65 @@ namespace Painel_Projetos.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult List(Aluno entity)
+        public ActionResult List(Aluno entity, int Alunos = 0)
         {
             IList<Aluno> lista = new List<Aluno>();
-            try
+            if (Alunos != 0)
             {
-                #region ViewBag.Curso
-                ViewBag.CursoId = new SelectList
-                    (
-                        repository.Curso.ObterCursoAtivo(),
-                        "Id",
-                        "Descricao",
-                        entity.CursoID
-                    );
-                #endregion
+                var identity = User.Identity as ClaimsIdentity;
+                var login = identity.Claims.FirstOrDefault(x => x.Type == "Login").Value;
+                var usuario = repository.Usuario.ObterPeloLogin(login);
+                Aluno aluno = repository.Aluno.ObterPor(Convert.ToInt32(usuario.AlunoID));
+                if (Alunos.Equals(1))
+                {
+                    lista = repository.Aluno.ObterAlunosTurma(aluno.CursoID, aluno.TurmaId);
+                    TempData["Admin"] = "sim";
+                }
+                else
+                {
+                    lista = repository.Aluno.ObterAlunosQueNaoEstaoEmGrupo(aluno.CursoID, aluno.TurmaId, aluno.Periodo);
+                    if (lista.Count.Equals(0))
+                        TempData["ListaVazia"] = "Não foi encontrado alunos";
 
-                #region ViewBag.Turma
-                ViewBag.TurmaId = new SelectList
-                    (
-                        repository.Turma.ObterTodos(),
-                        "Id",
-                        "Descricao",
-                        entity.TurmaId
-                    );
-                #endregion
-
-                lista = repository.Aluno.ObterAlunosTurma(entity.CursoID, entity.TurmaId);
-                if (lista.Count.Equals(0))
-                    TempData["ListaVazia"] = "Não foi encontrado alunos";
+                    TempData["Admin"] = "sim";
+                    TempData["PoderConvidar"] = "sim";
+                }
+                TempData["Turma"] = $" <b>Curso</b>: {repository.Curso.ObterPor(aluno.CursoID).Descricao} <b>Turma</b>: {repository.Turma.ObterPor(aluno.TurmaId).Descricao}";
             }
-            catch (Exception ex)
+            else
             {
 
-                TempData["Alerta"] = ex.Message.Replace(Environment.NewLine, "</br>");
+                try
+                {
+                    #region ViewBag.Curso
+                    ViewBag.CursoId = new SelectList
+                        (
+                            repository.Curso.ObterCursoAtivo(),
+                            "Id",
+                            "Descricao",
+                            entity.CursoID
+                        );
+                    #endregion
+
+                    #region ViewBag.Turma
+                    ViewBag.TurmaId = new SelectList
+                        (
+                            repository.Turma.ObterTodos(),
+                            "Id",
+                            "Descricao",
+                            entity.TurmaId
+                        );
+                    #endregion
+
+                    lista = repository.Aluno.ObterAlunosTurma(entity.CursoID, entity.TurmaId);
+                    if (lista.Count.Equals(0))
+                        TempData["ListaVazia"] = "Não foi encontrado alunos";
+                }
+                catch (Exception ex)
+                {
+
+                    TempData["Alerta"] = ex.Message.Replace(Environment.NewLine, "</br>");
+                }
             }
             return View(lista);
         }
@@ -312,6 +347,28 @@ namespace Painel_Projetos.Web.Controllers
 
                 return View(entity);
             }
+        }
+
+        public ActionResult EnviarConvite(int id = 0)
+        {
+            var identity = User.Identity as ClaimsIdentity;
+            var login = identity.Claims.FirstOrDefault(x => x.Type == "Login").Value;
+            var usuario = repository.Usuario.ObterPeloLogin(login);
+            Aluno alunoAdmin = repository.Aluno.ObterPor(Convert.ToInt32(usuario.AlunoID));
+            var grupoAluno = repository.GruposAlunos.ObterAlunoPor(alunoAdmin.ID);
+
+            Aluno aluno = id.Equals(0) ? new Aluno() : repository.Aluno.ObterPor(id);
+
+            try
+            {
+                Usuario.EnviarEmailDeConvite(alunoAdmin.Nome, alunoAdmin.Email, aluno.Nome, aluno.Email, repository.Grupo.ObterPor(grupoAluno.GrupoID).Nome);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return RedirectToAction("List");
         }
     }
 }

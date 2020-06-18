@@ -12,5 +12,6 @@ namespace Painel_Projetos.DomainModel.Repository
         Aluno ObterPor(string nome);
         IList<Aluno> ObterAlunosTurma(int curso, int turma);
 
+        IList<Aluno> ObterAlunosQueNaoEstaoEmGrupo(int curso, int turma, Periodo periodo);
     }
 }
