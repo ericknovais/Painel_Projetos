@@ -9,5 +9,6 @@ namespace Painel_Projetos.DomainModel.Repository
 {
     public interface IEmpresaRepository : IRepositoryBase<Empresa>
     {
+        Empresa ObterEmpresaPeloRepresentante(int idRepresentante);
     }
 }

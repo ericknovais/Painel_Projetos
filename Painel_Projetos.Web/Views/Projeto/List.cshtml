@@ -68,13 +68,13 @@
                                             @if (User.IsInRole("Representante"))
                                             {
                                                 <td>
-                                                    <a class="nav-link" href="@Url.Action("Edit", "Projeto", new { id = item.ID })">
+                                                    <a class="nav-link" href="@Url.Action("Edit", "Projeto", new { id = item.ProjetoID })">
                                                         <i class="fas fa-edit"></i>
                                                     </a>
                                                 </td>
                                             }
                                             <td>
-                                                <a class="nav-link" href="@Url.Action("Details", "Projeto", new { id = item.ID })">
+                                                <a class="nav-link" href="@Url.Action("Details", "Projeto", new { id = item.ProjetoID })">
                                                     <i class="far fa-eye"></i>
                                                 </a>
                                             </td>

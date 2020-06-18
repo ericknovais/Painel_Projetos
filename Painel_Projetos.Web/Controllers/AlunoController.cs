@@ -55,9 +55,11 @@ namespace Painel_Projetos.Web.Controllers
             IList<Aluno> lista = new List<Aluno>();
             if (usuario.Perfil == Perfil.Aluno)
             {
+                var eAdmin = repository.GruposAlunos.ObterAlunoPor(Convert.ToInt32(aluno.AlunoID));
                 //If para saber se o aluno que esta logado é admim de um grupo para poder convidar outros alunos para o grupo dele                
-                if (repository.GruposAlunos.ObterAlunoPor(Convert.ToInt32(aluno.AlunoID)).Administrador.Equals(true))
-                    TempData["Admin"] = "sim";
+                if(eAdmin != null)
+                    if (eAdmin.Administrador == true || eAdmin != null)
+                        TempData["Admin"] = "sim";
 
                 try
                 {

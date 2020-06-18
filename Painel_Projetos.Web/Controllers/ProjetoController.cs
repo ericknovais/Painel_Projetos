@@ -79,6 +79,7 @@ namespace Painel_Projetos.Web.Controllers
                 {
                     prjGrupos.RepresentanteId = representante.ID;
                     prjGrupos.ProjetoID = projeto.ID;
+                    prjGrupos.EmpresaID = repository.Empresa.ObterEmpresaPeloRepresentante(representante.ID).ID;
                     prjGrupos.Validar();
                     repository.ProjetosGrupos.Salvar(prjGrupos);
                 }

@@ -21,6 +21,11 @@ namespace Painel_Projetos.DataAccess.Repository
             this.ctx = context;
         }
 
+        public Empresa ObterEmpresaPeloRepresentante(int idRepresentante)
+        {
+            return ctx.Empresas.Include("Representante").FirstOrDefault(x => x.RepresentanteId == idRepresentante);
+        }
+
         public new IList<Empresa> ObterTodos()
         {
             return ctx.Empresas.Include("Representante").OrderBy(x => x.RazaoSocial).ToList();
