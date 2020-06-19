@@ -20,7 +20,8 @@ namespace AutenticacaoNoAspNetMVC.Filters
             if (!autorizado)
             {
                 filterContext.Controller.TempData["ErroAutorizacao"] = "Você não tem premissão para acessar essa página";
-                filterContext.Result = new RedirectResult("Home");
+                var teste = new RedirectResult("Home/Index");
+                filterContext.Result = teste;
             } 
         }
     }

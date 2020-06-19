@@ -16,7 +16,7 @@
             <!-- Botão oculto que abre o modal de SUCESSO-->
             <button id="btnModalSucesso" type="button" style="display: none;" data-toggle="modal" data-target="#modalSucesso"></button>
 
-            @if (TempData["SenhaAlterada"] != null)
+            @if (TempData["SenhaAlterada"] != null || TempData["AceitouConvite"] != null)
             {
                 <!-- Modal -->
                 <div id="modalSucesso" class="modal fade" role="dialog">
@@ -34,7 +34,14 @@
                             </div>
                             <!-- Corpo do modal -->
                             <div class="modal-body">
-                                <p>@TempData["SenhaAlterada"]</p>
+                                @if (TempData["SenhaAlterada"] != null)
+                                {
+                                    <p>@TempData["SenhaAlterada"]</p>
+                                }
+                                else
+                                {
+                                    <p>@TempData["AceitouConvite"]</p>
+                                }
                             </div>
 
                             <!-- Rodapé do modal-->
@@ -49,7 +56,7 @@
             <!-- Botão oculto que abre o modal de Alerta -->
             <button id="btnModalErro" type="button" style="display: none;" data-toggle="modal" data-target="#modalErro"></button>
 
-            @if (TempData["ErroAutorizacao"] != null)
+            @if (TempData["ErroAutorizacao"] != null || TempData["Alerta"] != null)
             {
                 <!-- Modal -->
                 <div id="modalErro" class="modal fade" role="dialog">
@@ -66,7 +73,14 @@
                             </div>
                             <!-- Corpo do modal -->
                             <div class="modal-body">
-                                <p>@TempData["ErroAutorizacao"]</p>
+                                @if (TempData["ErroAutorizacao"] != null)
+                                {
+                                    <p>@TempData["ErroAutorizacao"]</p>
+                                }
+                                else
+                                {
+                                    <p>@TempData["Alerta"]</p>
+                                }
                             </div>
 
                             <!-- Rodapé do modal-->

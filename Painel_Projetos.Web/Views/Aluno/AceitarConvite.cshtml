@@ -1,0 +1,111 @@
+﻿@model Painel_Projetos.DomainModel.Class.Aluno
+
+@{
+    ViewBag.Title = "AceitarConvite";
+}
+
+<div id="layoutSidenav_content">
+    <main>
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-6">
+                    <div class="card shadow-lg border-0 rounded-lg mt-5">
+                        <div class="card-header"><h3 class="text-center font-weight-light my-4">Convite para entrar no grupo</h3></div>
+                        <div class="card-body">
+                            @if (TempData["TemConvite"] != null)
+                            {
+                                using (Html.BeginForm())
+                                {
+                                    <p>@Html.Raw(TempData["Texto"])</p>
+
+                                    <div class="form-group d-flex align-items-center justify-content-between mt-4 mb-0">
+                                        <div class="small"></div>
+                                        <input type="submit" value="Aceitar" class="btn btn-success" />
+                                    </div>
+
+                                }
+                            }
+                            else
+                            {
+                                <p>@Html.Raw(TempData["Texto"])</p>
+                            }
+                            <!-- Botão oculto que abre o modal de SUCESSO-->
+                            <button id="btnModalSucesso" type="button" style="display: none;" data-toggle="modal" data-target="#modalSucesso"></button>
+
+                            @if (TempData["Mensagem"] == "Sucesso")
+                            {
+                                <!-- Modal -->
+                                <div id="modalSucesso" class="modal fade" role="dialog">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+
+                                            <!-- Cabeçalho do modal -->
+                                            <div class="modal-header">
+                                                <h4 class="modal-title">
+                                                    SUCESSO
+                                                    <i class="fas fa-check"></i>
+                                                </h4>
+                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            </div>
+                                            <!-- Corpo do modal -->
+                                            <div class="modal-body">
+                                                <p>Foi incluído um novo aluno no sistema </p>
+                                            </div>
+
+                                            <!-- Rodapé do modal-->
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn btn-success" data-dismiss="modal">Ok</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+
+                            <!-- Botão oculto que abre o modal de Alerta -->
+                            <button id="btnModalErro" type="button" style="display: none;" data-toggle="modal" data-target="#modalErro"></button>
+
+                            @if (TempData["Alerta"] != null)
+                            {
+                                <!-- Modal -->
+                                <div id="modalErro" class="modal fade" role="dialog">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+
+                                            <!-- Cabeçalho do modal -->
+                                            <div class="modal-header">
+                                                <h4 class="modal-title">
+                                                    ATENÇÃO
+                                                    <i class="fas fa-exclamation-triangle"></i>
+                                                </h4>
+                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            </div>
+                                            <!-- Corpo do modal -->
+                                            <div class="modal-body">
+                                                <p>@TempData["Alerta"]</p>
+                                            </div>
+
+                                            <!-- Rodapé do modal-->
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-danger" data-dismiss="modal">Fechar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+        <script src="~/Scripts/jquery.validate.min.js"></script>
+        <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+        @section Scripts {
+            <script src="~/Scripts/jquery.validate.min.js"></script>
+            <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+            <script src="~/Scripts/inputmask/jquery.inputmask.js"></script>
+            @*<script src="~/Content/js/methods_pt..js"></script>*@
+        }
+        }
+    </main>

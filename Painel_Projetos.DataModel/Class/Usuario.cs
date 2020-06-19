@@ -26,7 +26,7 @@ namespace Painel_Projetos.DomainModel.Class
         public Perfil Perfil { get; set; }
 
         [NotMapped]
-        public static string URL { get; } = "http://52.149.211.185/"; //"http://localhost:8080";
+        public static string URL { get; } = "http://localhost:8080"; //"http://52.149.211.185/";
         #region Metodos publicos 
 
         /// <summary>
@@ -139,7 +139,7 @@ namespace Painel_Projetos.DomainModel.Class
             }
         }
 
-        public static void EnviarEmailDeConvite(string nomeAdmin, string emailAdmin, string nomeConvidado, string emailConvidade, string nomeGrupo)
+        public static void EnviarEmailDeConvite(string nomeAdmin, string emailAdmin, string nomeConvidado, string emailConvidade, string nomeGrupo, int idConvidado, int idAdmin, int idGrupo)
         {
             SmtpClient client = new SmtpClient();
             client.Host = "smtp.gmail.com";
@@ -155,7 +155,7 @@ namespace Painel_Projetos.DomainModel.Class
                                 $"<h1>Olá</h1>" +
                                 $"<p><b>{nomeConvidado}</b></p>" +
                                 $"<p>O aluno <b>{nomeAdmin}</b> está te convidado para participar do grupo: {nomeGrupo}</p>" +
-                                $"Click <a href='{URL}/Aluno/List'>aqui</a> se desejá fazer parte do grupo");
+                                $"Click <a href='{URL}/Aluno/aceitarconvite/{idConvidado}?idGrupo={idGrupo}&idAdmin={idAdmin}'>aqui</a> se desejá fazer parte do grupo");
             mail.Body = corpo.ToString();
             mail.IsBodyHtml = true;
             mail.Priority = MailPriority.High;

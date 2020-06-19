@@ -57,7 +57,7 @@ namespace Painel_Projetos.Web.Controllers
             {
                 var eAdmin = repository.GruposAlunos.ObterAlunoPor(Convert.ToInt32(aluno.AlunoID));
                 //If para saber se o aluno que esta logado é admim de um grupo para poder convidar outros alunos para o grupo dele                
-                if(eAdmin != null)
+                if (eAdmin != null)
                     if (eAdmin.Administrador == true || eAdmin != null)
                         TempData["Admin"] = "sim";
 
@@ -360,17 +360,54 @@ namespace Painel_Projetos.Web.Controllers
             var grupoAluno = repository.GruposAlunos.ObterAlunoPor(alunoAdmin.ID);
 
             Aluno aluno = id.Equals(0) ? new Aluno() : repository.Aluno.ObterPor(id);
-
+            var grupo = repository.Grupo.ObterPor(grupoAluno.GrupoID);
             try
             {
-                Usuario.EnviarEmailDeConvite(alunoAdmin.Nome, alunoAdmin.Email, aluno.Nome, aluno.Email, repository.Grupo.ObterPor(grupoAluno.GrupoID).Nome);
+                Usuario.EnviarEmailDeConvite(alunoAdmin.Nome, alunoAdmin.Email, aluno.Nome, aluno.Email, grupo.Nome, aluno.ID, alunoAdmin.ID, grupo.ID);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                TempData["Alerta"] = ex.Message.Replace(Environment.NewLine, "<br/>");
+                return RedirectToAction("List");
             }
+            TempData["Convite"] = $"Foi enviado um e-mail convidando o aluno <b>{aluno.Nome}</b> para o grupo <b>{grupo.Nome}</b> espere pelo retorno dele!";
             return RedirectToAction("List");
+        }
+        [Authorize]
+        public ActionResult AceitarConvite(int id = 0, int idGrupo = 0, int idAdmin = 0)
+        {
+            Aluno aluno = id.Equals(0) ? new Aluno() : repository.Aluno.ObterPor(id);
+            Aluno alunoAdmin = idAdmin.Equals(0) ? new Aluno() : repository.Aluno.ObterPor(idAdmin);
+            Grupo grupo = idGrupo.Equals(0) ? new Grupo() : repository.Grupo.ObterPor(idGrupo);
+            if (id != 0 && idGrupo != 0 && idAdmin != 0)
+            {
+                TempData["TemConvite"] = "sim";
+                TempData["Texto"] = $"Olá {aluno.Nome} o aluno {alunoAdmin.Nome} te convidou para fazer parte do grupo {grupo.Nome}";
+            }
+            else
+            {
+                TempData["Texto"] = "Não há convites!";
+            }
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult AceitarConvite(int id = 0, int idGrupo = 0)
+        {
+            try
+            {
+                GruposAlunos gruposAlunos = new GruposAlunos();
+                gruposAlunos.AlunoID = id;
+                gruposAlunos.GrupoID = idGrupo;
+                repository.GruposAlunos.Salvar(gruposAlunos);
+                repository.SaveChanges();
+                TempData["AceitouConvite"] = $"Você agora faz parte do grupo {repository.Grupo.ObterPor(idGrupo).Nome}";
+            }
+            catch (Exception ex)
+            {
+                TempData["Alerta"] = ex.Message.Replace(Environment.NewLine, "<br/>");
+            }
+            return RedirectToAction("Index", "Home");
         }
     }
 }

@@ -632,6 +632,7 @@
     <Content Include="Views\Usuario\EsqueciSenha.cshtml" />
     <Content Include="Views\Turma\List.cshtml" />
     <Content Include="Views\Turma\Edit.cshtml" />
+    <Content Include="Views\Aluno\AceitarConvite.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
