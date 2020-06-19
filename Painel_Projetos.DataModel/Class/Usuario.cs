@@ -26,7 +26,7 @@ namespace Painel_Projetos.DomainModel.Class
         public Perfil Perfil { get; set; }
 
         [NotMapped]
-        public static string URL { get; } = "http://localhost:8080";
+        public static string URL { get; } = "http://52.149.211.185/"; //"http://localhost:8080";
         #region Metodos publicos 
 
         /// <summary>
