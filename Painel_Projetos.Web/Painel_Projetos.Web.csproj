@@ -633,6 +633,7 @@
     <Content Include="Views\Turma\List.cshtml" />
     <Content Include="Views\Turma\Edit.cshtml" />
     <Content Include="Views\Aluno\AceitarConvite.cshtml" />
+    <Content Include="Views\Grupo\ListaDeAlunos.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

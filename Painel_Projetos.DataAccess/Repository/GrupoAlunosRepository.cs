@@ -31,6 +31,11 @@ namespace Painel_Projetos.DataAccess.Repository
             return ctx.GruposAlunos.FirstOrDefault(x => x.AlunoID == idAluno);
         }
 
+        public IList<GruposAlunos> ObterAlunosDoGrupo(int idGrupo)
+        {
+            return ctx.GruposAlunos.Include("Aluno").Where(x => x.GrupoID == idGrupo).ToList();
+        }
+
         public IList<GruposAlunos> ObterGrupoPorCursoETurma(int cursoID, int turmaID, Periodo periodo)
         {
             return ctx.GruposAlunos.Include("Aluno")

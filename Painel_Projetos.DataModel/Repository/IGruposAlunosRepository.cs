@@ -13,5 +13,6 @@ namespace Painel_Projetos.DomainModel.Repository
         GruposAlunos ObterAlunoPor(int idAluno);
         IList<GruposAlunos> ObterProprioGrupo(int idAluno);
         IList<GruposAlunos> ObterGrupoPorCursoETurma(int cursoID, int turmaID, Periodo periodo);
+        IList<GruposAlunos> ObterAlunosDoGrupo(int idGrupo);
     }
 }

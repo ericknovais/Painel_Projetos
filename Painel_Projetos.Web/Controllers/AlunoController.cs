@@ -58,7 +58,7 @@ namespace Painel_Projetos.Web.Controllers
                 var eAdmin = repository.GruposAlunos.ObterAlunoPor(Convert.ToInt32(aluno.AlunoID));
                 //If para saber se o aluno que esta logado é admim de um grupo para poder convidar outros alunos para o grupo dele                
                 if (eAdmin != null)
-                    if (eAdmin.Administrador == true || eAdmin != null)
+                    if (eAdmin.Administrador == true)
                         TempData["Admin"] = "sim";
 
                 try
@@ -376,19 +376,29 @@ namespace Painel_Projetos.Web.Controllers
         [Authorize]
         public ActionResult AceitarConvite(int id = 0, int idGrupo = 0, int idAdmin = 0)
         {
-            Aluno aluno = id.Equals(0) ? new Aluno() : repository.Aluno.ObterPor(id);
-            Aluno alunoAdmin = idAdmin.Equals(0) ? new Aluno() : repository.Aluno.ObterPor(idAdmin);
+
+            GruposAlunos gruposAlunos = repository.GruposAlunos.ObterAlunoPor(id);
             Grupo grupo = idGrupo.Equals(0) ? new Grupo() : repository.Grupo.ObterPor(idGrupo);
-            if (id != 0 && idGrupo != 0 && idAdmin != 0)
+            if (gruposAlunos == null)
             {
-                TempData["TemConvite"] = "sim";
-                TempData["Texto"] = $"Olá {aluno.Nome} o aluno {alunoAdmin.Nome} te convidou para fazer parte do grupo {grupo.Nome}";
+                Aluno aluno = id.Equals(0) ? new Aluno() : repository.Aluno.ObterPor(id);
+                Aluno alunoAdmin = idAdmin.Equals(0) ? new Aluno() : repository.Aluno.ObterPor(idAdmin);
+                if (id != 0 && idGrupo != 0 && idAdmin != 0)
+                {
+                    TempData["TemConvite"] = "sim";
+                    TempData["Texto"] = $"Olá {aluno.Nome} o aluno {alunoAdmin.Nome} te convidou para fazer parte do grupo {grupo.Nome}";
+                }
+                else
+                {
+                    TempData["Texto"] = "Não há convites!";
+                }
+                return View();
             }
             else
             {
-                TempData["Texto"] = "Não há convites!";
+                TempData["Alerta"] = $"Você já esta no grupo {grupo.Nome}";
+                return RedirectToAction("Index", "Home");
             }
-            return View();
         }
 
         [HttpPost]

@@ -44,10 +44,7 @@
                             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                 <thead>
                                     <tr>
-                                        @if (User.IsInRole("Aluno"))
-                                        {
-                                            <th>Editar</th>
-                                        }
+                                        <th>Consultar Alunos</th>
                                         <th>Grupo</th>
                                         <th>Administrador</th>
                                     </tr>
@@ -57,14 +54,13 @@
                                     @foreach (var item in Model)
                                     {
                                         <tr>
-                                            @if (User.IsInRole("Aluno"))
-                                            {
-                                                <td>
-                                                    <a class="nav-link" href="@Url.Action("Edit", "Grupo", new { id = item.ID })">
-                                                        <i class="fas fa-edit"></i>
-                                                    </a>
-                                                </td>
-                                            }
+
+                                            <td>
+                                                <a class="nav-link" href="@Url.Action("ListaDeAlunos", "Grupo", new { id = item.GrupoID })">
+                                                    <i class="fas fa-edit"></i>
+                                                </a>
+                                            </td>
+
                                             <td>
                                                 @item.Grupo.Nome
                                             </td>
