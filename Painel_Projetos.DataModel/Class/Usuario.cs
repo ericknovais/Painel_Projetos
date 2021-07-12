@@ -172,7 +172,41 @@ namespace Painel_Projetos.DomainModel.Class
                 mail = null;
             }
         }
+
+        public static void SeCandidatar(string emailRepre, string nomeRepre, string nomeAluno, string emailAluno,string nomeGrupo, string nomeProjeto)
+        {
+            SmtpClient client = new SmtpClient();
+            client.Host = "smtp.gmail.com";
+            client.EnableSsl = true;
+            client.Credentials = new System.Net.NetworkCredential("painel.suport@gmail.com", "impacta2020");
+            MailMessage mail = new MailMessage();
+            mail.Sender = new MailAddress("painel.suport@gmail.com", "Painel De Projetos");
+            mail.From = new MailAddress("painel.suport@gmail.com", "Painel De Projetos");
+            mail.To.Add(new MailAddress(emailRepre, nomeRepre));
+            mail.Subject = $"Grupo {nomeGrupo}";
+            StringBuilder corpo = new StringBuilder();
+            corpo.AppendFormat(
+                                $"<h1>Olá</h1>" +
+                                $"<p> O <b>{nomeAluno}</b> do grupo <b>{nomeGrupo}</b> está se candidatando para realizar o projeto {nomeProjeto}</p>" +
+                                $"<p><b>E-mail do aluno:</b> {emailAluno} entre encontato</p>");
+            mail.Body = corpo.ToString();
+            mail.IsBodyHtml = true;
+            mail.Priority = MailPriority.High;
+            try
+            {
+                client.Send(mail);
+            }
+            catch (System.Exception erro)
+            {
+                throw new Exception(erro.ToString());
+            }
+            finally
+            {
+                mail = null;
+            }
+        }
     }
+
 
     #endregion
 }

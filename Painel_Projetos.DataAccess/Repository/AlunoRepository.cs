@@ -36,9 +36,7 @@ namespace Painel_Projetos.DataAccess.Repository
         {
             return ctx.Alunos.Include("Curso").Include("Turma").Where(x =>x.CursoID == curso && x.TurmaId == turma).OrderBy(x => x.Nome).ToList();
         }
-
      
-
         public Aluno ObterPor(string nome)
         {
             return ctx.Alunos.FirstOrDefault(x => x.Nome == nome);

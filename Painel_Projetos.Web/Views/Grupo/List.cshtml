@@ -54,13 +54,11 @@
                                     @foreach (var item in Model)
                                     {
                                         <tr>
-
                                             <td>
-                                                <a class="nav-link" href="@Url.Action("ListaDeAlunos", "Grupo", new { id = item.GrupoID })">
-                                                    <i class="fas fa-edit"></i>
+                                                <a title="Consultar alunos do grupo" class="nav-link" href="@Url.Action("ListaDeAlunos", "Grupo", new { id = item.GrupoID })">
+                                                    <i class="far fa-eye"></i>
                                                 </a>
                                             </td>
-
                                             <td>
                                                 @item.Grupo.Nome
                                             </td>

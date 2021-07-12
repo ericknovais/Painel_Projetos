@@ -32,6 +32,10 @@ namespace Painel_Projetos.Web.Controllers
                 }
                 else
                 {
+                    if (usuario.Perfil.Equals(Perfil.Aluno) && repository.GruposAlunos.ObterAlunoPor(Convert.ToInt32(usuario.AlunoID)).Administrador == true)
+                    {
+                        TempData["AlunoAdmin"] = "sim";
+                    }
                     lista = repository.ProjetosGrupos.ObterTodos();
                     if (lista.Count.Equals(0))
                         TempData["ListaVazia"] = "Não ha projetos disponíveis no momento";
@@ -115,5 +119,28 @@ namespace Painel_Projetos.Web.Controllers
             }
         }
 
+        public ActionResult CanditarAoProjeto(int id = 0)
+        {
+            Projeto projeto = repository.Projeto.ObterPor(id);
+            ProjetosGrupos projetosGrupos = repository.ProjetosGrupos.ObterPorIdProjeto(id);
+            Representante representante = repository.Representante.ObterPor(projetosGrupos.RepresentanteId);
+            var identity = User.Identity as ClaimsIdentity;
+            var login = identity.Claims.FirstOrDefault(x => x.Type == "Login").Value;
+            var usuario = repository.Usuario.ObterPeloLogin(login);
+            Aluno aluno = repository.Aluno.ObterPor(Convert.ToInt32(usuario.AlunoID));
+            GruposAlunos gruposAlunos = repository.GruposAlunos.ObterAlunoPor(aluno.ID);
+            Grupo grupo = repository.Grupo.ObterPor(gruposAlunos.GrupoID);
+            try
+            {
+                Usuario.SeCandidatar(representante.Email, representante.Nome, aluno.Nome, aluno.Email, grupo.Nome, projeto.Titulo);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            TempData["Sucesso"] = "Seu e-mail foi enviado ao representante desse projeto espere ate ele entrar em contato com seu grupo";
+            return RedirectToAction("List");
+        }
     }
 }
